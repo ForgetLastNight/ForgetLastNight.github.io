@@ -17,10 +17,8 @@ document.write(
   
   "<body>"+
     "<div class='navbar navbar-fixed-top' role='navigation'>"+
-      "<div class='container'>"+
-            "<center style='vertical-align:middle;'><h3>Forget Last Night</h3></center>"+
-      "</div>"+
-    "</div>"+
-
-    "<div class='container' id='main'>"
+      "<center id='logo'>Forget Last Night"+
+      "</center>"+
+    "</div><!-- navbar-->"+
+    "<div class='container-fluid' id='main'>"
    );

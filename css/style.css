@@ -1,1 +1,25 @@
-#main{}
+html,body{
+	height:100%;
+	font-family: BeautySC;
+}
+
+body{
+	padding-top:50px;
+}
+
+#main{
+	background: black;
+	color:white;
+	padding:0px;
+	min-height: 100%;
+	height: auto !important; /*min-height hack, make page fill up screen regardless of device*/
+	height: 100%;            /*min-height hack*/
+}
+
+@font-face {
+  font-family: BeautySC;
+  src: url('../fonts/beautysc.woff');
+}
+
+.navbar-fixed-top{background:#BBB;}
+#logo{margin-top:5px;color:black; font-family:BeautySC; font-size: 60px;}
