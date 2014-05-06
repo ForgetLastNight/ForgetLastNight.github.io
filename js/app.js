@@ -1,16 +1,22 @@
 $(document).ready(function(){
-	Parse.initialize('JzA8q6sistqJipqlSGVoQjgzUIkM5DTT4TiAmun9', 'ME6ADe5O6EAxaznIONYLpECysNoE9TzRWi3F8BtK');
-      
+	
+	$('#forget').click(function(){
 
+		message = prompt("Enter tweet here");
 
+		Parse.Cloud.run('ShareToTwitter',{tweet: message}, {
+		  success: function(result) {
+		    alert("Success!");
+		  },
+		  error: function(error) {
+		  }
+		});
 
-	Parse.Cloud.run('ShareToTwitter', {}, {
-	  success: function(result) {
-	    alert("Success!");
-	  },
-	  error: function(error) {
-	  }
 	});
+
+
+	
+
 
 
 });
