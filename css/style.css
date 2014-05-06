@@ -3,7 +3,7 @@ html,body{
 }
 
 body{
-	padding-top:90px;
+	padding-top:80px;
 }
 
 #main{
@@ -21,4 +21,4 @@ body{
 }
 
 .navbar-fixed-top{background:#BBB;}
-#logo{margin-top:5px;color:black; font-family:BeautySC; font-size: 60px;}
+#logo{margin-top:5px;color:black; font-family:BeautySC;font-size:4em;}
