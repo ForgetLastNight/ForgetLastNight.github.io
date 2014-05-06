@@ -1,0 +1,21 @@
+#forget-box{
+text-align: center;
+position:relative;
+top:100px;
+
+
+
+
+}
+
+#forget{
+	font-size: 30px;
+	font-weight: bold;
+	height:200px;
+	width: 200px;
+	border-radius: 50%;
+	outline:none;
+}
+
+#forget span{position: relative;
+top:65px;}

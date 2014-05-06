@@ -1,10 +1,9 @@
 html,body{
 	height:100%;
-	font-family: BeautySC;
 }
 
 body{
-	padding-top:50px;
+	padding-top:80px;
 }
 
 #main{
@@ -18,8 +17,9 @@ body{
 
 @font-face {
   font-family: BeautySC;
-  src: url('../fonts/beautysc.woff');
+  src: url('../fonts/BEAUTYSC.woff');
 }
 
 .navbar-fixed-top{background:#BBB;}
-#logo{margin-top:5px;color:black; font-family:BeautySC; font-size: 60px;}
+#logo{margin-top:5px;color:black; font-family:BeautySC;font-size:4em;}
+
