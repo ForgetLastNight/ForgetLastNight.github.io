@@ -12,6 +12,13 @@ $(document).ready(function(){
 	  }
 	});	
 
+	// Parse.Cloud.run('ShareToTwitter', {}, {
+	//   success: function(result) {
+	//     alert("Success!");
+	//   },
+	//   error: function(error) {
+	//   }
+	// });
 
 
 });
