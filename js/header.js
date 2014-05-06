@@ -11,6 +11,7 @@ document.write(
     "<link href='css/bootstrap.min.css' rel='stylesheet'>"+
     "<link href='css/style.css' rel='stylesheet'>"+
 
+    "<script src='https://www.parsecdn.com/js/parse-1.2.18.min.js'></script>"+
     "<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js'></script>"+
     "<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.0/fastclick.min.js'></script>"+
   "</head>"+
