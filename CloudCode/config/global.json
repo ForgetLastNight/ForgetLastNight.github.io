@@ -1,0 +1,14 @@
+{
+    "applications": {
+        "Forget Last Night": {
+            "applicationId": "JzA8q6sistqJipqlSGVoQjgzUIkM5DTT4TiAmun9", 
+            "masterKey": "uqLmzw4b6nGj3027s6YySBony6XZSnXmcb3M29Pl"
+        }, 
+        "_default": {
+            "link": "Forget Last Night"
+        }
+    }, 
+    "global": {
+        "parseVersion": "1.2.18"
+    }
+}
