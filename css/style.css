@@ -1,9 +1,10 @@
 html,body{
 	height:100%;
+	background: black;
 }
 
 body{
-	padding-top:80px;
+	padding-top:90px;
 }
 
 #main{

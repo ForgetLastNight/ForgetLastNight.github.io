@@ -1,13 +1,4 @@
-#forget-box{
-text-align: center;
-position:relative;
-top:100px;
-
-
-
-
-}
-
+.col-xs-6{text-align: center;}
 #forget{
 	font-size: 30px;
 	font-weight: bold;
@@ -17,5 +8,21 @@ top:100px;
 	outline:none;
 }
 
-#forget span{position: relative;
-top:65px;}
+#forget span{
+	position: relative;
+	top:65px
+}
+
+#get{
+	font-size: 20px;
+	font-weight: bold;
+	height:200px;
+	width: 200px;
+	border-radius: 50%;
+	outline:none;
+}
+
+#get span{
+	position: relative;
+	top:75px;
+}
