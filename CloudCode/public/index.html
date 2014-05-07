@@ -2,8 +2,52 @@
 <html>
   <head>
     <title>My ParseApp site</title>
+    <script src='https://www.parsecdn.com/js/parse-1.2.18.min.js'></script>
+    <script type="text/javascript" src="../cloud/codebird.js"></script>
+
   </head>
   <body>
-    Hello World!
+ <script type="text/javascript">  
+
+
+
+//  	Parse.initialize("JzA8q6sistqJipqlSGVoQjgzUIkM5DTT4TiAmun9", "ME6ADe5O6EAxaznIONYLpECysNoE9TzRWi3F8BtK");
+
+//   Parse.Cloud.run('ShareToTwitter', {}, {
+//   success: function(result) {
+//    console.log(result);
+//   },
+//   error: function(error) {
+//   }
+// });
+var cb = new Codebird;
+cb.setConsumerKey("Ku3MsRCDG1GZI2Gdb3hggjTw5", "8HHQZhecyFPrPcmHbQ5AGh174WXx8eDo0irkdLqwaQxaYHLirk");
+cb.setToken("2477479568-TGmXC5Icfc3D4o0FcRAE123jzOLjjiotstxSci8", "CpD3tJSoylobhjST78E9OW6lEdPtPg6l5KioPS378aypv");
+
+cb.__call(
+    "statuses_homeTimeline",
+    {},
+    function (result) {
+        console.log(result);
+    }
+);
+// cb.__call(
+//     "statuses_update",
+//     {"status": "Whohoo, I just tweeted with a new key"},
+//     function (reply) {
+//         console.log(reply);
+//     }
+// );
+cb.__call(
+    "statuses_destroy_ID",
+   {id: "463791144875212801"},
+    function (result) {
+      alert("destroy");
+    }
+);
+
+
+//   </script>
+
   </body>
 </html>
