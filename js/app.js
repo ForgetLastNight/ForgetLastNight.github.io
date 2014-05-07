@@ -1,34 +1,64 @@
 $(document).ready(function(){
 
-
-		// message = prompt("Enter tweet here");
-
-		// Parse.Cloud.run('ShareToTwitter',{tweet: message}, {
-		//   success: function(result) {
-		//     console.log("Tweet posted to twitter!");
-		//   },
-		//   error: function(error) {
-		//   }
-		// });
-
-
-
+	var cb = new Codebird;
+	// cb.setConsumerKey("YOURKEY", "YOURSECRET");
+	cb.setConsumerKey("Ku3MsRCDG1GZI2Gdb3hggjTw5", "8HHQZhecyFPrPcmHbQ5AGh174WXx8eDo0irkdLqwaQxaYHLirk");
+	// cb.setToken("YOURTOKEN", "YOURTOKENSECRET");
+	cb.setToken("2477479568-TGmXC5Icfc3D4o0FcRAE123jzOLjjiotstxSci8", "CpD3tJSoylobhjST78E9OW6lEdPtPg6l5KioPS378aypv");
 
 	$('#get').click(function(){
+		var tweetIDs = [];
 
-		var s ="#mtv vine.co filter:links since:2011-11-11";
-		Parse.Cloud.run('GetFromTwitter',{searchQuery : s}, {
-		  success: function(result) {
-		  	console.log("Tweets retrieved from twitter!");
-		  },
-		  error: function(error) {
-		  }
-		});
+		// get home timeline of the user
+		cb.__call(
+			"statuses_homeTimeline",
+			{},
+			function (results) {
+				for(i=0;i<results.length;i++) tweetIDs.push(results[i]['id_str']);
+
+				// embed the tweets 
+				// https://api.twitter.com/1/statuses/oembed.format
+				for(i=0;i<tweetIDs.length;i++)
+				{
+					var params = {
+
+						id : tweetIDs[i]
+
+					};
+
+					cb.__call(
+						"statuses_oembed",
+						params,
+						function (reply) {
+							console.log(reply);
+
+							display = reply['html'];
+							display = display.replace("//platform.twitter.com/widgets.js","https://platform.twitter.com/widgets.js");
+							$('#display-tweets').append(display);
+						}
+					);
+				}
+			}
+
+		);
 
 	});
 
-	
 
+	// cb.__call(
+	//     "statuses_destroy_ID",
+	//    {id: "463741784297046016"},
+	//     function (result) {
+	//       alert("destroy");
+	//     }
+	// );
 
+	// cb.__call(
+	//     "statuses_update",
+	//     {"status": "Whohoo, I just tweeted with a new key"},
+	//     function (reply) {
+	//         console.log(reply);
+	//     }
+	// );
 
 });
