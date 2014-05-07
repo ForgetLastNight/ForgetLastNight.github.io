@@ -10,17 +10,25 @@ $(document).ready(function(){
 		var tweetIDs = [];
 
 		// get home timeline of the user
+		var params = {
+
+			count : '5'
+
+		};
+		console.log("Getting tweets...");
 		cb.__call(
 			"statuses_homeTimeline",
-			{},
+			params,
 			function (results) {
+				console.log(results[0]);
 				for(i=0;i<results.length;i++) tweetIDs.push(results[i]['id_str']);
 
 				// embed the tweets 
 				// https://api.twitter.com/1/statuses/oembed.format
+				console.log("Tweets received. Requesting embed service...");
 				for(i=0;i<tweetIDs.length;i++)
 				{
-					var params = {
+					params = {
 
 						id : tweetIDs[i]
 
@@ -30,8 +38,6 @@ $(document).ready(function(){
 						"statuses_oembed",
 						params,
 						function (reply) {
-							console.log(reply);
-
 							display = reply['html'];
 							display = display.replace("//platform.twitter.com/widgets.js","https://platform.twitter.com/widgets.js");
 							$('#display-tweets').append(display);
