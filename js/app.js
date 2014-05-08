@@ -1,5 +1,21 @@
 $(document).ready(function(){
 
+   window.fbAsyncInit = function() {
+     FB.init({
+       appId      : '748101388568634',
+       xfbml      : true,
+       version    : 'v2.0'
+     });
+   };
+
+   (function(d, s, id){
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) {return;}
+      js = d.createElement(s); js.id = id;
+      js.src = "https://connect.facebook.net/en_US/sdk.js";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+
 	var cb = new Codebird;
 	// cb.setConsumerKey("YOURKEY", "YOURSECRET");
 	cb.setConsumerKey("Ku3MsRCDG1GZI2Gdb3hggjTw5", "8HHQZhecyFPrPcmHbQ5AGh174WXx8eDo0irkdLqwaQxaYHLirk");
