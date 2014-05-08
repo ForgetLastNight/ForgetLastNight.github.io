@@ -1,28 +1,28 @@
 .col-xs-6{text-align: center;}
 #forget{
-	font-size: 30px;
+	font-size: 20px;
 	font-weight: bold;
-	height:200px;
-	width: 200px;
+	width:100px;
+	height:100px;
 	border-radius: 50%;
 	outline:none;
 }
 
 #forget span{
 	position: relative;
-	top:65px
+	top:25px
 }
 
 #get{
 	font-size: 20px;
 	font-weight: bold;
-	height:200px;
-	width: 200px;
+	height:100px;
+	width: 100px;
 	border-radius: 50%;
 	outline:none;
 }
 
 #get span{
 	position: relative;
-	top:75px;
+	top:25px;
 }

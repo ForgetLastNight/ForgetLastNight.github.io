@@ -9,44 +9,70 @@ $(document).ready(function(){
 	$('#get').click(function(){
 		var tweetIDs = [];
 
-		// get home timeline of the user
-		var params = {
+		Parse.Cloud.run('Timeline', {}, {
+			success: function(results) {
+				results = JSON.parse(results);
 
-			count : '5'
+		 		for(i=0;i<results.length;i++) tweetIDs.push(results[i]['id_str']);
 
-		};
-		console.log("Getting tweets...");
-		cb.__call(
-			"statuses_homeTimeline",
-			params,
-			function (results) {
-				console.log(results[0]);
-				for(i=0;i<results.length;i++) tweetIDs.push(results[i]['id_str']);
+		 		Parse.Cloud.run('DeleteTweet', {id : '463523143723016192'}, {
+		 			success: function(results){
 
-				// embed the tweets 
-				// https://api.twitter.com/1/statuses/oembed.format
-				console.log("Tweets received. Requesting embed service...");
-				for(i=0;i<tweetIDs.length;i++)
-				{
-					params = {
+		 				console.log("Successfully deleted!");
+		 			},
+		 			error: function(error){
 
-						id : tweetIDs[i]
+		 			}
+		 		});	
 
-					};
-
-					cb.__call(
-						"statuses_oembed",
-						params,
-						function (reply) {
-							display = reply['html'];
-							display = display.replace("//platform.twitter.com/widgets.js","https://platform.twitter.com/widgets.js");
-							$('#display-tweets').append(display);
-						}
-					);
-				}
+			},
+			error: function(error) {
 			}
+		});
 
-		);
+
+		//-----CODEBIRD---------------------------
+		// var tweetIDs = [];
+
+		// // get home timeline of the user
+		// var params = {
+
+		// 	count : '5'
+
+		// };
+		// console.log("Getting tweets...");
+		// cb.__call(
+		// 	"statuses_homeTimeline",
+		// 	params,
+		// 	function (results) {
+		// 		console.log(results[0]);
+		// 		for(i=0;i<results.length;i++) tweetIDs.push(results[i]['id_str']);
+
+		// 		// embed the tweets 
+		// 		// https://api.twitter.com/1/statuses/oembed.format
+		// 		console.log("Tweets received. Requesting embed service...");
+		// 		for(i=0;i<tweetIDs.length;i++)
+		// 		{
+		// 			params = {
+
+		// 				id : tweetIDs[i]
+
+		// 			};
+
+		// 			cb.__call(
+		// 				"statuses_oembed",
+		// 				params,
+		// 				function (reply) {
+		// 					display = reply['html'];
+		// 					display = display.replace("//platform.twitter.com/widgets.js","https://platform.twitter.com/widgets.js");
+		// 					$('#display-tweets').append(display);
+		// 				}
+		// 			);
+		// 		}
+		// 	}
+
+		// );
+		//------------END CODEBIRD-----------------------------------
 
 	});
 
