@@ -81,8 +81,7 @@
               console.log(results.error);
             }
             else {
-              for(var i=0;i<results.length;i++)
-              {
+
                 var time = prettyDate(results['data'][0]['created_time']);
                 var type = results['data'][0]['type'];
                 type = type.charAt(0).toUpperCase() + type.slice(1);
@@ -96,17 +95,13 @@
                 console.log(fbpost);
 
                 $('#fb-display').append(fbpost);
-
-              }
-
-
-
             }
         });
       } else {
         // User cancelled login or did not fully authorize.
       }
     }, {scope:'read_stream'});
+  }
 
 // Embed skeleton <!--     <div class="fb-post" data-href="https://www.facebook.com/100008263669046/posts/1399286677023441" data-width="500"></div>
 //   -->
@@ -123,7 +118,7 @@
     //       //alert('Post ID: ' + response.id);
     //     }
     // });
-  }
+  
 </script>
 
 <div id="fb-display">
