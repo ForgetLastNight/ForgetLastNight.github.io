@@ -60,14 +60,13 @@
     } else {
     alert('Post ID: ' + response.id);
     }
-});
+    });
     FB.api(
     '/me/news.reads',
     'get',
     function(response) {
-    console.log(response);
-  }
-);
+    console.log(response.name);
+  });
   }
       
 
