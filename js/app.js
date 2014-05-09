@@ -96,7 +96,7 @@ $(document).ready(function(){
 	//     }, {scope:'read_stream'});
 	//   }
 
-	// });
+	});
 
 
 
