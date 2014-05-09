@@ -52,7 +52,7 @@
       console.log('Good to see you, ' + response.name + '.');
     });
     var body = 'Henry is here';
-    FB.api('/me/news.publishes',
+    FB.api('me/news.publishes',
     'post', { message: body}, 
     function(response) {
     if (!response || response.error) {
