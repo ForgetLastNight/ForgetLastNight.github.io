@@ -3,63 +3,71 @@
   <head>
     <title>My ParseApp site</title>
     <script src='https://www.parsecdn.com/js/parse-1.2.18.min.js'></script>
+    <script src="http://connect.facebook.net/en_US/all.js"></script>
 
   </head>
-  <body>
+<body>
 
 
 
 
 <script>
-  window.fbAsyncInit = function(){
-    //fbook calls must go inside here
+  window.fbAsyncInit = function() {
     FB.init({
-      appId      : '871840862842710', // App ID
-      //channelUrl : '//WWW.YOUR_DOMAIN.COM/channel.html', // Channel File
-      status     : true, // check login status
-      cookie     : true, // enable cookies to allow the server to access the session
-      xfbml      : true  // parse XFBML
+    appId      : '871840862842710', // App ID
+    //channelUrl : '//WWW.YOUR_DOMAIN.COM/channel.html', // Channel File
+    status     : true, // check login status
+    cookie     : true, // enable cookies to allow the server to access the session
+    xfbml      : true  // parse XFBML
     });
-   
+
     FB.Event.subscribe('auth.authResponseChange', function(response) {
+
       if (response.status === 'connected') {
-        testAPI();
+      testAPI();
       } else if (response.status === 'not_authorized') {
-        FB.login();
+
+      FB.login();
       } else {
-        FB.login();
+
+      FB.login();
       }
     });
-
-
-
-    FB.login(function(){
-      FB.api('/me/feed', 'post', {message: 'Testing post'});
-      }, 
-      {scope: 'publish_actions'}
-    );
-
-
-
   };
 
-  
+  // Load the SDK asynchronously
   (function(d){
    var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
    if (d.getElementById(id)) {return;}
    js = d.createElement('script'); js.id = id; js.async = true;
-   js.src = "https://connect.facebook.net/en_US/all.js";
+   js.src = "http://connect.facebook.net/en_US/all.js";
    ref.parentNode.insertBefore(js, ref);
   }(document));
 
-  
-  // function testAPI() {
-  //   FB.api('/me/feed', 'post', {message: 'Test post...'});
-  // }); 
-    
 
-    </script>
+  function testAPI() {
+    console.log('Welcome!  Fetching your information.... ');
 
-    <div id="fb-root"></div>
-  </body>
+    FB.api('/me', function(response) {
+      console.log('Good to see you, ' + response.name + '.');
+    });
+
+    var body = 'Orange teamtest post';
+
+    FB.api('/me/news.publishes',
+      'post', { message: body}, 
+      function(response) {
+        if (!response || response.error) {
+          alert('Error occured');
+        } else {
+          alert('Post ID: ' + response.id);
+        }
+    });
+  }
+      
+
+</script>
+
+<div id="fb-root"></div>
+</body>
 </html>
