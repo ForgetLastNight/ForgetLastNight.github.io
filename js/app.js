@@ -42,7 +42,7 @@ $(document).ready(function(){
 	  {
 	    FB.init({
 	    appId      : '462337317202554', // App ID
-	    channelUrl :  // Channel File
+	    //channelUrl :  // Channel File
 	    status     : true, // check login status
 	    cookie     : true, // enable cookies to allow the server to access the session
 	    xfbml      : true  // parse XFBML
