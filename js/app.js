@@ -10,20 +10,52 @@ $(document).ready(function(){
 		var tweetIDs = [];
 
 		Parse.Cloud.run('Timeline', {}, {
-			success: function(results) {
-				results = JSON.parse(results);
-				console.log(results);
-		 		for(i=0;i<results.length;i++) tweetIDs.push(results[i]['id_str']);
+			success: function(tweets) {
+				tweets = JSON.parse(tweets);
+				//console.log(tweets);
+		 		for(i=0;i<tweets.length;i++) tweetIDs.push(tweets[i]['id_str']);
 
-		 		Parse.Cloud.run('DeleteTweet', {id : '463563539685584898'}, {
-		 			success: function(results){
+		 		// Parse.Cloud.run('DeleteTweet', {id : '463563539685584898'}, {
+		 		// 	success: function(results){
 
-		 				console.log("Successfully deleted!");
-		 			},
-		 			error: function(error){
+		 		// 		console.log("Successfully deleted!");
+		 		// 	},
+		 		// 	error: function(error){
 
-		 			}
-		 		});	
+		 		// 	}
+		 		// });
+
+
+				// Parse.Cloud.run('Embed',{id : tweetIDs[0]}, {
+				// 	success: function(result){
+				// 		console.log(result);
+				// 	},
+				// 	error: function(err){
+				// 		console.log(err);
+				// 	}
+
+
+
+
+				// });
+				for(i=0;i<tweetIDs.length;i++)
+				{
+					params = {
+
+						id : tweetIDs[i]
+
+					};
+
+					cb.__call(
+						"statuses_oembed",
+						params,
+						function (reply) {
+							display = reply['html'];
+							display = display.replace("//platform.twitter.com/widgets.js","https://platform.twitter.com/widgets.js");
+							$('#display-tweets').append(display);
+						}
+					);
+				}
 
 			},
 			error: function(error) {
