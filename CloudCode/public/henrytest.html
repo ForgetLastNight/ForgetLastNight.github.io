@@ -59,17 +59,24 @@
     // });
 
     FB.getAuthResponse(function(response) {
-         var accessToken = response.authResponse.accessToken;
+      console.log(response);
+      var accessToken = response.authResponse.accessToken;
+
+      FB.api('/me/feed?access_token='+accessToken,
+        function(response2) {
+          if (!response2 || response2.error) {
+            console.log(response2.error);
+          } else {
+            console.log(response2);
+            //alert('Post ID: ' + response.id);
+          }
+      });
+
+
+
+
      });
-    FB.api('/me/feed?access_token='+accessToken,
-      function(response) {
-        if (!response || response.error) {
-          console.log(response.error);
-        } else {
-          console.log(response);
-          //alert('Post ID: ' + response.id);
-        }
-    });
+
 
 
     //this works.
