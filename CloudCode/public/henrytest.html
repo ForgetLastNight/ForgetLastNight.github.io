@@ -67,6 +67,23 @@
   }
 </script>
 
+<!--         method: 'stream.publish',
+        message: 'I just entered the Your Perfect Kent Day Competition.',
+        picture : 'http://apps.facebook.com/perfect-kent-day/',
+        link : 'http://apps.facebook.com/perfect-kent-day/',
+        name: 'Enter to win or vote for your faourite story here!',
+        caption: $title,
+        description: $story,
+        actions : { name : 'Apply for Kent Teach Jobs...', link : 'http://www.kent-       teach.com/'}
+    };
+
+    FB.api('/me/feed', 'POST', publish, function(response) {
+    //alert('A post had just been published into the stream on your wall.');
+        $('#before-submit').hide();
+        $('#after-submit').show();
+        $('#loading').fadeOut();
+    }); -->
+
 <button onclick="testAPI()">Test</button>
 
 </body>
