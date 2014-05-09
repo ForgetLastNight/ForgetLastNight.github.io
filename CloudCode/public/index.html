@@ -32,10 +32,10 @@
       }, {scope: 'publish_actions'});
 
   FB.api(
-  'me/news.reads',
+  'me/feed',
   'get',
     function(response) {
-    console.log(response.message);
+    console.log(response);
                        }
         );
 };
