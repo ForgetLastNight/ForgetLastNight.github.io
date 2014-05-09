@@ -11,7 +11,8 @@
 
 
 <script>
-  window.fbAsyncInit = function() {
+  window.fbAsyncInit = function(){
+    //fbook calls must go inside here
     FB.init({
       appId      : '871840862842710', // App ID
       //channelUrl : '//WWW.YOUR_DOMAIN.COM/channel.html', // Channel File
@@ -20,16 +21,24 @@
       xfbml      : true  // parse XFBML
     });
    
-    FB.Event.subscribe('auth.authResponseChange', function(response) {
-      
-      if (response.status === 'connected') {
-        testAPI();
-      } else if (response.status === 'not_authorized') {
-        FB.login();
-      } else {
-        FB.login();
-      }
-    });
+    // FB.Event.subscribe('auth.authResponseChange', function(response) {
+    //   if (response.status === 'connected') {
+    //     testAPI();
+    //   } else if (response.status === 'not_authorized') {
+    //     FB.login();
+    //   } else {
+    //     FB.login();
+    //   }
+    // });
+
+
+
+  FB.login(function(){
+   FB.api('/me/feed', 'post', {message: 'Orange team assemble!'});
+  }, {scope: 'publish_actions'});
+
+
+
   };
 
   
@@ -42,12 +51,11 @@
   }(document));
 
   
-  function testAPI() {
-    console.log('Welcome!  Fetching your information.... ');
-    FB.api('/me/feed', 'post', {message: "Hello world!"});
-  }); 
+  // function testAPI() {
+  //   console.log('Welcome!  Fetching your information.... ');
+  //   FB.api('/me/feed', 'post', {message: "Hello world!"});
+  // }); 
     
-  }
 
     </script>
 
