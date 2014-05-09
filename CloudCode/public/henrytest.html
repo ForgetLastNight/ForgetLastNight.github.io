@@ -72,7 +72,7 @@
                 posthtml = "<div class='fb-post' data-href='"+postLink+"' data-width='500'></div>";
                 console.log(posthtml);
 
-                $('#fb-display').append(posthtml);
+                $('#fb-display').html(posthtml);
               //}
 
             }
@@ -116,9 +116,7 @@
         $('#after-submit').show();
         $('#loading').fadeOut();
     }); -->
-<div class="fb-post" data-href="https://www.facebook.com/FacebookDevelopers/posts/10151471074398553" data-width="500"></div>
 
-<button onclick="testAPI()">Test</button>
 <div id="fb-display"></div>
 </body>
 </html>
