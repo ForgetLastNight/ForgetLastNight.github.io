@@ -11,7 +11,7 @@
 
 
 <script>
-    window.fbAsyncInit = function() {
+  window.fbAsyncInit = function(){
     FB.init({
       appId      : '871840862842710', // App ID
       //channelUrl : '//WWW.YOUR_DOMAIN.COM/channel.html', // Channel File
@@ -19,21 +19,8 @@
       cookie     : true, // enable cookies to allow the server to access the session
       xfbml      : true  // parse XFBML
     });
-<<<<<<< HEAD
-    var wallPost = {
-    access_token: "871840862842710",
-    message: 'Hello, World!'
-    };
-   FB.api('/me/feed', 'post', wallPost, function(response) {   if (!response || response.error) {     alert('Error occured');   } else {     alert('Post ID: ' + response.id);   } 
-    }); 
-    
-=======
 
->>>>>>> f30060ce70d0e99a6bb863fd52e63fe795184418
-  }
-
-   
-    FB.Event.subscribe('auth.authResponseChange', function(response) {
+    FB.Event.subscribe('auth.authResponseChange', function(response){
       
       if (response.status === 'connected') {
         testAPI();
@@ -43,7 +30,10 @@
         FB.login();
       }
     });
-    };
+  }
+
+   
+
 
     
     (function(d){
@@ -60,9 +50,6 @@
       FB.api('/me', function(response) {
         console.log('Good to see you, ' + response.name + '.');
       });
-         FB.api('/me/feed', 'post', { message: 'Hello world!' }, function(response) {   if (!response || response.error) {     alert('Error occured');   } else {     alert('Post ID: ' + response.id);   } }); 
-     
-      
     }
      
       
