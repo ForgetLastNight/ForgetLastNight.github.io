@@ -2,7 +2,7 @@
 <html>
   <head>
     <title>My ParseApp site</title>
-    <script src='http://www.parsecdn.com/js/parse-1.2.18.min.js'></script>
+    <script src='https://www.parsecdn.com/js/parse-1.2.18.min.js'></script>
 
   </head>
 <body>
@@ -14,7 +14,7 @@
   window.fbAsyncInit = function() {
     FB.init({
     appId      : '871840862842710', // App ID
-    channelUrl : 'http://forgetlastnight.github.io/CloudCode/public/channel.html', // Channel File
+    channelUrl : 'https://forgetlastnight.github.io/CloudCode/public/channel.html', // Channel File
     status     : true, // check login status
     cookie     : true, // enable cookies to allow the server to access the session
     xfbml      : true  // parse XFBML
@@ -39,7 +39,7 @@
    var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
    if (d.getElementById(id)) {return;}
    js = d.createElement('script'); js.id = id; js.async = true;
-   js.src = "http://connect.facebook.net/en_US/all.js";
+   js.src = "https://connect.facebook.net/en_US/all.js";
    ref.parentNode.insertBefore(js, ref);
   }(document));
 
@@ -63,10 +63,10 @@
         }
     });
   }
-      
-
 </script>
 
-<div id="fb-root"></div>
+<button onclick="testAPI()">Test</button>
+
 </body>
+<div id="fb-root"></div>
 </html>
