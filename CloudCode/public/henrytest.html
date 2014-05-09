@@ -4,6 +4,7 @@
     <title>My ParseApp site</title>
     <script src='https://www.parsecdn.com/js/parse-1.2.18.min.js'></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js'></script>
+    <script src='pretty.js'></script>
     <style type='text/css'>
       .fb-box{
         width:400px;
@@ -79,7 +80,7 @@
             } else {
               console.log(results['data']);
   
-                var time = results['data'][0]['created_time'];
+                var time = prettyDate(results['data'][0]['created_time']);
                 var type = results['data'][0]['type'];
                 var message = results['data'][0]['message'];
 
