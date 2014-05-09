@@ -68,12 +68,12 @@
               console.log(results);
               //alert('Post ID: ' + response.id);
               // for(i=0;i<results.length;i++){
-                postLink = results['data'][0]['actions'][0]['link'];
-                posthtml = "<div class='fb-post' data-href='"+postLink+"' data-width='500'></div>";
+                var postLink = results['data'][0]['actions'][0]['link'];
+                var posthtml = "<div class='fb-post' data-href='"+postLink+"' data-width='500'></div>";
                 console.log(posthtml);
 
                 //$('#fb-display').html(posthtml);
-                $('#fb-display').html("hello world");
+                $('#fb-display').html(posthtml);
               //}
 
             }
