@@ -30,7 +30,15 @@
   FB.login(function(){
   FB.api('/me/feed', 'post', {message: 'Brian is here for the third time'});
       }, {scope: 'publish_actions'});
-      };
+
+  FB.api(
+  'me/news.reads',
+  'get',
+    function(response) {
+    console.log(response.message);
+                       }
+        );
+};
 
       (function(d, s, id){
          var js, fjs = d.getElementsByTagName(s)[0];
