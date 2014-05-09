@@ -51,7 +51,7 @@
     FB.api('/me', function(response) {
       console.log('Good to see you, ' + response.name + '.');
     });
-    var body = 'Henry is here';
+    var body = 'garfield is here';
     FB.api('/me/news.publishes',
     'post', { message: body}, 
     function(response) {
@@ -61,12 +61,7 @@
     alert('Post ID: ' + response.id);
     }
     });
-    FB.api(
-    '/me/news.reads',
-    'get',
-    function(response) {
-    console.log(response);
-  });
+ 
   }
       
 
