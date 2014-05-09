@@ -11,7 +11,8 @@
 
 
 <script>
-  window.fbAsyncInit = function() {
+  window.fbAsyncInit = function()
+  {
     FB.init({
     appId      : '871840862842710', // App ID
     channelUrl : 'https://forgetlastnight.github.io/CloudCode/public/channel.html', // Channel File
@@ -20,18 +21,23 @@
     xfbml      : true  // parse XFBML
     });
 
-    FB.Event.subscribe('auth.authResponseChange', function(response) {
+    FB.Event.subscribe('auth.authResponseChange', function(response) 
+    {
 
-      if (response.status === 'connected') {
-      //testAPI();
-      } else if (response.status === 'not_authorized') {
-
-      FB.login();
-      } else {
-
-      FB.login();
+      if (response.status === 'connected')
+      {
+        testAPI();
+      }
+      else if(response.status === 'not_authorized')
+      {
+        FB.login();
+      } 
+      else
+      {
+        FB.login();
       }
     });
+
   };
 
   // Load the SDK asynchronously
@@ -54,17 +60,17 @@
     });
 
     var publish = {
-      message: "Henry test post",
+      message: 'Henry test post',
       method: 'stream.publish'
     };
 
-    FB.api('/me/feed',
-      'POST', publish, 
+    FB.api('/me/feed','get', {}, 
       function(response) {
         if (!response || response.error) {
           alert(response.error);
         } else {
-          alert('Post ID: ' + response.id);
+          console.log(response);
+          //alert('Post ID: ' + response.id);
         }
     });
   }
