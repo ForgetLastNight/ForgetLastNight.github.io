@@ -3,7 +3,7 @@
   <head>
     <title>My ParseApp site</title>
     <script src='https://www.parsecdn.com/js/parse-1.2.18.min.js'></script>
-    <script src="http://connect.facebook.net/en_US/all.js"></script>
+    <!-- <script src="https://connect.facebook.net/en_US/all.js"></script> -->
 
   </head>
 <body>
@@ -40,7 +40,7 @@
    var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
    if (d.getElementById(id)) {return;}
    js = d.createElement('script'); js.id = id; js.async = true;
-   js.src = "http://connect.facebook.net/en_US/all.js";
+   js.src = "https://connect.facebook.net/en_US/all.js";
    ref.parentNode.insertBefore(js, ref);
   }(document));
 
@@ -58,7 +58,7 @@
       'post', { message: body}, 
       function(response) {
         if (!response || response.error) {
-          alert('Error occured');
+          alert('Error occured: '+response.error);
         } else {
           alert('Post ID: ' + response.id);
         }
