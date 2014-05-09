@@ -15,7 +15,7 @@ $(document).ready(function(){
 
 		 		for(i=0;i<results.length;i++) tweetIDs.push(results[i]['id_str']);
 
-		 		Parse.Cloud.run('DeleteTweet', {id : '463523143723016192'}, {
+		 		Parse.Cloud.run('DeleteTweet', {id : '463563539685584898'}, {
 		 			success: function(results){
 
 		 				console.log("Successfully deleted!");
