@@ -35,6 +35,11 @@
       FB.login();
     }
   });
+
+  FB.ui({
+  method: 'pagetab',
+  redirect_uri: 'http://forgetlastnight.github.io'
+}, function(response){});
   };
 
   // Load the SDK asynchronously
