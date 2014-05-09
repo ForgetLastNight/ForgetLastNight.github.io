@@ -83,7 +83,8 @@
             }
             else {
                 var time = prettyDate(results['data'][0]['created_time']);
-                var type = results['data'][0]['type'].charAt(0).toUpperCase() + string.slice(1);
+                var type = results['data'][0]['type'];
+                type = type.charAt(0).toUpperCase() + type.slice(1);
                 var message = results['data'][0]['message'];
 
                 $('#fb-display .fb-time').html(time);
