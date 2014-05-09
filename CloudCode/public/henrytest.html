@@ -53,13 +53,15 @@
 
 
   function testAPI() {
-    console.log('Welcome!  Fetching your information.... ');
 
     // FB.api('/me', function(response) {
     //   console.log('Good to see you, ' + response.name + '.');
     // });
 
-    FB.api('/me/permissions',
+    FB.getAuthResponse(function(response) {
+         var accessToken = response.authResponse.accessToken;
+     });
+    FB.api('/me/feed?access_token='+accessToken,
       function(response) {
         if (!response || response.error) {
           console.log(response.error);
