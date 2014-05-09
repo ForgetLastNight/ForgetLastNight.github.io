@@ -18,6 +18,22 @@
           xfbml      : true,
           version    : 'v2.0'
         });
+
+        FB.ui(
+      {
+       method: 'feed',
+       description: (
+          'Brian is here'
+       ),
+     
+      },function(response) {
+        if (response && response.post_id) {
+          alert('Post was published.');
+        } else {
+          alert('Post was not published.');
+            }
+          }
+        );
       };
 
       (function(d, s, id){
