@@ -52,18 +52,6 @@
     FB.api('/me', function(response) {
       console.log('Good to see you, ' + response.name + '.');
     });
-    var body = "Brian is here again";
-FB.api(
-  '/me/news.publishes',
-  'post',
-  {
-    "message": body
-  },
-  function(response) {
-    // handle the response
-  }
-);
- 
   }
       
 
