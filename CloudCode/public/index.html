@@ -17,33 +17,47 @@
           appId      : '462337317202554',
           xfbml      : true,
           version    : 'v2.0'
+
+          testAPI();
         });
 
-  FB.getLoginStatus(function(response) {
-  if (response.status === 'connected') {
-    console.log('Logged in.');
-                                       }
-    else {
-        FB.login();
-          }
-        });
-  FB.login(function(){
-  FB.api('/me/feed', 'post', {message: 'Brian is here for the third time'});
+// Load the SDK asynchronously
+  (function(d){
+    var js, id = 'facebook-jssdk', 
+    ref = d.getElementsByTagName('script')[0];
+    if (d.getElementById(id)) {return;}
+    js = d.createElement('script'); 
+    js.id = id; js.async = true;
+    js.src = "https://connect.facebook.net/en_US/all.js";
+    ref.parentNode.insertBefore(js, ref);
+  }(document));
 
-  FB.api(
-  'me/feed',
-  'get',
-    function(response) {
-    console.log(response);
-    console.log(response['data'][0]['created_time']);
-    console.log(response['data'][0]['message']);
-                       }
-        );
 
-      }, {scope: 'publish_actions'});
+  function testAPI() {
 
+
+    FB.login(function(response) {
+      if (response.authResponse) {
+        // user is logged in and granted some permissions.
+        FB.login(function(){
+          FB.api('/me/feed', 'post', {message: 'Brian is here for the third time'});
+
+          FB.api(
+            'me/feed',
+            'get',
+            function(response) {
+              console.log(response);
+              console.log(response['data'][0]['created_time']);
+              console.log(response['data'][0]['message']);
+            }
+            );
+
+        }, {scope: 'publish_actions'});
+
+      }
+    });
+  }  
   
-};
 
       (function(d, s, id){
          var js, fjs = d.getElementsByTagName(s)[0];
