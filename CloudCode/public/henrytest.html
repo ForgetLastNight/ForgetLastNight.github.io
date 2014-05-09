@@ -64,7 +64,7 @@
       method: 'stream.publish'
     };
 
-    FB.api('/me/feed','post', publish, 
+    FB.api('/me/feed','POST', {message: "Hello from henry"}, 
       function(response) {
         if (!response || response.error) {
           console.log(response.error);
