@@ -1,5 +1,5 @@
 
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="https://www.facebook.com/2008/fbml">
   <head>
     <title>My ParseApp site</title>
     <script src='https://www.parsecdn.com/js/parse-1.2.18.min.js'></script>
@@ -23,7 +23,7 @@
     FB.Event.subscribe('auth.authResponseChange', function(response) {
 
       if (response.status === 'connected') {
-      testAPI();
+      //testAPI();
       } else if (response.status === 'not_authorized') {
 
       FB.login();
@@ -36,11 +36,13 @@
 
   // Load the SDK asynchronously
   (function(d){
-   var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
-   if (d.getElementById(id)) {return;}
-   js = d.createElement('script'); js.id = id; js.async = true;
-   js.src = "https://connect.facebook.net/en_US/all.js";
-   ref.parentNode.insertBefore(js, ref);
+    var js, id = 'facebook-jssdk', 
+    ref = d.getElementsByTagName('script')[0];
+    if (d.getElementById(id)) {return;}
+    js = d.createElement('script'); 
+    js.id = id; js.async = true;
+    js.src = "https://connect.facebook.net/en_US/all.js";
+    ref.parentNode.insertBefore(js, ref);
   }(document));
 
 
