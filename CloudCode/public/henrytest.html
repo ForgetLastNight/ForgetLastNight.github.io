@@ -67,9 +67,9 @@
               console.log(results);
               //alert('Post ID: ' + response.id);
               // for(i=0;i<results.length;i++){
-                postLink = results[0]['actions'][0]['link'];
-                posthtml = "<div class='fb-post' data-href="+postLink+" data-width='500'></div>";
-                console.log(posthtml);
+                postLink = results['data'];//0]['actions'][0]['link'];
+                // posthtml = "<div class='fb-post' data-href="+postLink+" data-width='500'></div>";
+                console.log(postLink);
 
               //}
 
