@@ -55,11 +55,11 @@
   function testAPI() {
     console.log('Welcome!  Fetching your information.... ');
 
-    FB.api('/me', function(response) {
-      console.log('Good to see you, ' + response.name + '.');
-    });
+    // FB.api('/me', function(response) {
+    //   console.log('Good to see you, ' + response.name + '.');
+    // });
 
-    FB.api('/me/home',
+    FB.api('/me',
       function(response) {
         if (!response || response.error) {
           console.log(response.error);
