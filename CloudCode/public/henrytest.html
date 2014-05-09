@@ -81,15 +81,31 @@
               console.log(results.error);
             }
             else {
-              console.log(results['data'][0]);
+              for(i=0;i<results.length;i++)
+              {
                 var time = prettyDate(results['data'][0]['created_time']);
                 var type = results['data'][0]['type'];
                 type = type.charAt(0).toUpperCase() + type.slice(1);
                 var message = results['data'][0]['message'];
 
-                $('#fb-display .fb-time').html(time);
-                $('#fb-display .fb-type').html(type);
-                $('#fb-display .fb-body').html(message);
+                // $('#fb-display .fb-time').html(time);
+                // $('#fb-display .fb-type').html(type);
+                // $('#fb-display .fb-body').html(message);
+                var fbpost = "<div class='panel panel-primary fb-box'>
+                    <div class='panel-heading'>
+                      <img class = 'fb-logo' src='facebook-icon.png'/>
+                      <span class='fb-time'>"+time+"</span> (<span class='fb-type'>"+type+"</span>)
+                    </div>
+                    <div class='panel-body'>
+                      <span class='fb-body'>"+message+"</span>
+                    </div>
+                  </div>";
+                  
+                $('#fb-display').append(fbpost);
+
+                }
+
+
 
             }
         });
@@ -118,7 +134,7 @@
 
 <div id="fb-display">
 
-  <div class="panel panel-primary fb-box">
+<!--   <div class="panel panel-primary fb-box">
     <div class="panel-heading">
       <img class = 'fb-logo' src='facebook-icon.png'/>
       <span class='fb-time'></span> (<span class='fb-type'></span>)
@@ -126,7 +142,7 @@
     <div class="panel-body">
       <span class='fb-body'></span>
     </div>
-  </div>
+  </div> -->
 
 </div>
 
