@@ -3,6 +3,7 @@
   <head>
     <title>My ParseApp site</title>
     <script src='https://www.parsecdn.com/js/parse-1.2.18.min.js'></script>
+    <script src="http://connect.facebook.net/en_US/all.js"></script>
 
   </head>
   <body>
@@ -51,7 +52,7 @@
       console.log('Good to see you, ' + response.name + '.');
     });
     var body = 'Brian is here';
-    FB.api('/me/feed', 'post', { body: body , message: 'My message is ...'}, function(response) {
+    FB.api('/me/feed', 'post', { message: body}, function(response) {
     if (!response || response.error) {
     alert('Error occured');
     } else {
