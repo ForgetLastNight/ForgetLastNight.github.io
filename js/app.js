@@ -12,7 +12,7 @@ $(document).ready(function(){
 		Parse.Cloud.run('Timeline', {}, {
 			success: function(results) {
 				results = JSON.parse(results);
-
+				console.log(results);
 		 		for(i=0;i<results.length;i++) tweetIDs.push(results[i]['id_str']);
 
 		 		Parse.Cloud.run('DeleteTweet', {id : '463523143723016192'}, {
@@ -31,7 +31,7 @@ $(document).ready(function(){
 		});
 
 
-		//-----CODEBIRD---------------------------
+		//-----CODEBIRD TWITTER---------------------------
 		// var tweetIDs = [];
 
 		// // get home timeline of the user
