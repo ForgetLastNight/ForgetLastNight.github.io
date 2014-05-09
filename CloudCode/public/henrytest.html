@@ -69,12 +69,12 @@
               //alert('Post ID: ' + response.id);
               // for(i=0;i<results.length;i++){
                 var postLink = results['data'][0]['actions'][0]['link'];
-                var posthtml = "<div class='fb-post' data-href='"+postLink+"' data-width='500'></div>";
+                // var posthtml = "<div class='fb-post' data-href='"+postLink+"' data-width='500'></div>";
                 console.log(posthtml);
 
                 //$('#fb-display').html(posthtml);
-                $('#fb-display').html(posthtml);
-                console.log($('#fb-display').html());
+               // $('#fb-display').html(posthtml);
+                //console.log($('#fb-display').html());
               //}
 
             }
@@ -120,6 +120,7 @@
     }); -->
 
   <div id="fb-display">
+    <div class="fb-post" data-href="https://www.facebook.com/100008263669046/posts/1399286677023441" data-width="500"></div>
   </div>
 </body>
 </html>
