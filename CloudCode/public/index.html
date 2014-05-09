@@ -21,7 +21,9 @@
     xfbml      : true  // parse XFBML
   });
 
-
+  FB.api('/me', function(response) {
+      console.log('Good to see you, ' + response.name + '.');
+    });
   FB.Event.subscribe('auth.authResponseChange', function(response) {
     
     if (response.status === 'connected') {
@@ -49,9 +51,7 @@
 
   function testAPI() {
     console.log('Welcome!  Fetching your information.... ');
-    FB.api('/me', function(response) {
-      console.log('Good to see you, ' + response.name + '.');
-    });
+    
   }
       
 
