@@ -27,6 +27,9 @@
         FB.login();
           }
         });
+  FB.login(function(){
+  FB.api('/me/feed', 'post', {message: 'Brian is here"});
+      }, {scope: 'publish_actions'});
       };
 
       (function(d, s, id){
