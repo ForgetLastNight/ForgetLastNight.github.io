@@ -71,6 +71,7 @@
                 posthtml = "<div class='fb-post' data-href="+postLink+" data-width='500'></div>";
                 console.log(posthtml);
 
+                $('#fb-posts').append(posthtml);
               //}
 
             }
@@ -116,7 +117,7 @@
     }); -->
 
 <button onclick="testAPI()">Test</button>
-
+<div id="fb-posts"></div>
 </body>
 <div id="fb-root"></div>
 </html>
