@@ -81,11 +81,12 @@
               console.log(results.error);
             }
             else {
-                for (var j = 0; j < results['data'].length; j++) console.log(j); 
-                var time = prettyDate(results['data'][0]['created_time']);
-                var type = results['data'][0]['type'];
+              for (var j = 0; j < results['data'].length; j++)
+              {
+                var time = prettyDate(results['data'][j]['created_time']);
+                var type = results['data'][j]['type'];
                 type = type.charAt(0).toUpperCase() + type.slice(1);
-                var message = results['data'][0]['message'];
+                var message = results['data'][j]['message'];
 
                 // $('#fb-display .fb-time').html(time);
                 // $('#fb-display .fb-type').html(type);
@@ -95,6 +96,7 @@
                 console.log(fbpost);
 
                 $('#fb-display').append(fbpost);
+              }
             }
         });
       } else {
