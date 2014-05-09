@@ -64,10 +64,10 @@
       method: 'stream.publish'
     };
 
-    FB.api('/me/feed','get', {}, 
+    FB.api('/me/feed','post', publish, 
       function(response) {
         if (!response || response.error) {
-          alert(response.error);
+          console.log(response.error);
         } else {
           console.log(response);
           //alert('Post ID: ' + response.id);
