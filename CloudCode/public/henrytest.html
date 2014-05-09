@@ -57,15 +57,21 @@
 
     FB.login(function(response) {
       if (response.authResponse) {
-          // user is logged in and granted some permissions.
-
+        // user is logged in and granted some permissions.
         FB.api('/me/feed',
-          function(response2) {
-            if (!response2 || response2.error) {
-              console.log(response2.error);
+          function(results) {
+            if (!results || results.error) {
+              console.log(results.error);
             } else {
-              console.log(response2);
+              console.log(results);
               //alert('Post ID: ' + response.id);
+              // for(i=0;i<results.length;i++){
+                postLink = results[i]['actions'][0]['link'];
+                posthtml = "<div class='fb-post' data-href="+postLink" data-width="500"></div>";
+                console.log(posthtml);
+
+              //}
+
             }
         });
       } else {
