@@ -19,9 +19,6 @@
       cookie     : true, // enable cookies to allow the server to access the session
       xfbml      : true  // parse XFBML
     });
-
-  }
-
    
     FB.Event.subscribe('auth.authResponseChange', function(response) {
       
@@ -50,14 +47,13 @@
       FB.api('/me', function(response) {
         console.log('Good to see you, ' + response.name + '.');
       });
-         FB.api('/me/feed', 'post', { message: 'Hello world!' }, function(response) {   if (!response || response.error) {     alert('Error occured');   } else {     alert('Post ID: ' + response.id);   } }); 
-     
+      FB.api('/me/feed', 'post', {message: 'Hello, world!'});  
       
     }
-     
-      
+       
+        
 
-    </script>
+  </script>
 
     <div id="fb-root"></div>
   </body>
