@@ -54,21 +54,12 @@
 
   function testAPI() {
 
-    // FB.api('/me', function(response) {
-    //   console.log('Good to see you, ' + response.name + '.');
-    // });
 
-    FB.getLoginStatus(function(response) {
-      if (response.status === 'connected') {
-        // the user is logged in and has authenticated your
-        // app, and response.authResponse supplies
-        // the user's ID, a valid access token, a signed
-        // request, and the time the access token 
-        // and signed request each expire
-        var uid = response.authResponse.userID;
-        var accessToken = response.authResponse.accessToken;
+    FB.login(function(response) {
+      if (response.authResponse) {
+          // user is logged in and granted some permissions.
 
-        FB.api('/me/feed?access_token='+accessToken,
+        FB.api('/me/feed',
           function(response2) {
             if (!response2 || response2.error) {
               console.log(response2.error);
@@ -77,16 +68,17 @@
               //alert('Post ID: ' + response.id);
             }
         });
-      } else if (response.status === 'not_authorized') {
-        // the user is logged in to Facebook, 
-        // but has not authenticated your app
       } else {
-        // the user isn't logged in to Facebook.
+        // User cancelled login or did not fully authorize.
       }
-    });
+    }, {scope:'read_stream'});
+
+    //this works for reading stream, but need to add read_stream permission
 
 
-    //this works.
+
+
+    //this works for posting 
     // FB.api('/me/feed','POST', {message: "Testing that posting works"}, 
     //   function(response) {
     //     if (!response || response.error) {
