@@ -4,6 +4,19 @@
     <title>My ParseApp site</title>
     <script src='https://www.parsecdn.com/js/parse-1.2.18.min.js'></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js'></script>
+    <style type='text/css'>
+      .fb-box{
+        width:400px;
+        height:150px;
+
+      }
+
+      .fb-logo{
+        width:30px;
+        height:30px;
+      }
+    </style>
+    <link href='../../css/bootstrap.min.css' rel='stylesheet'>
 
   </head>
 <body>
@@ -38,7 +51,7 @@
     //     FB.login();
     //   }
     // });
-    testAPI();
+    displayFB();
 
   };
 
@@ -54,8 +67,7 @@
   }(document));
 
 
-  function testAPI() {
-
+  function displayFB() {
 
     FB.login(function(response) {
       if (response.authResponse) {
@@ -65,17 +77,15 @@
             if (!results || results.error) {
               console.log(results.error);
             } else {
-              console.log(results);
-              //alert('Post ID: ' + response.id);
-              // for(i=0;i<results.length;i++){
-                var postLink = results['data'][0]['actions'][0]['link'];
-                // var posthtml = "<div class='fb-post' data-href='"+postLink+"' data-width='500'></div>";
-                //console.log(posthtml);
+              console.log(results['data']);
+  
+                var time = results['data'][0]['created_time'];
+                var type = results['data'][0]['type'];
+                var message = results['data'][0]['message'];
 
-                //$('#fb-display').html(posthtml);
-               // $('#fb-display').html(posthtml);
-                //console.log($('#fb-display').html());
-              //}
+                $('#fb-display .fb-time').html(time);
+                $('#fb-display .fb-type').html(type);
+                $('#fb-display .fb-body').html(message);
 
             }
         });
@@ -84,11 +94,11 @@
       }
     }, {scope:'read_stream'});
 
-    //this works for reading stream, but need to add read_stream permission
+// Embed skeleton <!--     <div class="fb-post" data-href="https://www.facebook.com/100008263669046/posts/1399286677023441" data-width="500"></div>
+//   -->
 
 
-
-
+//this works for reading stream, but need to add read_stream permission
     //this works for posting 
     // FB.api('/me/feed','POST', {message: "Testing that posting works"}, 
     //   function(response) {
@@ -102,25 +112,20 @@
   }
 </script>
 
-<!--         method: 'stream.publish',
-        message: 'I just entered the Your Perfect Kent Day Competition.',
-        picture : 'http://apps.facebook.com/perfect-kent-day/',
-        link : 'http://apps.facebook.com/perfect-kent-day/',
-        name: 'Enter to win or vote for your faourite story here!',
-        caption: $title,
-        description: $story,
-        actions : { name : 'Apply for Kent Teach Jobs...', link : 'http://www.kent-       teach.com/'}
-    };
+<div id="fb-display">
 
-    FB.api('/me/feed', 'POST', publish, function(response) {
-    //alert('A post had just been published into the stream on your wall.');
-        $('#before-submit').hide();
-        $('#after-submit').show();
-        $('#loading').fadeOut();
-    }); -->
-
-  <div id="fb-display">
-    <div class="fb-post" data-href="https://www.facebook.com/100008263669046/posts/1399286677023441" data-width="500"></div>
+  <div class="panel panel-primary fb-box">
+    <div class="panel-heading">
+      <img class = 'fb-logo' src='facebook-icon.png'/>
+      <span class='fb-time'></span>
+    </div>
+    <div class="panel-body">
+      <span class='fb-type'></span><p class='fb-body'></p>
+    </div>
   </div>
+
+</div>
+
+
 </body>
 </html>
