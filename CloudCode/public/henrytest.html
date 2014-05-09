@@ -81,7 +81,7 @@
               console.log(results.error);
             }
             else {
-
+                for (var j = 0; j < results.length; j++) console.log(j); 
                 var time = prettyDate(results['data'][0]['created_time']);
                 var type = results['data'][0]['type'];
                 type = type.charAt(0).toUpperCase() + type.slice(1);
