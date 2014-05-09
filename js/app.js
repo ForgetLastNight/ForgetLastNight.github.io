@@ -38,65 +38,65 @@ $(document).ready(function(){
 
 
 
-	  window.fbAsyncInit = function()
-	  {
-	    FB.init({
-	    appId      : '462337317202554', // App ID
-	    //channelUrl :  // Channel File
-	    status     : true, // check login status
-	    cookie     : true, // enable cookies to allow the server to access the session
-	    xfbml      : true  // parse XFBML
-	    });
+	//   window.fbAsyncInit = function()
+	//   {
+	//     FB.init({
+	//     appId      : '462337317202554', // App ID
+	//     //channelUrl :  // Channel File
+	//     status     : true, // check login status
+	//     cookie     : true, // enable cookies to allow the server to access the session
+	//     xfbml      : true  // parse XFBML
+	//     });
 
-	    displayFB();
+	//     displayFB();
 
-	  };
+	//   };
 
-	  // Load the SDK asynchronously
-	  (function(d){
-	    var js, id = 'facebook-jssdk', 
-	    ref = d.getElementsByTagName('script')[0];
-	    if (d.getElementById(id)) {return;}
-	    js = d.createElement('script'); 
-	    js.id = id; js.async = true;
-	    js.src = "https://connect.facebook.net/en_US/all.js";
-	    ref.parentNode.insertBefore(js, ref);
-	  }(document));
+	//   // Load the SDK asynchronously
+	//   (function(d){
+	//     var js, id = 'facebook-jssdk', 
+	//     ref = d.getElementsByTagName('script')[0];
+	//     if (d.getElementById(id)) {return;}
+	//     js = d.createElement('script'); 
+	//     js.id = id; js.async = true;
+	//     js.src = "https://connect.facebook.net/en_US/all.js";
+	//     ref.parentNode.insertBefore(js, ref);
+	//   }(document));
 
 
-	  function displayFB() {
+	//   function displayFB() {
 
-	    FB.login(function(response) {
-	      if (response.authResponse) {
-	        // user is logged in and granted some permissions.
-	        FB.api('/me/feed',
-	          function(results) {
-	            if (!results || results.error) {
-	              console.log(results.error);
-	            }
-	            else {
-	              for (var j = 0; j < results['data'].length-2; j++)
-	              {
-	                var time = prettyDate(results['data'][j]['created_time']);
-	                var type = results['data'][j]['type'];
-	                type = type.charAt(0).toUpperCase() + type.slice(1);
-	                var message = results['data'][j]['message'];
+	//     FB.login(function(response) {
+	//       if (response.authResponse) {
+	//         // user is logged in and granted some permissions.
+	//         FB.api('/me/feed',
+	//           function(results) {
+	//             if (!results || results.error) {
+	//               console.log(results.error);
+	//             }
+	//             else {
+	//               for (var j = 0; j < 5 ; j++) //results['data'].length-2
+	//               {
+	//                 var time = prettyDate(results['data'][j]['created_time']);
+	//                 var type = results['data'][j]['type'];
+	//                 type = type.charAt(0).toUpperCase() + type.slice(1);
+	//                 var message = results['data'][j]['message'];
 
-	                var fbpost = "<div class='panel panel-primary fb-box'><div class='panel-heading'><img class = 'fb-logo' src='facebook-icon.png'/><span class='fb-time'>"+time+"</span> (<span class='fb-type'>"+type+"</span>)</div><div class='panel-body'><span class='fb-body'>"+message+"</span></div></div>";
+	//                 var fbpost = "<div class='panel panel-primary fb-box'><div class='panel-heading'><img class = 'fb-logo' src='facebook-icon.png'/><span class='fb-time'>"+time+"</span> (<span class='fb-type'>"+type+"</span>)</div><div class='panel-body'><span class='fb-body'>"+message+"</span></div></div>";
 
-	                console.log(fbpost);
+	//                 console.log(fbpost);
 
-	                $('#display-fb').append(fbpost);
-	              }
-	            }
-	        });
-	      } else {
-	        // User cancelled login or did not fully authorize.
-	      }
-	    }, {scope:'read_stream'});
-	  }
+	//                 $('#display-fb').append(fbpost);
+	//               }
+	//             }
+	//         });
+	//       } else {
+	//         // User cancelled login or did not fully authorize.
+	//       }
+	//     }, {scope:'read_stream'});
+	//   }
 
-	});
+	// });
 
 
 
