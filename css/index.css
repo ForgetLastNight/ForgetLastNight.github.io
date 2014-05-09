@@ -26,3 +26,16 @@
 	position: relative;
 	top:25px;
 }
+
+.fb-box{
+  width:200px;
+
+}
+.fb-box .panel-body{padding-top:10px;}
+
+.fb-logo{
+  width:30px;
+  height:30px;
+}
+
+.fb-time{padding-left:5px;}
