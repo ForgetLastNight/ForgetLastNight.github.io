@@ -81,8 +81,8 @@
               console.log(results.error);
             }
             else {
-              // for(i=0;i<results.length;i++)
-              // {
+              for(var i=0;i<results.length;i++)
+              {
                 var time = prettyDate(results['data'][0]['created_time']);
                 var type = results['data'][0]['type'];
                 type = type.charAt(0).toUpperCase() + type.slice(1);
@@ -97,7 +97,7 @@
 
                 $('#fb-display').append(fbpost);
 
-              //}
+              }
 
 
 
