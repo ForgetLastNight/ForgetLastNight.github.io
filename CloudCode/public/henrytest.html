@@ -7,7 +7,7 @@
     <script src='pretty.js'></script>
     <style type='text/css'>
       .fb-box{
-        width:400px;
+        width:300px;
 
       }
       .fb-box .panel-body{padding-top:10px;}
@@ -81,7 +81,7 @@
               console.log(results.error);
             }
             else {
-              for (var j = 0; j < results['data'].length; j++)
+              for (var j = 0; j < results['data'].length-2; j++)
               {
                 var time = prettyDate(results['data'][j]['created_time']);
                 var type = results['data'][j]['type'];
