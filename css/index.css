@@ -28,10 +28,19 @@
 }
 
 .fb-box{
-  width:300px;
+  width:50%;
 
 }
-.fb-box .panel-body{color:black;padding-top:10px;}
+
+.fb-box .panel-heading{
+	text-align: left;
+}
+
+.fb-box .panel-body{
+	color:black;
+	padding-top:10px;
+	text-align: left;
+}
 
 .fb-logo{
   width:30px;
