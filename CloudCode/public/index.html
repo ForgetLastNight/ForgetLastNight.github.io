@@ -35,8 +35,8 @@
   'get',
     function(response) {
     console.log(response);
-    console.log(response.name);
-    console.log(response[0].id);
+    console.log(response['data'][0]['created_time']);
+    console.log(response['data'][0]['message']);
                        }
         );
 
