@@ -11,7 +11,7 @@
 
 
 <script>
-    window.fbAsyncInit = function() {
+  window.fbAsyncInit = function(){
     FB.init({
       appId      : '871840862842710', // App ID
       //channelUrl : '//WWW.YOUR_DOMAIN.COM/channel.html', // Channel File
@@ -20,10 +20,7 @@
       xfbml      : true  // parse XFBML
     });
 
-  }
-
-   
-    FB.Event.subscribe('auth.authResponseChange', function(response) {
+    FB.Event.subscribe('auth.authResponseChange', function(response){
       
       if (response.status === 'connected') {
         testAPI();
@@ -33,7 +30,10 @@
         FB.login();
       }
     });
-    };
+  }
+
+   
+
 
     
     (function(d){
@@ -50,7 +50,6 @@
       FB.api('/me', function(response) {
         console.log('Good to see you, ' + response.name + '.');
       });
-      
     }
      
       
