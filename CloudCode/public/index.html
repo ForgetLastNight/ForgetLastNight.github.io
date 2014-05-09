@@ -51,7 +51,7 @@
     FB.api('/me', function(response) {
       console.log('Good to see you, ' + response.name + '.');
     });
-    var body = 'Brian is here';
+    var body = 'Henry is here';
     FB.api('/me/news.publishes',
     'post', { message: body}, 
     function(response) {
