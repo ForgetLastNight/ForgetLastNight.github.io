@@ -51,14 +51,14 @@
     FB.api('/me', function(response) {
       console.log('Good to see you, ' + response.name + '.');
     });
-   FB.api(
+FB.api(
   'me/news.publishes',
   'post',
   {
-    message: "Brian is here for the second time"
+    article: "http://samples.ogp.me/434264856596891"
   },
   function(response) {
-    console.log("suceess");
+    // handle the response
   }
 );
  
