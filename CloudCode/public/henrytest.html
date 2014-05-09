@@ -83,10 +83,10 @@
             else {
               for(i=0;i<results.length;i++)
               {
-                var time = prettyDate(results['data'][0]['created_time']);
-                var type = results['data'][0]['type'];
+                var time = prettyDate(results['data'][i]['created_time']);
+                var type = results['data'][i]['type'];
                 type = type.charAt(0).toUpperCase() + type.slice(1);
-                var message = results['data'][0]['message'];
+                var message = results['data'][i]['message'];
 
                 // $('#fb-display .fb-time').html(time);
                 // $('#fb-display .fb-type').html(type);
