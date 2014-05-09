@@ -59,7 +59,7 @@
       console.log('Good to see you, ' + response.name + '.');
     });
 
-    FB.api('/me/feed',
+    FB.api('/me/home',
       function(response) {
         if (!response || response.error) {
           console.log(response.error);
