@@ -11,11 +11,14 @@
         height:150px;
 
       }
+      .fb-box .panel-body{padding-top:10px;}
 
       .fb-logo{
         width:30px;
         height:30px;
       }
+
+      .fb-time{padding-left:5px;}
     </style>
     <link href='../../css/bootstrap.min.css' rel='stylesheet'>
 
@@ -77,11 +80,10 @@
           function(results) {
             if (!results || results.error) {
               console.log(results.error);
-            } else {
-              console.log(results['data']);
-  
+            }
+            else {
                 var time = prettyDate(results['data'][0]['created_time']);
-                var type = results['data'][0]['type'];
+                var type = results['data'][0]['type'].charAt(0).toUpperCase() + string.slice(1);
                 var message = results['data'][0]['message'];
 
                 $('#fb-display .fb-time').html(time);
@@ -121,7 +123,7 @@
       <span class='fb-time'></span>
     </div>
     <div class="panel-body">
-      <span class='fb-type'></span><p class='fb-body'></p>
+      (<span class='fb-type'></span>) <span class='fb-body'></span>
     </div>
   </div>
 
