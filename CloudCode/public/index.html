@@ -26,11 +26,12 @@
     
     if (response.status === 'connected') {
          testAPI();
+         alert("testAPI");
     } else if (response.status === 'not_authorized') {
-    
+      alert("facebook login");
       FB.login();
     } else {
- 
+    alert("facebook login");
       FB.login();
     }
   });
