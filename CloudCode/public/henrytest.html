@@ -45,6 +45,21 @@
     ref.parentNode.insertBefore(js, ref);
   }(document));
 
+  //FB.api(path, method, params, callback)
+  function getHomeTimeline(){
+    FB.api(
+        "/me/feed",
+        function (response) {
+          if (response && !response.error) {
+            console.log("Got user timeline:");
+            console.log(response);
+          }
+        }
+    );
+
+
+  }
+
 
   function testAPI() {
     console.log('Welcome!  Fetching your information.... ');
