@@ -14,65 +14,76 @@
 <script>
  window.fbAsyncInit = function() {
   FB.init({
-    appId      : '871840862842710', // App ID
-    //channelUrl : '//WWW.YOUR_DOMAIN.COM/channel.html', // Channel File
-    status     : true, // check login status
-    cookie     : true, // enable cookies to allow the server to access the session
-    xfbml      : true  // parse XFBML
+    appId      : '462337317202554',
+    xfbml      : true,
+    version    : 'v2.0'
   });
-
-
-  FB.Event.subscribe('auth.authResponseChange', function(response) {
-    
-    if (response.status === 'connected') {
-         testAPI();
-    } else if (response.status === 'not_authorized') {
-    
-      FB.login();
-    } else {
- 
-      FB.login();
-    }
+  FB.getLoginStatus(function(response) {
+    statusChangeCallback(response);
   });
-  };
+}
 
-  // Load the SDK asynchronously
+// Load the SDK asynchronously
   (function(d){
-   var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
-   if (d.getElementById(id)) {return;}
-   js = d.createElement('script'); js.id = id; js.async = true;
-   js.src = "http://connect.facebook.net/en_US/all.js";
-   ref.parentNode.insertBefore(js, ref);
+    var js, id = 'facebook-jssdk', 
+    ref = d.getElementsByTagName('script')[0];
+    if (d.getElementById(id)) {return;}
+    js = d.createElement('script'); 
+    js.id = id; js.async = true;
+    js.src = "https://connect.facebook.net/en_US/all.js";
+    ref.parentNode.insertBefore(js, ref);
   }(document));
 
 
-  function testAPI() {
-    console.log('Welcome!  Fetching your information.... ');
-    FB.api('/me', function(response) {
-      console.log('Good to see you, ' + response.name + '.');
-    });
-    var body = 'Henry is here';
-    FB.api('/me/news.publishes',
-    'post', { message: body}, 
-    function(response) {
-    if (!response || response.error) {
-    alert('Error occured');
-    } else {
-    alert('Post ID: ' + response.id);
-    }
-});
-    FB.api(
-    '/me/news.reads',
-    'get',
-    function(response) {
+  function statusChangeCallback(response) {
+    console.log('statusChangeCallback');
     console.log(response);
+    // The response object is returned with a status field that lets the
+    // app know the current login status of the person.
+    // Full docs on the response object can be found in the documentation
+    // for FB.getLoginStatus().
+    if (response.status === 'connected') {
+      // Logged into your app and Facebook.
+      testAPI();
+    } else if (response.status === 'not_authorized') {
+      // The person is logged into Facebook, but not your app.
+      document.getElementById('status').innerHTML = 'Please log ' +
+        'into this app.';
+    } else {
+      // The person is not logged into Facebook, so we're not sure if
+      // they are logged into this app or not.
+      document.getElementById('status').innerHTML = 'Please log ' +
+        'into Facebook.';
+    }
   }
-);
-  }
-      
+  function testAPI() {
 
-    </script>
 
-    <div id="fb-root"></div>
+    FB.login(function(response) {
+      if (response.authResponse) {
+        // user is logged in and granted some permissions.
+        FB.login(function(){
+          FB.api('/me/feed', 'post', {message: 'Brian is here for the third time'});
+
+          FB.api(
+            'me/feed',
+            'get',
+            function(response) {
+              console.log(response);
+              console.log(response['data'][0]['created_time']);
+              console.log(response['data'][0]['message']);
+            }
+            );
+
+        }, {scope: 'publish_actions'});
+
+      }
+    });
+  }  
+  
+
+</script>
+
+   
   </body>
 </html>
