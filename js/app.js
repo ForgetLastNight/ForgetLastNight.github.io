@@ -1,19 +1,23 @@
 $(document).ready(function(){
 
+
+	//var cb = new Codebird;
 	var cKey = "Ku3MsRCDG1GZI2Gdb3hggjTw5";
 	var cSecret = "8HHQZhecyFPrPcmHbQ5AGh174WXx8eDo0irkdLqwaQxaYHLirk";
 
-
+	//cb.setConsumerKey(cKey, cSecret);
 
 
 	//do a parse call here to check if the current user has a token
 	// if so set it to this
-	var token = "2477479568-98cCXgJEWokohC7vFPbRiTDBTUEjgrZBEJk5S6J";
-	var tSecret = "iGTJ60sZuELJybNfsvmgFGekI9mgx2soHCrkIbGSDZf1J";
 
-	var cb = new Codebird;
+	var token = "";
+	var tSecret = "";
+
+
+	
 	// cb.setConsumerKey("CONSUMERKEY", "CONSUMERSECRET");
-	cb.setConsumerKey(cKey, cSecret);
+	
 	// cb.setToken("TOKEN", "TOKENSECRET");
 	//cb.setToken(token,tSecret);
 	
@@ -25,22 +29,17 @@ $(document).ready(function(){
 
 		Parse.Cloud.run('RequestToken', {oKey : cKey, cSec : cSecret, oCall : 'oob'}, {
 			success: function(reply) {
-				console.log("Token received: "+reply);
+				console.log("Request token received: "+reply);
 				temp = reply.split('=');
 				token = temp[1].split('&')[0];
 				tSecret = temp[2].split('&')[0];
-				cb.setToken(token,tSecret);
+				console.log("oToken: "+token);
+				console.log("tSec: "+tSecret);
+				//cb.setToken(token,tSecret);
 
 
-				cb.__call(
-				   "oauth_authorize",
-				   {},
-				   function (auth_url) {
-				   	//this gets blocked as popup in mobile
-				   	window.codebird_auth = window.open(auth_url);
-
-				   }
-				);
+				//not sure why we would need oauth/authorize call
+				window.open("https://api.twitter.com/oauth/authorize?oauth_token="+token); 
 
 
 			},
@@ -55,21 +54,24 @@ $(document).ready(function(){
 
 	$('#submitpin').click(function(){
 
-		cb.__call(
-		    "oauth_accessToken",
-		    {oauth_verifier: $('#PINFIELD').val()},
-		    function (reply) {
-		        // store the authenticated token, which may be different from the request token (!)
-		        //cb.setToken(reply.oauth_token, reply.oauth_token_secret);
-		        console.log(reply);
-		        token = reply.oauth_token;
-		        tSecret = reply.oauth_token_secret;
-		        alert("Thank you. You may now use the application.")
+		var oVerifier = $('#PINFIELD').val();
 
-		        // if you need to persist the login after page reload,
-		        // consider storing the token in a cookie or HTML5 local storage
-		    }
-		);
+		Parse.Cloud.run('AccessToken', {oVer: oVerifier, oToken : token, oKey : cKey, tSec : tSecret, cSec : cSecret}, {
+			success: function(reply) {
+				console.log("Access token received: "+reply);
+				temp = reply.split('=');
+				token = temp[1].split('&')[0];
+				tSecret = temp[2].split('&')[0];
+				//cb.setToken(token,tSecret);
+				alert("You may now use the application. Click 'view' to get started.");
+
+			},
+			error: function(error) {
+				console.log(error);
+			}
+		});
+
+
 	});
 
 
@@ -213,7 +215,18 @@ $(document).ready(function(){
 		// 	}
 
 		// );
-		//------------END CODEBIRD-----------------------------------
+		//
+
+				// cb.__call(
+				//    "oauth_authorize",
+				//    {},
+				//    function (auth_url) {
+				//    	console.log(auth_url);
+				//    	//this gets blocked as popup in mobile
+				//    	//window.codebird_auth = window.open(auth_url);
+
+				//    }
+				// );
 
 
 
@@ -320,3 +333,13 @@ $(document).ready(function(){
 
 
 
+				// Parse.Cloud.run('Authorize', {oToken : token, oKey : cKey, tSec : tSecret, cSec : cSecret}, {
+				// 	success: function(auth_url) {
+				// 		console.log("Auth url: "+ response);
+
+
+				// 	},
+				// 	error: function(error) {
+				// 		console.log("There was an error Authorizing.");
+				// 	}
+				// });
