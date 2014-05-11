@@ -47,9 +47,9 @@ $(document).ready(function(){
 						    	console.log(status);
 						    	window.open(auth_url);
 						    },
-								error: function (err) {
-									console.log(err);
-								}
+							error: function (err) {
+								console.log(err);
+							}
 						});
 				   }
 				);
