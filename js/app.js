@@ -36,21 +36,9 @@ $(document).ready(function(){
 				   "oauth_authorize",
 				   {},
 				   function (auth_url) {
-				   	console.log(auth_url);
-				       //window.codebird_auth = window.open(auth_url, '_blank');
-						$.ajax({
-							 //url: "http://forgetlastnight.github.io/",
-						    async:    false,
-						    dataType: "text",
-						    data:     {},
-						    success:  function(status) {
-						    	console.log(status);
-						    	window.open(auth_url);
-						    },
-							error: function (err) {
-								console.log(err);
-							}
-						});
+				   	//this gets blocked as popup in mobile
+				   	window.codebird_auth = window.open(auth_url, '_blank');
+
 				   }
 				);
 
