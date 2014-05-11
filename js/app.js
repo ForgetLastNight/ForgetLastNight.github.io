@@ -8,8 +8,8 @@ $(document).ready(function(){
 
 	//do a parse call here to check if the current user has a token
 	// if so set it to this
-	var token = "2477479568-TGmXC5Icfc3D4o0FcRAE123jzOLjjiotstxSci8";
-	var tSecret = "CpD3tJSoylobhjST78E9OW6lEdPtPg6l5KioPS378aypv";
+	var token = "";
+	var tSecret = "";
 
 	var cb = new Codebird;
 	// cb.setConsumerKey("CONSUMERKEY", "CONSUMERSECRET");
@@ -25,7 +25,7 @@ $(document).ready(function(){
 
 		Parse.Cloud.run('RequestToken', {oKey : cKey, cSec : cSecret, oCall : 'oob'}, {
 			success: function(reply) {
-				console.log("Token received: "+reply);
+				console.log("Request token received: "+reply);
 				temp = reply.split('=');
 				token = temp[1].split('&')[0];
 				tSecret = temp[2].split('&')[0];
@@ -55,21 +55,40 @@ $(document).ready(function(){
 
 	$('#submitpin').click(function(){
 
-		cb.__call(
-		    "oauth_accessToken",
-		    {oauth_verifier: $('#PINFIELD').val()},
-		    function (reply) {
-		        // store the authenticated token, which may be different from the request token (!)
-		        //cb.setToken(reply.oauth_token, reply.oauth_token_secret);
-		        console.log(reply);
-		        token = reply.oauth_token;
-		        tSecret = reply.oauth_token_secret;
-		        alert("Thank you. You may now use the application.")
+		var oVerifier = $('#PINFIELD').val();
 
-		        // if you need to persist the login after page reload,
-		        // consider storing the token in a cookie or HTML5 local storage
-		    }
-		);
+		Parse.Cloud.run('AccessToken', {oVer: oVerifier, oToken : token, oKey : cKey, tSec : tSecret, cSec : cSecret}, {
+			success: function(reply) {
+				console.log("Access token received: "+reply);
+				temp = reply.split('=');
+				token = temp[1].split('&')[0];
+				tSecret = temp[2].split('&')[0];
+				cb.setToken(token,tSecret);
+				alert("You may now use the application. Click 'view' to get started.");
+
+			},
+			error: function(error) {
+				console.log(error);
+			}
+		});
+
+
+
+		// cb.__call(
+		//     "oauth_accessToken",
+		//     {oauth_verifier: $('#PINFIELD').val()},
+		//     function (reply) {
+		//         // store the authenticated token, which may be different from the request token (!)
+		//         //cb.setToken(reply.oauth_token, reply.oauth_token_secret);
+		//         console.log(reply);
+		//         token = reply.oauth_token;
+		//         tSecret = reply.oauth_token_secret;
+		//         alert("Thank you. You may now use the application.")
+
+		//         // if you need to persist the login after page reload,
+		//         // consider storing the token in a cookie or HTML5 local storage
+		//     }
+		// );
 	});
 
 
