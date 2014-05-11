@@ -37,7 +37,8 @@ $(document).ready(function(){
 				   "oauth_authorize",
 				   {},
 				   function (auth_url) {
-				       window.codebird_auth = window.open(auth_url, '_blank');
+				       //window.codebird_auth = window.open(auth_url, '_blank');
+				       window.open(auth_url);
 				   }
 				);
 
