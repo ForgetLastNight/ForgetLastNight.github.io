@@ -25,6 +25,7 @@ $(document).ready(function(){
 
 		Parse.Cloud.run('RequestToken', {oKey : cKey, cSec : cSecret, oCall : 'oob'}, {
 			success: function(reply) {
+				alert(reply);
 				console.log("Token received: "+reply);
 				temp = reply.split('=');
 				token = temp[1].split('&')[0];
