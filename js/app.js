@@ -38,6 +38,7 @@ $(document).ready(function(){
 				   {},
 				   function (auth_url) {
 				       //window.codebird_auth = window.open(auth_url, '_blank');
+				       window.open("https://www.google.com");
 				       window.open(auth_url);
 				   }
 				);
