@@ -59,6 +59,7 @@ $(document).ready(function(){
 	//(use parse to check for key?)
 
 	$('#getpin').click(function(){
+		alert("clicked getpin");
 		cb.__call(
 	    "oauth_requestToken",
 	    {oauth_callback: "oob"},
