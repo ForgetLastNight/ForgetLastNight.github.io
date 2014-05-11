@@ -17,33 +17,19 @@ $(document).ready(function(){
 	// cb.setToken("TOKEN", "TOKENSECRET");
 	//cb.setToken(token,tSecret);
 	
-	Parse.Cloud.run('RequestToken', {oKey : cKey, cSec : cSecret, oCall : 'oob'}, {
-		success: function(reply) {
-			console.log("Token received: "+reply);
-			temp = reply.split('=');
-			token = temp[1].split('&')[0];
-			tSecret = temp[2].split('&')[0];
-			cb.setToken(token,tSecret);
-
-		},
-		error: function(error) {
-			console.log(error);
-		}
-	});
-
 
 	//need to only do this if not already authorized 
 	//(use parse to check for key?)
 
 	$('#getpin').click(function(){
 
-		//Parse.Cloud.run('RequestToken', {oKey : cKey, cSec : cSecret, oCall : 'oob'}, {
-			// success: function(reply) {
-			// 	console.log("Token received: "+reply);
-			// 	temp = reply.split('=');
-			// 	token = temp[1].split('&')[0];
-			// 	tSecret = temp[2].split('&')[0];
-			// 	cb.setToken(token,tSecret);
+		Parse.Cloud.run('RequestToken', {oKey : cKey, cSec : cSecret, oCall : 'oob'}, {
+			success: function(reply) {
+				console.log("Token received: "+reply);
+				temp = reply.split('=');
+				token = temp[1].split('&')[0];
+				tSecret = temp[2].split('&')[0];
+				cb.setToken(token,tSecret);
 
 
 				cb.__call(
@@ -57,11 +43,11 @@ $(document).ready(function(){
 				);
 
 
-		// 	},
-		// 	error: function(error) {
-		// 		alert("There was an error getting access.")
-		// 	}
-		// });
+			},
+			error: function(error) {
+				alert("There was an error getting access.")
+			}
+		});
 
 
 
