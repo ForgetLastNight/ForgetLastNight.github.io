@@ -36,29 +36,8 @@ $(document).ready(function(){
 				//cb.setToken(token,tSecret);
 
 
-				// Parse.Cloud.run('Authorize', {oToken : token, oKey : cKey, tSec : tSecret, cSec : cSecret}, {
-				// 	success: function(auth_url) {
-				// 		console.log("Auth url: "+ response);
-
-
-				// 	},
-				// 	error: function(error) {
-				// 		console.log("There was an error Authorizing.");
-				// 	}
-				// });
 				//not sure why we would need oauth/authorize call
 				window.open("https://api.twitter.com/oauth/authorize?oauth_token="+token); 
-
-				// cb.__call(
-				//    "oauth_authorize",
-				//    {},
-				//    function (auth_url) {
-				//    	console.log(auth_url);
-				//    	//this gets blocked as popup in mobile
-				//    	//window.codebird_auth = window.open(auth_url);
-
-				//    }
-				// );
 
 
 			},
@@ -196,7 +175,18 @@ $(document).ready(function(){
 		// 	}
 
 		// );
-		//------------END CODEBIRD-----------------------------------
+		//
+
+				// cb.__call(
+				//    "oauth_authorize",
+				//    {},
+				//    function (auth_url) {
+				//    	console.log(auth_url);
+				//    	//this gets blocked as popup in mobile
+				//    	//window.codebird_auth = window.open(auth_url);
+
+				//    }
+				// );
 
 
 
@@ -303,3 +293,13 @@ $(document).ready(function(){
 
 
 
+				// Parse.Cloud.run('Authorize', {oToken : token, oKey : cKey, tSec : tSecret, cSec : cSecret}, {
+				// 	success: function(auth_url) {
+				// 		console.log("Auth url: "+ response);
+
+
+				// 	},
+				// 	error: function(error) {
+				// 		console.log("There was an error Authorizing.");
+				// 	}
+				// });
