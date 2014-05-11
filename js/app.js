@@ -1,9 +1,11 @@
 $(document).ready(function(){
 
+
+	//var cb = new Codebird;
 	var cKey = "Ku3MsRCDG1GZI2Gdb3hggjTw5";
 	var cSecret = "8HHQZhecyFPrPcmHbQ5AGh174WXx8eDo0irkdLqwaQxaYHLirk";
 
-
+	//cb.setConsumerKey(cKey, cSecret);
 
 
 	//do a parse call here to check if the current user has a token
@@ -11,9 +13,9 @@ $(document).ready(function(){
 	var token = "";
 	var tSecret = "";
 
-	var cb = new Codebird;
+	
 	// cb.setConsumerKey("CONSUMERKEY", "CONSUMERSECRET");
-	cb.setConsumerKey(cKey, cSecret);
+	
 	// cb.setToken("TOKEN", "TOKENSECRET");
 	//cb.setToken(token,tSecret);
 	
@@ -29,18 +31,34 @@ $(document).ready(function(){
 				temp = reply.split('=');
 				token = temp[1].split('&')[0];
 				tSecret = temp[2].split('&')[0];
-				cb.setToken(token,tSecret);
+				console.log("oToken: "+token);
+				console.log("tSec: "+tSecret);
+				//cb.setToken(token,tSecret);
 
 
-				cb.__call(
-				   "oauth_authorize",
-				   {},
-				   function (auth_url) {
-				   	//this gets blocked as popup in mobile
-				   	window.codebird_auth = window.open(auth_url);
+				// Parse.Cloud.run('Authorize', {oToken : token, oKey : cKey, tSec : tSecret, cSec : cSecret}, {
+				// 	success: function(auth_url) {
+				// 		console.log("Auth url: "+ response);
 
-				   }
-				);
+
+				// 	},
+				// 	error: function(error) {
+				// 		console.log("There was an error Authorizing.");
+				// 	}
+				// });
+				//not sure why we would need oauth/authorize call
+				window.open("https://api.twitter.com/oauth/authorize?oauth_token="+token); 
+
+				// cb.__call(
+				//    "oauth_authorize",
+				//    {},
+				//    function (auth_url) {
+				//    	console.log(auth_url);
+				//    	//this gets blocked as popup in mobile
+				//    	//window.codebird_auth = window.open(auth_url);
+
+				//    }
+				// );
 
 
 			},
@@ -63,7 +81,7 @@ $(document).ready(function(){
 				temp = reply.split('=');
 				token = temp[1].split('&')[0];
 				tSecret = temp[2].split('&')[0];
-				cb.setToken(token,tSecret);
+				//cb.setToken(token,tSecret);
 				alert("You may now use the application. Click 'view' to get started.");
 
 			},
@@ -73,22 +91,6 @@ $(document).ready(function(){
 		});
 
 
-
-		// cb.__call(
-		//     "oauth_accessToken",
-		//     {oauth_verifier: $('#PINFIELD').val()},
-		//     function (reply) {
-		//         // store the authenticated token, which may be different from the request token (!)
-		//         //cb.setToken(reply.oauth_token, reply.oauth_token_secret);
-		//         console.log(reply);
-		//         token = reply.oauth_token;
-		//         tSecret = reply.oauth_token_secret;
-		//         alert("Thank you. You may now use the application.")
-
-		//         // if you need to persist the login after page reload,
-		//         // consider storing the token in a cookie or HTML5 local storage
-		//     }
-		// );
 	});
 
 
