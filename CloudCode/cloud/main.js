@@ -127,6 +127,69 @@ Parse.Cloud.define("DeleteTweet", function(request, response) {
     });
 });
 
+
+Parse.Cloud.define("RequestToken", function(request, response) {
+    var urlLink = 'https://api.twitter.com/oauth/request_token';
+
+    var consumerSecret = request.params.cSec;
+
+    var oauth_consumer_key = request.params.oKey;
+
+    var oauth_callback = request.params.oCall;
+
+
+    var nonce = oauth.nonce(32);
+    var ts = Math.floor(new Date().getTime() / 1000);
+    var timestamp = ts.toString();
+
+    var accessor = {
+        "consumerSecret": consumerSecret
+    };
+
+
+    var params = {
+        "oauth_version": "1.0",
+        "oauth_consumer_key": oauth_consumer_key,
+        "oauth_timestamp": timestamp,
+        "oauth_nonce": nonce,
+        "oauth_signature_method": "HMAC-SHA1",
+        "oauth_callback": oauth_callback
+    };
+
+    var message = {
+        "method": "POST",
+        "action": urlLink,
+        "parameters": params
+    };
+
+
+    //lets create signature
+    oauth.SignatureMethod.sign(message, accessor);
+    var normPar = oauth.SignatureMethod.normalizeParameters(message.parameters);
+    console.log("Normalized Parameters: " + normPar);
+    var baseString = oauth.SignatureMethod.getBaseString(message);
+    console.log("BaseString: " + baseString);
+    var sig = oauth.getParameter(message.parameters, "oauth_signature") + "=";
+    console.log("Non-Encode Signature: " + sig);
+    var encodedSig = oauth.percentEncode(sig); //finally you got oauth signature
+    console.log("Encoded Signature: " + encodedSig);
+
+    Parse.Cloud.httpRequest({
+        method: 'POST',
+        url: urlLink,
+        headers: {
+            "Authorization": 'OAuth oauth_consumer_key='+oauth_consumer_key+', oauth_callback=' + oauth_callback + ', oauth_nonce=' + nonce + ', oauth_signature=' + encodedSig + ', oauth_signature_method="HMAC-SHA1", oauth_timestamp=' + timestamp + ', oauth_version="1.0"'
+        },
+        body: {
+        },
+        success: function(httpResponse) {
+            response.success(httpResponse.text);
+        },
+        error: function(httpResponse) {
+            response.error('Request failed with response ' + httpResponse.status + ' , ' + httpResponse);
+        }
+    });
+});
 // Parse.Cloud.define("Embed", function(request, response) {
 //     var urlLink = 'https://api.twitter.com/1/statuses/oembed/'+request.params.id+'.format';
 

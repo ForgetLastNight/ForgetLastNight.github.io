@@ -15,68 +15,40 @@ $(document).ready(function(){
 	// cb.setConsumerKey("CONSUMERKEY", "CONSUMERSECRET");
 	cb.setConsumerKey(cKey, cSecret);
 	// cb.setToken("TOKEN", "TOKENSECRET");
-	cb.setToken(token,tSecret);
+	//cb.setToken(token,tSecret);
 	
-
-	// var current_url = location.toString();
-	// var query       = current_url.match(/\?(.+)$/).split("&amp;");
-	// var parameters  = {};
-	// var parameter;
-
-
-	// for (var i = 0; i < query.length; i++) {
-	//     parameter = query[i].split("=");
-	//     if (parameter.length === 1) {
-	//         parameter[1] = "";
-	//     }
-	//     parameters[decodeURIComponent(parameter[0])] = decodeURIComponent(parameter[1]);
-	// }
-
-	// // check if oauth_verifier is set
-	// if (typeof parameters.oauth_verifier !== "undefined") {
-	//     // assign stored request token parameters to codebird here
-	//     // ...
-	//     cb.setToken(stored_somewhere.oauth_token, stored_somewhere.oauth_token_secret);
-
-	//     cb.__call(
-	//         "oauth_accessToken",
-	//         {
-	//             oauth_verifier: parameters.oauth_verifier
-	//         },
-	//         function (reply) {
-	//             cb.setToken(reply.oauth_token, reply.oauth_token_secret);
-
-	//             // if you need to persist the login after page reload,
-	//             // consider storing the token in a cookie or HTML5 local storage
-	//         }
-	//     );
-	// }
-
-
-
 
 	//need to only do this if not already authorized 
 	//(use parse to check for key?)
 
 	$('#getpin').click(function(){
-		alert("clicked getpin");
-		cb.__call(
-	    "oauth_requestToken",
-	    {oauth_callback: "oob"},
-	    function (reply) {
-	        // stores it
-	        cb.setToken(reply.oauth_token, reply.oauth_token_secret);
 
-	        // gets the authorize screen URL
-	        cb.__call(
-	            "oauth_authorize",
-	            {},
-	            function (auth_url) {
-	                window.codebird_auth = window.open(auth_url);
-	            }
-	        );
-	    	}
-		);
+		Parse.Cloud.run('RequestToken', {oKey : cKey, cSec : cSecret, oCall : 'oob'}, {
+			success: function(reply) {
+				console.log("Token received: "+reply);
+				temp = reply.split('=');
+				token = temp[1].split('&')[0];
+				tSecret = temp[2].split('&')[0];
+				cb.setToken(token,tSecret);
+
+
+				cb.__call(
+				   "oauth_authorize",
+				   {},
+				   function (auth_url) {
+				       window.codebird_auth = window.open(auth_url);
+				   }
+				);
+
+
+			},
+			error: function(error) {
+				alert("There was an error getting access.")
+			}
+		});
+
+
+
 	})
 
 	$('#submitpin').click(function(){
@@ -101,7 +73,7 @@ $(document).ready(function(){
 
 	
 
-	$('#get').click(function(){
+	$('#view').click(function(){
 
 		Parse.Cloud.run('Timeline', {oToken : token, oKey : cKey, tSec : tSecret, cSec : cSecret}, {
 			success: function(tweets) {
@@ -221,6 +193,23 @@ $(document).ready(function(){
 	//     }
 	// );
 
+		// cb.__call(
+	 //    "oauth_requestToken",
+	 //    {oauth_callback: "oob"},
+	 //    function (reply) {
+	 //        // stores it
+	 //        cb.setToken(reply.oauth_token, reply.oauth_token_secret);
+
+	 //        // gets the authorize screen URL
+	 //        cb.__call(
+	 //            "oauth_authorize",
+	 //            {},
+	 //            function (auth_url) {
+	 //                window.codebird_auth = window.open(auth_url);
+	 //            }
+	 //        );
+	 //    	}
+		// );
 
 
 
@@ -228,34 +217,6 @@ $(document).ready(function(){
 
 
 
-				// Parse.Cloud.run('Embed',{id : tweetIDs[0]}, {
-				// 	success: function(result){
-				// 		console.log(result);
-				// 	},
-				// 	error: function(err){
-				// 		console.log(err);
-				// 	}
-
-
-
-
-				// });
-
-
-
-					// params = {
-					// 	id : tweetIDs[i]
-					// };
-
-					// cb.__call(
-					// 	"statuses_oembed",
-					// 	params,
-					// 	function (reply) {
-					// 		display = reply['html'];
-					// 		display = display.replace("//platform.twitter.com/widgets.js","https://platform.twitter.com/widgets.js");
-					// 		$('#display-tweets').append(display);
-					// 	}
-					// );
 
 
 
@@ -316,3 +277,6 @@ $(document).ready(function(){
 	//       }
 	//     }, {scope:'read_stream'});
 	//   }
+
+
+
