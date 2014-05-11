@@ -88,15 +88,24 @@ $(document).ready(function(){
 
 				for(i=0;i<tweets.length;i++)
 				{
+					//turn this into something better
 					var time = tweets[i]['created_at'].toString();
+
 					var message = tweets[i]['text'];
 					var id = tweets[i]['id_str'];
-					var hours =2;  //change hours
-					tweets_based_on_hours(tweets[i],hours,time,message,id);
+					var hours = $('#time-range').val();  //change hours
+
+					if(inRange(tweets[i],hours))
+					{
+						var tweetHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='twitter_logo.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time+"</span><br/>"+message+"</p></div><div class='col-xs-1 delete-box'><input type='checkbox' name='"+id+"'/></div></div>";
+						$('#display-tweets').append(tweetHTML);
+					}
 			    }
 			},
 			error: function(error) {
-				alert("There was an error getting tweets.")
+				alert("There was an error getting tweets.");
+				var hours = $('#time-range').val();  //change hours
+				console.log(hours);				
 			}
 		});
 
@@ -131,41 +140,34 @@ $(document).ready(function(){
 
 	});
 
-	function tweets_based_on_hours(tweets,hours,times,message,id){
+	function inRange(tweet,hours){
 
-		//get the last 2 hours from currentime (testing)
 		var currentTime  = new Date();
-				//console.log(currentTime);
-				var sec = currentTime.valueOf();
-				
-				var two_hours_difference = sec - last_two_hours_to_second;
-				var two_hours_before = new Date(two_hours_difference);
-				//console.log(two_hours_before);
+		
+		var sec = currentTime.valueOf();
+		
+		var x_hours_difference = sec - last_x_hours_to_second;
+		var x_hours_before = new Date(x_hours_difference);
+		//console.log(two_hours_before);
 
-					var time = times;
-					//console.log(time);
-					var s = time.split(" ",6);
-					console.log(s[1]+" "+s[2]+", "+s[5]+" "+s[3]);
-					// var s2 = s[3].split(":");
-					// console.log(s2[0],s2[1],s2[2]);
-					var s3 = new Date(s[1]+" "+s[2]+", "+s[5]+" "+s[3]);
-					var s4 = s3.valueOf();
-					console.log(s4);
-					var last_two_hours_to_second = 1000*hours*60*60;
-					var seconds_difference =  s4 - last_two_hours_to_second;
-					console.log(seconds_difference);
-					var two_hour_before = new Date(seconds_difference);
-					console.log(two_hour_before);
+		var time = tweet['created_at'].toString();
+		//console.log(time);
+		var s = time.split(" ",6);
+		console.log(s[1]+" "+s[2]+", "+s[5]+" "+s[3]);
+		// var s2 = s[3].split(":");
+		// console.log(s2[0],s2[1],s2[2]);
+		var s3 = new Date(s[1]+" "+s[2]+", "+s[5]+" "+s[3]);
+		var s4 = s3.valueOf();
 
-					
-					if( currentTime - last_two_hours_to_second < s4  ){
-						var tweetHTML = "<div id='display-tweets'><div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='twitter_logo.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time+"</span><br/>"+message+"</p></div><div class='col-xs-1 delete-box'><input type='checkbox' name='"+id+"'/></div></div></div>";
-						$('#display-tweets').append(tweetHTML);	
-					}	
-					else
-					{
-						return;
-					}
+		var last_x_hours_to_second = 1000*hours*60*60;
+		var seconds_difference =  s4 - last_x_hours_to_second;
+
+		var x_hour_before = new Date(seconds_difference);
+
+
+		
+		if( currentTime - last_x_hours_to_second < s4  ) return true;
+		else return false;
 	}
 
 });

@@ -5,6 +5,9 @@
 	font-weight: bold;
 	width:100%;
 	outline:none;
+	border:1px solid red;
+
+
 }
 
 
@@ -14,6 +17,8 @@
 	font-weight: bold;
 	width: 100%;
 	outline:none;
+	border:1px solid green;
+
 }
 
 
@@ -41,6 +46,7 @@
 
 #display-tweets{
 	margin-top:20px;
+	color:white;
 }
 #display-tweets .logo{
 	padding:3% 5px;
@@ -54,7 +60,8 @@
 }
 
 #display-tweets .row{
-	background-color: rgba(0,0,0,0.8);
+	background-color: rgba(0,0,0,0.9);
+	margin-bottom:20px;
 }
 
 #display-tweets .message{
