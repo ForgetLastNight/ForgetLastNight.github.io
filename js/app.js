@@ -41,11 +41,15 @@ $(document).ready(function(){
 						$.ajax({
 							 //url: "http://forgetlastnight.github.io/",
 						    async:    false,
-						    dataType: "json",
+						    dataType: "text",
 						    data:     {},
 						    success:  function(status) {
+						    	console.log(status);
 						    	window.open(auth_url);
-						    }
+						    },
+								error: function (err) {
+									console.log(err);
+								}
 						});
 				   }
 				);
