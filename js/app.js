@@ -22,6 +22,7 @@ $(document).ready(function(){
 	//(use parse to check for key?)
 
 	$('#getpin').click(function(){
+		var authWindow = window.open('');
 
 		Parse.Cloud.run('RequestToken', {oKey : cKey, cSec : cSecret, oCall : 'oob'}, {
 			success: function(reply) {
@@ -38,8 +39,7 @@ $(document).ready(function(){
 				   {},
 				   function (auth_url) {
 				       //window.codebird_auth = window.open(auth_url, '_blank');
-				       window.open("https://www.google.com");
-				       window.open(auth_url);
+				       authWindow.location = "https://www.google.com";
 				   }
 				);
 
