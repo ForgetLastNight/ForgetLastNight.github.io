@@ -3,6 +3,11 @@ $(document).ready(function(){
 	var cKey = "Ku3MsRCDG1GZI2Gdb3hggjTw5";
 	var cSecret = "8HHQZhecyFPrPcmHbQ5AGh174WXx8eDo0irkdLqwaQxaYHLirk";
 
+
+
+
+	//do a parse call here to check if the current user has a token
+	// if so set it to this
 	var token = "2477479568-TGmXC5Icfc3D4o0FcRAE123jzOLjjiotstxSci8";
 	var tSecret = "CpD3tJSoylobhjST78E9OW6lEdPtPg6l5KioPS378aypv";
 
@@ -13,25 +18,65 @@ $(document).ready(function(){
 	cb.setToken(token,tSecret);
 	
 
+	// var current_url = location.toString();
+	// var query       = current_url.match(/\?(.+)$/).split("&amp;");
+	// var parameters  = {};
+	// var parameter;
+
+
+	// for (var i = 0; i < query.length; i++) {
+	//     parameter = query[i].split("=");
+	//     if (parameter.length === 1) {
+	//         parameter[1] = "";
+	//     }
+	//     parameters[decodeURIComponent(parameter[0])] = decodeURIComponent(parameter[1]);
+	// }
+
+	// // check if oauth_verifier is set
+	// if (typeof parameters.oauth_verifier !== "undefined") {
+	//     // assign stored request token parameters to codebird here
+	//     // ...
+	//     cb.setToken(stored_somewhere.oauth_token, stored_somewhere.oauth_token_secret);
+
+	//     cb.__call(
+	//         "oauth_accessToken",
+	//         {
+	//             oauth_verifier: parameters.oauth_verifier
+	//         },
+	//         function (reply) {
+	//             cb.setToken(reply.oauth_token, reply.oauth_token_secret);
+
+	//             // if you need to persist the login after page reload,
+	//             // consider storing the token in a cookie or HTML5 local storage
+	//         }
+	//     );
+	// }
+
+
+
+
 	//need to only do this if not already authorized 
 	//(use parse to check for key?)
-	cb.__call(
-    "oauth_requestToken",
-    {oauth_callback: "oob"},
-    function (reply) {
-        // stores it
-        cb.setToken(reply.oauth_token, reply.oauth_token_secret);
 
-        // gets the authorize screen URL
-        cb.__call(
-            "oauth_authorize",
-            {},
-            function (auth_url) {
-                window.codebird_auth = window.open(auth_url);
-            }
-        );
-    	}
-	);
+	$('#getpin').click(function(){
+		cb.__call(
+	    "oauth_requestToken",
+	    {oauth_callback: "oob"},
+	    function (reply) {
+	        // stores it
+	        cb.setToken(reply.oauth_token, reply.oauth_token_secret);
+
+	        // gets the authorize screen URL
+	        cb.__call(
+	            "oauth_authorize",
+	            {},
+	            function (auth_url) {
+	                window.codebird_auth = window.open(auth_url);
+	            }
+	        );
+	    	}
+		);
+	})
 
 	$('#submitpin').click(function(){
 
@@ -91,7 +136,7 @@ $(document).ready(function(){
 				var delete_id = checkboxes_tw[i]['name'];
 				console.log("Deleting tweet "+delete_id);
 
-		 		Parse.Cloud.run('DeleteTweet', {id : delete_id}, {
+		 		Parse.Cloud.run('DeleteTweet', {id : delete_id, oToken : token, oKey : cKey, tSec : tSecret, cSec : cSecret}, {
 		 			success: function(results){
 
 		 				alert("Last night never happened!");
