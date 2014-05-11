@@ -1,33 +1,23 @@
+
 .col-xs-6{text-align: center;}
 #forget{
 	font-size: 20px;
 	font-weight: bold;
-	width:100px;
-	height:100px;
-	border-radius: 50%;
+	width:100%;
 	outline:none;
 }
 
-#forget span{
-	position: relative;
-	top:25px
-}
+
 
 #get{
 	font-size: 20px;
 	font-weight: bold;
-	height:100px;
-	width: 100px;
-	border-radius: 50%;
+	width: 100%;
 	outline:none;
 }
 
-#get span{
-	position: relative;
-	top:25px;
-}
 
-.fb-box{
+/*.fb-box{
   width:100%;
 
 }
@@ -47,4 +37,31 @@
   height:30px;
 }
 
-.fb-time{padding-left:5px;}
+.fb-time{padding-left:5px;}*/
+
+#display-tweets{
+	margin-top:20px;
+}
+#display-tweets .logo{
+	padding:3% 5px;
+
+}
+
+.logo_tw{
+	width:70%;
+	height:70%;
+	margin:10%;
+}
+
+#display-tweets .row{
+	background-color: rgba(0,0,0,0.8);
+}
+
+#display-tweets .message{
+	padding:3% 8px;
+}
+
+.delete-box{
+	padding:7% 0px;
+	text-align: center;
+}
