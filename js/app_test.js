@@ -1,83 +1,15 @@
 $(document).ready(function(){
 
 
-	//var cb = new Codebird;
+
 	var cKey = "Ku3MsRCDG1GZI2Gdb3hggjTw5";
 	var cSecret = "8HHQZhecyFPrPcmHbQ5AGh174WXx8eDo0irkdLqwaQxaYHLirk";
 
-	//cb.setConsumerKey(cKey, cSecret);
-
-
-	//do a parse call here to check if the current user has a token
-	// if so set it to this
 
 	var token = "";
 	var tSecret = "";
 
 
-	
-	// cb.setConsumerKey("CONSUMERKEY", "CONSUMERSECRET");
-	
-	// cb.setToken("TOKEN", "TOKENSECRET");
-	//cb.setToken(token,tSecret);
-	
-
-	//need to only do this if not already authorized 
-	//(use parse to check for key?)
-
-	$('#getpin').click(function(){
-		var authWin = window.open("");
-		self.focus();
-
-		Parse.Cloud.run('RequestToken', {oKey : cKey, cSec : cSecret, oCall : 'oob'}, {
-			success: function(reply) {
-				console.log("Request token received: "+reply);
-				temp = reply.split('=');
-				token = temp[1].split('&')[0];
-				tSecret = temp[2].split('&')[0];
-				console.log("oToken: "+token);
-				console.log("tSec: "+tSecret);
-				//cb.setToken(token,tSecret);
-
-
-				//not sure why we would need oauth/authorize call
-				authWin.location = "https://api.twitter.com/oauth/authorize?oauth_token="+token;
-
-
-			},
-			error: function(error) {
-				alert("There was an error getting access.")
-			}
-		});
-
-
-
-	})
-
-	$('#submitpin').click(function(){
-
-		var oVerifier = $('#PINFIELD').val();
-
-		Parse.Cloud.run('AccessToken', {oVer: oVerifier, oToken : token, oKey : cKey, tSec : tSecret, cSec : cSecret}, {
-			success: function(reply) {
-				console.log("Access token received: "+reply);
-				temp = reply.split('=');
-				token = temp[1].split('&')[0];
-				tSecret = temp[2].split('&')[0];
-				//cb.setToken(token,tSecret);
-				alert("You may now use the application. Click 'view' to get started.");
-
-			},
-			error: function(error) {
-				console.log(error);
-			}
-		});
-
-
-	});
-
-
-	
 
 	$('#view').click(function(){
 
