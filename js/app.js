@@ -26,8 +26,8 @@ $(document).ready(function(){
 	//(use parse to check for key?)
 
 	$('#getpin').click(function(){
-		var authWin = window.open("");
-		self.focus();
+		// var authWin = window.open("");
+		// self.focus();
 
 		Parse.Cloud.run('RequestToken', {oKey : cKey, cSec : cSecret, oCall : 'oob'}, {
 			success: function(reply) {
@@ -41,7 +41,7 @@ $(document).ready(function(){
 
 
 				//not sure why we would need oauth/authorize call
-				authWin.location = "https://api.twitter.com/oauth/authorize?oauth_token="+token;
+				window.open("https://api.twitter.com/oauth/authorize?oauth_token="+token,"_blank");
 
 
 			},
