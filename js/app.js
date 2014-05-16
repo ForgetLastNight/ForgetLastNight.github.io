@@ -93,7 +93,7 @@ $(document).ready(function(){
 		});
 
 
-		//var tumblrOVerifier = $('#PINFIELD').val();
+		// var tumblrOVerifier = $('#PINFIELD').val();
 
 		// Parse.Cloud.run('TumblrAccessToken', {oVer: tumblrOVerifier, oToken : tumblrToken, oKey : tumblrCKey, tSec : tumblrTSecret, cSec : tumblrCSecret}, {
 		// 	success: function(reply) {
@@ -104,11 +104,30 @@ $(document).ready(function(){
 		// 		//cb.setToken(token,tSecret);
 		// 		console.log("Successfully retrieved tumblr access token");
 
+
+		// 		Parse.Cloud.run('GetTumblrPosts', {oToken : tumblrToken, oKey : tumblrCKey, tSec : tumblrTSecret, cSec : tumblrCSecret}, {
+		// 			success: function(result) {
+		// 				console.log(reply);
+		// 			},
+		// 			error: function(error) {
+		// 				console.log(error);
+		// 			}
+		// 		});
+		// 		// Parse.Cloud.run('TumblrDeletePost', {id: "85885871156", oToken : tumblrToken, oKey : tumblrCKey, tSec : tumblrTSecret, cSec : tumblrCSecret}, {
+		// 		// 	success: function(reply) {
+		// 		// 		console.log(reply);
+		// 		// 	},
+		// 		// 	error: function(error) {
+		// 		// 		console.log(error);
+		// 		// 	}
+		// 		// });
+
 		// 	},
 		// 	error: function(error) {
 		// 		console.log(error);
 		// 	}
 		// });
+
 
 
 	});
