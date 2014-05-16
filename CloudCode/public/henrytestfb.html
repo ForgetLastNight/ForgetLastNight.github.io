@@ -23,7 +23,6 @@
 
   </head>
 <body>
- <img src='https://pic.twitter.com/KszoD7x40Y'/>
   <div id="fb-root"></div>
 
 
@@ -81,8 +80,6 @@
           }
         }
     );
-
-
   }
 
 
@@ -99,6 +96,7 @@
             else {
               for (var j = 0; j < results['data'].length-2; j++)
               {
+                console.log(results);
                 var time = prettyDate(results['data'][j]['created_time']);
                 var type = results['data'][j]['type'];
                 type = type.charAt(0).toUpperCase() + type.slice(1);
