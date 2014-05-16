@@ -177,13 +177,24 @@ $(document).ready(function(){
 
 	$('#getTumblr').click(function(){
 		var tumblr = require('./tumblr.js-master/lib/tumblr.js');
+
+		var oauth = OAuth({
+		    consumer: {
+		        public: 'dHGh4mCQc2AdnxuvwBEttGsTHh0YuM0ovYWchcLQarvKBgdrk7',
+		        secret: 'dHGh4mCQc2AdnxuvwBEttGsTHh0YuM0ovYWchcLQarvKBgdrk7'
+		    }
+		});
+		
+		myOAuth = oauth.authorize(request, token);
+		console.log(myOAuth);
+
 		var client = tumblr.createClient({
 		  consumer_key: 'dHGh4mCQc2AdnxuvwBEttGsTHh0YuM0ovYWchcLQarvKBgdrk7',
 		  consumer_secret: 'dHGh4mCQc2AdnxuvwBEttGsTHh0YuM0ovYWchcLQarvKBgdrk7',
 		  // token: '<oauth token>',
 		  // token_secret: '<oauth token secret>'
 		});
-		
+
 		client.userInfo(function (err, data) {
 		    data.user.blogs.forEach(function (blog) {
 		        console.log(blog.name);
