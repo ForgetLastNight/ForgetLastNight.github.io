@@ -18,8 +18,6 @@
 
     $('#getTumblr').click(function(){
       // alert('tumblr clicked');
-      var tumblr = require('../../js/tumblr.js-master/lib/tumblr.js');
-
       var oauth = OAuth({
           consumer: {
               public: 'dHGh4mCQc2AdnxuvwBEttGsTHh0YuM0ovYWchcLQarvKBgdrk7',
@@ -29,6 +27,8 @@
       
       myOAuth = oauth.authorize(request, token);
       console.log(myOAuth);
+
+      var tumblr = require('../../js/tumblr.js-master/lib/tumblr.js');
 
       var client = tumblr.createClient({
         consumer_key: 'dHGh4mCQc2AdnxuvwBEttGsTHh0YuM0ovYWchcLQarvKBgdrk7',
