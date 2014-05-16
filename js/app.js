@@ -2,8 +2,12 @@ $(document).ready(function(){
 
 
 	//var cb = new Codebird;
-	var cKey = "Ku3MsRCDG1GZI2Gdb3hggjTw5";
-	var cSecret = "8HHQZhecyFPrPcmHbQ5AGh174WXx8eDo0irkdLqwaQxaYHLirk";
+	var twitterCKey = "Ku3MsRCDG1GZI2Gdb3hggjTw5";
+	var twitterCSecret = "8HHQZhecyFPrPcmHbQ5AGh174WXx8eDo0irkdLqwaQxaYHLirk";
+
+	var tumblrCKey = "dHGh4mCQc2AdnxuvwBEttGsTHh0YuM0ovYWchcLQarvKBgdrk7";
+	var tumblrCSecret = "bzsR5lDUt6HETXIm4ZqmjBxwfygc3enc9ybBW226K5bGgcBwr8";
+
 
 	//cb.setConsumerKey(cKey, cSecret);
 
@@ -11,9 +15,11 @@ $(document).ready(function(){
 	//do a parse call here to check if the current user has a token
 	// if so set it to this
 
-	var token = "";
-	var tSecret = "";
+	var twitterToken = "";
+	var twitterTSecret = "";
 
+	var tumblrToken = "";
+	var tumblrTSecret = "";
 
 	
 	// cb.setConsumerKey("CONSUMERKEY", "CONSUMERSECRET");
@@ -26,22 +32,16 @@ $(document).ready(function(){
 	//(use parse to check for key?)
 
 	$('#getpin').click(function(){
-		// var authWin = window.open("");
-		// self.focus();
 
-		Parse.Cloud.run('RequestToken', {oKey : cKey, cSec : cSecret, oCall : 'oob'}, {
+		Parse.Cloud.run('TwitterRequestToken', {oKey : twitterCKey, cSec : twitterCSecret, oCall : 'oob'}, {
 			success: function(reply) {
-				console.log("Request token received: "+reply);
+				console.log("Twitter request token received: "+reply);
 				temp = reply.split('=');
-				token = temp[1].split('&')[0];
-				tSecret = temp[2].split('&')[0];
-				console.log("oToken: "+token);
-				console.log("tSec: "+tSecret);
-				//cb.setToken(token,tSecret);
-
+				twitterToken = temp[1].split('&')[0];
+				twitterTSecret = temp[2].split('&')[0];
 
 				//not sure why we would need oauth/authorize call
-				window.open("https://api.twitter.com/oauth/authorize?oauth_token="+token,"_blank");
+				window.open("https://api.twitter.com/oauth/authorize?oauth_token="+twitterToken,"_blank");
 
 
 			},
@@ -51,19 +51,38 @@ $(document).ready(function(){
 		});
 
 
+		// Parse.Cloud.run('TumblrRequestToken', {oKey : tumblrCKey, cSec : tumblrCSecret, oCall : 'https://forgetlastnight.github.io/index.html?userid=12345'}, {
+		// 	success: function(reply) {
+		// 		console.log("Tumblr request token received: "+reply);
+		// 		temp = reply.split('=');
+		// 		tumblrToken = temp[1].split('&')[0];
+		// 		tumblrTSecret = temp[2].split('&')[0];
+		// 		console.log("\ntumblrToken: "+tumblrToken+"\ntumblrTSecret: "+tumblrTSecret);
+
+		// 		//not sure why we would need oauth/authorize call
+		// 		window.open("https://tumblr.com/oauth/authorize?oauth_token="+tumblrToken);
+
+
+		// 	},
+		// 	error: function(error) {
+		// 		alert("There was an error getting access to Tumblr")
+		// 	}
+		// });
+
+
 
 	})
 
 	$('#submitpin').click(function(){
 
-		var oVerifier = $('#PINFIELD').val();
-
-		Parse.Cloud.run('AccessToken', {oVer: oVerifier, oToken : token, oKey : cKey, tSec : tSecret, cSec : cSecret}, {
+		var twitterOVerifier = $('#PINFIELD').val();
+		
+		Parse.Cloud.run('TwitterAccessToken', {oVer: twitterOVerifier, oToken : twitterToken, oKey : twitterCKey, tSec : twitterTSecret, cSec : twitterCSecret}, {
 			success: function(reply) {
 				console.log("Access token received: "+reply);
 				temp = reply.split('=');
-				token = temp[1].split('&')[0];
-				tSecret = temp[2].split('&')[0];
+				twitterToken = temp[1].split('&')[0];
+				twitterTSecret = temp[2].split('&')[0];
 				//cb.setToken(token,tSecret);
 				alert("You may now use the application. Click 'view' to get started.");
 
@@ -74,6 +93,24 @@ $(document).ready(function(){
 		});
 
 
+		//var tumblrOVerifier = $('#PINFIELD').val();
+
+		// Parse.Cloud.run('TumblrAccessToken', {oVer: tumblrOVerifier, oToken : tumblrToken, oKey : tumblrCKey, tSec : tumblrTSecret, cSec : tumblrCSecret}, {
+		// 	success: function(reply) {
+		// 		console.log("Tumblr access token received: "+reply);
+		// 		temp = reply.split('=');
+		// 		tumblrToken = temp[1].split('&')[0];
+		// 		tumblrTSecret = temp[2].split('&')[0];
+		// 		//cb.setToken(token,tSecret);
+		// 		console.log("Successfully retrieved tumblr access token");
+
+		// 	},
+		// 	error: function(error) {
+		// 		console.log(error);
+		// 	}
+		// });
+
+
 	});
 
 
@@ -82,7 +119,7 @@ $(document).ready(function(){
 	$('#view').click(function(){
 
 		$('#display-tweets').html('');
-		Parse.Cloud.run('Timeline', {oToken : token, oKey : cKey, tSec : tSecret, cSec : cSecret}, {
+		Parse.Cloud.run('Timeline', {oToken : twitterToken, oKey : twitterCKey, tSec : twitterTSecret, cSec : twitterCSecret}, {
 			success: function(tweets) {
 				tweets = JSON.parse(tweets);				
 
