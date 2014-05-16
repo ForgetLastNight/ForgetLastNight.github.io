@@ -1,71 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <script type="text/javascript" src="../../js/header.js"></script>
-    <script type="text/javascript" src='../../js/pretty.js'></script>
+    <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/hmac-sha1.js"></script>
+    <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/components/enc-base64-min.js"></script>
+    <script src="../../js/oauth-1.0a-master/oauth-1.0a.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js'></script>
+  </head>
 
-    <link href='css/index.css' rel='stylesheet'>
-
-    <center>
-      <button style='color:black;margin-bottom:10px;'type='button' id='getpin'>1. Click here to start</button><br>
-      <input style='width:100px;color:black;' type='text' id='PINFIELD'></input>
-      <button style='color:black;'type='button' id='submitpin'>2. Submit PIN</button>
-      <hr/>
-  </center>
-
-
-
-  <div class='row'>
-    <div class='col-xs-3'></div>
-    <div  style='color:black;padding-bottom:20px;' class='col-xs-6'>
-      LAST <input id='time-range' value='48' style='width:50px;'> HOURS
-    </div>
-    <div class='col-xs-3'></div>
-  </div>
-
+<body>
 
   <div id="tumblr">
     <button id="getTumblr" type="button">Get Tumblr Posts</button>
     <div id="tumblrData"></div>
   </div>
 
+  <script type="text/javascript">
 
-  <div class='row'>
-    <div class='col-xs-2'></div>
-    <div class='col-xs-8'>
-      <div  id="view" type="button" class="btn btn-lg btn-success"><span>View</span></div>
-    </div>
-    <div class='col-xs-2'></div>
-  </div>
-  
-  
-  <div id='display-tweets'>
+    $('#getTumblr').click(function(){
+      // alert('tumblr clicked');
+      var oauth = OAuth({
+          consumer: {
+              public: 'dHGh4mCQc2AdnxuvwBEttGsTHh0YuM0ovYWchcLQarvKBgdrk7',
+              secret: 'bzsR5lDUt6HETXIm4ZqmjBxwfygc3enc9ybBW226K5bGgcBwr8'
+          }
+      });
+      
+      myOAuth = oauth.authorize(request, token);
+      console.log(myOAuth);
 
-  </div>
+      var tumblr = require('../../js/tumblr.js-master/lib/tumblr.js');
 
+      var client = tumblr.createClient({
+        consumer_key: 'dHGh4mCQc2AdnxuvwBEttGsTHh0YuM0ovYWchcLQarvKBgdrk7',
+        consumer_secret: 'bzsR5lDUt6HETXIm4ZqmjBxwfygc3enc9ybBW226K5bGgcBwr8',
+        // token: '<oauth token>',
+        // token_secret: '<oauth token secret>'
+      });
 
-  <div class='row' style='padding-top:20px;'>
-    <div class='col-xs-2'></div>
-    <div class='col-xs-8'>
-      <div  id="forget" type="button" class="btn btn-lg btn-danger"><span>Forget Selected</span></div>
-    </div>
-    <div class='col-xs-2'></div>
+      client.userInfo(function (err, data) {
+          data.user.blogs.forEach(function (blog) {
+              console.log(blog.name);
+          });
+      });
+    });
 
-  </div>
-
-    
-
-
-    <script type="text/javascript" src="../../js/footer.js"></script>
- 
-<!--    <div class='row' >
-      <div class='col-xs-2 logo'>
-        <img class='logo_tw' src='twitter_logo.png'/>
-      </div>
-      <div class='col-xs-9 message'>
-        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et ma</p>
-      </div>
-      <div class='col-xs-1 delete-box'>
-        <input type='checkbox' name='123456789'/>
-      </div>
-    </div> -->
+  </script>
+</body>
+</html>
