@@ -84,31 +84,32 @@ $(document).ready(function(){
 		$('#display-tweets').html('');
 		Parse.Cloud.run('Timeline', {oToken : token, oKey : cKey, tSec : tSecret, cSec : cSecret}, {
 			success: function(tweets) {
-				tweets = JSON.parse(tweets);
-				console.log(tweets);
-
-				
+				tweets = JSON.parse(tweets);				
 
 				for(i=0;i<tweets.length;i++)
 				{
 					//turn this into something better
 					var time = tweets[i]['created_at'].toString();
-
+					time = time.substring(0,20);
 					var message = tweets[i]['text'];
 					var id = tweets[i]['id_str'];
 					var hours = $('#time-range').val();  //change hours
+					var imghtml = '';
+					if(tweets[i]['entities']['media'])
+					{
+						imgsrc = tweets[i]['entities']['media'][0]['media_url'];
+						imghtml = "<img class='twitpic' src='"+imgsrc+"'/><br/>";
+					}
 
 					if(inRange(tweets[i],hours))
 					{
-						var tweetHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='twitter_logo.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time+"</span><br/>"+message+"</p></div><div class='col-xs-1 delete-box'><input type='checkbox' name='"+id+"'/></div></div>";
+						var tweetHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='twitter_logo.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time+"</span><br/>"+imghtml+message+"</p></div><div class='col-xs-1 delete-box'><input type='checkbox' name='"+id+"'/></div></div>";
 						$('#display-tweets').append(tweetHTML);
 					}
 			    }
 			},
 			error: function(error) {
 				alert("There was an error getting tweets.");
-				var hours = $('#time-range').val();  //change hours
-				console.log(hours);				
 			}
 		});
 

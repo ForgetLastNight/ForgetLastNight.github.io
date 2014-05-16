@@ -1,14 +1,17 @@
 $(document).ready(function(){
 
-
+	
 
 	var cKey = "Ku3MsRCDG1GZI2Gdb3hggjTw5";
 	var cSecret = "8HHQZhecyFPrPcmHbQ5AGh174WXx8eDo0irkdLqwaQxaYHLirk";
 
 
-	var token = "164383734-ig2AIhdUhXPsO0APb8WifSub4CNq8ogmwyNQK86v";
-	var tSecret = "3g98eLAZJvGbIvcRnVC4xMjCW8f5wZ2kvFxhxAfDpooOz";
+	var token = "2477479568-98cCXgJEWokohC7vFPbRiTDBTUEjgrZBEJk5S6J";
+	var tSecret = "iGTJ60sZuELJybNfsvmgFGekI9mgx2soHCrkIbGSDZf1J";
 
+	var cb = new Codebird;
+	cb.setConsumerKey(cKey, cSecret);
+	cb.setToken(token,tSecret);
 
 
 	$('#view').click(function(){
@@ -16,31 +19,34 @@ $(document).ready(function(){
 		$('#display-tweets').html('');
 		Parse.Cloud.run('Timeline', {oToken : token, oKey : cKey, tSec : tSecret, cSec : cSecret}, {
 			success: function(tweets) {
-				tweets = JSON.parse(tweets);
-				console.log(tweets);
-
-				
+				tweets = JSON.parse(tweets);		
 
 				for(i=0;i<tweets.length;i++)
 				{
 					//turn this into something better
 					var time = tweets[i]['created_at'].toString();
+					time = time.substring(0,20);
 
 					var message = tweets[i]['text'];
 					var id = tweets[i]['id_str'];
 					var hours = $('#time-range').val();  //change hours
+					var imghtml = '';
+					if(tweets[i]['entities']['media'])
+					{
+						imgsrc = tweets[i]['entities']['media'][0]['media_url'];
+						imghtml = "<img class='twitpic' src='"+imgsrc+"'/><br/>";
+					}
 
 					if(inRange(tweets[i],hours))
 					{
-						var tweetHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='twitter_logo.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time+"</span><br/>"+message+"</p></div><div class='col-xs-1 delete-box'><input type='checkbox' name='"+id+"'/></div></div>";
+						var tweetHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='twitter_logo.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time+"</span><br/>"+imghtml+message+"</p></div><div class='col-xs-1 delete-box'><input type='checkbox' name='"+id+"'/></div></div>";
 						$('#display-tweets').append(tweetHTML);
 					}
 			    }
 			},
 			error: function(error) {
 				alert("There was an error getting tweets.");
-				var hours = $('#time-range').val();  //change hours
-				console.log(hours);				
+	
 			}
 		});
 
@@ -88,7 +94,7 @@ $(document).ready(function(){
 		var time = tweet['created_at'].toString();
 		//console.log(time);
 		var s = time.split(" ",6);
-		console.log(s[1]+" "+s[2]+", "+s[5]+" "+s[3]);
+		// console.log(s[1]+" "+s[2]+", "+s[5]+" "+s[3]);
 		// var s2 = s[3].split(":");
 		// console.log(s2[0],s2[1],s2[2]);
 		var s3 = new Date(s[1]+" "+s[2]+", "+s[5]+" "+s[3]);
@@ -98,8 +104,6 @@ $(document).ready(function(){
 		var seconds_difference =  s4 - last_x_hours_to_second;
 
 		var x_hour_before = new Date(seconds_difference);
-
-
 		
 		if( currentTime - last_x_hours_to_second < s4  ) return true;
 		else return false;
@@ -133,21 +137,21 @@ $(document).ready(function(){
 		// 		console.log("Tweets received. Requesting embed service...");
 		// 		for(i=0;i<tweetIDs.length;i++)
 		// 		{
-		// 			params = {
+					// params = {
 
-		// 				id : tweetIDs[i]
+					// 	id : tweetIDs[i]
 
-		// 			};
+					// };
 
-		// 			cb.__call(
-		// 				"statuses_oembed",
-		// 				params,
-		// 				function (reply) {
-		// 					display = reply['html'];
-		// 					display = display.replace("//platform.twitter.com/widgets.js","https://platform.twitter.com/widgets.js");
-		// 					$('#display-tweets').append(display);
-		// 				}
-		// 			);
+					// cb.__call(
+					// 	"statuses_oembed",
+					// 	params,
+					// 	function (reply) {
+					// 		display = reply['html'];
+					// 		display = display.replace("//platform.twitter.com/widgets.js","https://platform.twitter.com/widgets.js");
+					// 		$('#display-tweets').append(display);
+					// 	}
+					// );
 		// 		}
 		// 	}
 
