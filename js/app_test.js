@@ -6,13 +6,14 @@ $(document).ready(function(){
 	var cSecret = "8HHQZhecyFPrPcmHbQ5AGh174WXx8eDo0irkdLqwaQxaYHLirk";
 
 
-	var token = "";
-	var tSecret = "";
+	var token = "164383734-ig2AIhdUhXPsO0APb8WifSub4CNq8ogmwyNQK86v";
+	var tSecret = "3g98eLAZJvGbIvcRnVC4xMjCW8f5wZ2kvFxhxAfDpooOz";
 
 
 
 	$('#view').click(function(){
 
+		$('#display-tweets').html('');
 		Parse.Cloud.run('Timeline', {oToken : token, oKey : cKey, tSec : tSecret, cSec : cSecret}, {
 			success: function(tweets) {
 				tweets = JSON.parse(tweets);

@@ -81,6 +81,7 @@ $(document).ready(function(){
 
 	$('#view').click(function(){
 
+		$('#display-tweets').html('');
 		Parse.Cloud.run('Timeline', {oToken : token, oKey : cKey, tSec : tSecret, cSec : cSecret}, {
 			success: function(tweets) {
 				tweets = JSON.parse(tweets);
