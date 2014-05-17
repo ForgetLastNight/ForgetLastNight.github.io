@@ -18,13 +18,37 @@
 
     $('#getTumblr').click(function(){
       // alert('tumblr clicked');
+
+      var request = require('request');
+      var OAuth   = require('oauth-1.0a');
+
       var oauth = OAuth({
           consumer: {
               public: 'dHGh4mCQc2AdnxuvwBEttGsTHh0YuM0ovYWchcLQarvKBgdrk7',
               secret: 'bzsR5lDUt6HETXIm4ZqmjBxwfygc3enc9ybBW226K5bGgcBwr8'
-          }
+          },
+          signature_method: 'HMAC-SHA1'
       });
-      
+
+      var request_data = {
+          url: 'api.tumblr.com/v2/blog/orangeteam394.tumblr.com/info?api_key=dHGh4mCQc2AdnxuvwBEttGsTHh0YuM0ovYWchcLQarvKBgdrk7',
+          method: 'GET'
+      };
+
+      var token = {
+              public: 'dHGh4mCQc2AdnxuvwBEttGsTHh0YuM0ovYWchcLQarvKBgdrk7',
+              secret: 'bzsR5lDUt6HETXIm4ZqmjBxwfygc3enc9ybBW226K5bGgcBwr8'
+      };
+
+      request({
+          url: request_data.url,
+          method: request_data.method,
+          form: oauth.authorize(request_data, token)
+      }, function(error, response, body) {
+          //process your data here
+          console.log(response);
+      });
+
       myOAuth = oauth.authorize(request, token);
       console.log(myOAuth);
 
