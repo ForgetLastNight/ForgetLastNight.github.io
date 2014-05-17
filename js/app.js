@@ -1,15 +1,10 @@
 $(document).ready(function(){
 
-
-	//var cb = new Codebird;
 	var twitterCKey = "Ku3MsRCDG1GZI2Gdb3hggjTw5";
 	var twitterCSecret = "8HHQZhecyFPrPcmHbQ5AGh174WXx8eDo0irkdLqwaQxaYHLirk";
 
 	var tumblrCKey = "dHGh4mCQc2AdnxuvwBEttGsTHh0YuM0ovYWchcLQarvKBgdrk7";
 	var tumblrCSecret = "bzsR5lDUt6HETXIm4ZqmjBxwfygc3enc9ybBW226K5bGgcBwr8";
-
-
-	//cb.setConsumerKey(cKey, cSecret);
 
 
 	//do a parse call here to check if the current user has a token
@@ -20,12 +15,6 @@ $(document).ready(function(){
 
 	var tumblrToken = "";
 	var tumblrTSecret = "";
-
-	
-	// cb.setConsumerKey("CONSUMERKEY", "CONSUMERSECRET");
-	
-	// cb.setToken("TOKEN", "TOKENSECRET");
-	//cb.setToken(token,tSecret);
 	
 
 	//need to only do this if not already authorized 
@@ -35,7 +24,6 @@ $(document).ready(function(){
 
 		Parse.Cloud.run('TwitterRequestToken', {oKey : twitterCKey, cSec : twitterCSecret, oCall : 'oob'}, {
 			success: function(reply) {
-				console.log("Twitter request token received: "+reply);
 				temp = reply.split('=');
 				twitterToken = temp[1].split('&')[0];
 				twitterTSecret = temp[2].split('&')[0];
@@ -51,82 +39,63 @@ $(document).ready(function(){
 		});
 
 
-		// Parse.Cloud.run('TumblrRequestToken', {oKey : tumblrCKey, cSec : tumblrCSecret, oCall : 'https://forgetlastnight.github.io/index.html?userid=12345'}, {
-		// 	success: function(reply) {
-		// 		console.log("Tumblr request token received: "+reply);
-		// 		temp = reply.split('=');
-		// 		tumblrToken = temp[1].split('&')[0];
-		// 		tumblrTSecret = temp[2].split('&')[0];
-		// 		console.log("\ntumblrToken: "+tumblrToken+"\ntumblrTSecret: "+tumblrTSecret);
+		Parse.Cloud.run('TumblrRequestToken', {oKey : tumblrCKey, cSec : tumblrCSecret, oCall : 'https://forgetlastnight.github.io/index.html?userid=12345'}, {
+			success: function(reply) {
+				temp = reply.split('=');
+				tumblrToken = temp[1].split('&')[0];
+				tumblrTSecret = temp[2].split('&')[0];
 
-		// 		//not sure why we would need oauth/authorize call
-		// 		window.open("https://tumblr.com/oauth/authorize?oauth_token="+tumblrToken);
+				//not sure why we would need oauth/authorize call
+				window.open("https://tumblr.com/oauth/authorize?oauth_token="+tumblrToken);
 
 
-		// 	},
-		// 	error: function(error) {
-		// 		alert("There was an error getting access to Tumblr")
-		// 	}
-		// });
+			},
+			error: function(error) {
+				alert("There was an error getting access to Tumblr")
+			}
+		});
 
 
 
 	})
 
-	$('#submitpin').click(function(){
+	$('#submit-twitter').click(function(){
 
-		var twitterOVerifier = $('#PINFIELD').val();
+		var twitterOVerifier = $('#pinfield-twitter').val();
 		
 		Parse.Cloud.run('TwitterAccessToken', {oVer: twitterOVerifier, oToken : twitterToken, oKey : twitterCKey, tSec : twitterTSecret, cSec : twitterCSecret}, {
 			success: function(reply) {
-				console.log("Access token received: "+reply);
 				temp = reply.split('=');
 				twitterToken = temp[1].split('&')[0];
 				twitterTSecret = temp[2].split('&')[0];
-				//cb.setToken(token,tSecret);
-				alert("You may now use the application. Click 'view' to get started.");
+
+				alert("Successfully connected to Twitter.");
 
 			},
 			error: function(error) {
 				console.log(error);
 			}
 		});
+	});
 
 
-		// var tumblrOVerifier = $('#PINFIELD').val();
+	$('#submit-tumblr').click(function(){
 
-		// Parse.Cloud.run('TumblrAccessToken', {oVer: tumblrOVerifier, oToken : tumblrToken, oKey : tumblrCKey, tSec : tumblrTSecret, cSec : tumblrCSecret}, {
-		// 	success: function(reply) {
-		// 		console.log("Tumblr access token received: "+reply);
-		// 		temp = reply.split('=');
-		// 		tumblrToken = temp[1].split('&')[0];
-		// 		tumblrTSecret = temp[2].split('&')[0];
-		// 		//cb.setToken(token,tSecret);
-		// 		console.log("Successfully retrieved tumblr access token");
+		var tumblrOVerifier = $('#verif-tumblr').val();
 
+		Parse.Cloud.run('TumblrAccessToken', {oVer: tumblrOVerifier, oToken : tumblrToken, oKey : tumblrCKey, tSec : tumblrTSecret, cSec : tumblrCSecret}, {
+			success: function(reply) {
+				temp = reply.split('=');
+				tumblrToken = temp[1].split('&')[0];
+				tumblrTSecret = temp[2].split('&')[0];
 
-		// 		Parse.Cloud.run('GetTumblrPosts', {oToken : tumblrToken, oKey : tumblrCKey, tSec : tumblrTSecret, cSec : tumblrCSecret}, {
-		// 			success: function(result) {
-		// 				console.log(reply);
-		// 			},
-		// 			error: function(error) {
-		// 				console.log(error);
-		// 			}
-		// 		});
-		// 		// Parse.Cloud.run('TumblrDeletePost', {id: "85885871156", oToken : tumblrToken, oKey : tumblrCKey, tSec : tumblrTSecret, cSec : tumblrCSecret}, {
-		// 		// 	success: function(reply) {
-		// 		// 		console.log(reply);
-		// 		// 	},
-		// 		// 	error: function(error) {
-		// 		// 		console.log(error);
-		// 		// 	}
-		// 		// });
+				alert("Successfully connected to Tumblr.");
 
-		// 	},
-		// 	error: function(error) {
-		// 		console.log(error);
-		// 	}
-		// });
+			},
+			error: function(error) {
+				console.log(error);
+			}
+		});
 
 
 
@@ -137,7 +106,8 @@ $(document).ready(function(){
 
 	$('#view').click(function(){
 
-		$('#display-tweets').html('');
+		$('#display-media').html('');
+
 		Parse.Cloud.run('Timeline', {oToken : twitterToken, oKey : twitterCKey, tSec : twitterTSecret, cSec : twitterCSecret}, {
 			success: function(tweets) {
 				tweets = JSON.parse(tweets);				
@@ -159,8 +129,8 @@ $(document).ready(function(){
 
 					if(inRange(tweets[i],hours))
 					{
-						var tweetHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='twitter_logo.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time+"</span><br/>"+imghtml+message+"</p></div><div class='col-xs-1 delete-box'><input type='checkbox' name='"+id+"'/></div></div>";
-						$('#display-tweets').append(tweetHTML);
+						var tweetHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='twitter_logo.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time+"</span><br/>"+imghtml+message+"</p></div><div class='col-xs-1 delete-box delete-twitter'><input type='checkbox' name='"+id+"'/></div></div>";
+						$('#display-media').append(tweetHTML);
 					}
 			    }
 			},
@@ -169,34 +139,95 @@ $(document).ready(function(){
 			}
 		});
 
+		
+		Parse.Cloud.run('GetTumblrUserInfo', {oToken : tumblrToken, oKey : tumblrCKey, tSec : tumblrTSecret, cSec : tumblrCSecret}, {
+			success: function(result) {
+				info = JSON.parse(result);
+
+				blogname = info.response.user.blogs[0].name+".tumblr.com";
+
+
+				Parse.Cloud.run('GetTumblrPosts', {oToken : tumblrToken, oKey : tumblrCKey, tSec : tumblrTSecret, cSec : tumblrCSecret, bName: blogname}, {
+					success: function(results) {
+						results = JSON.parse(results);
+
+						posts = results['response']['posts'];
+
+
+						for(var i=0;i<posts.length;i++)
+						{
+							time = posts[i]['date'];
+							title=posts[i]['title']?posts[i]['title']:"No Title";
+							message = posts[i]['body'];
+							id = String(posts[i]['id']);
+
+							var tumblrHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='tumblr-logo.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time+"</span><br/>"+title+"<br/>"+message+"</p></div><div class='col-xs-1 delete-box delete-tumblr'><input type='checkbox' name='"+id+"'/></div></div>";
+							$('#display-media').append(tumblrHTML);
+						}
+
+					},
+					error: function(error) {
+						console.log(error);
+					}
+				});
+
+
+			},
+			error: function(error) {
+				console.log(error);
+			}
+		});
+
+
+
 	});
 
 
 	$('#forget').click(function(){
 
-		var checkboxes_tw = $('#display-tweets .delete-box input');
+		var checkboxes_twitter = $('#display-media .delete-twitter input');
 
-		for(var i = 0;i<checkboxes_tw.length;i++)
+		for(var i = 0;i<checkboxes_twitter.length;i++)
 		{
-			if(checkboxes_tw[i]['checked'])
+			if(checkboxes_twitter[i]['checked'])
 			{
-				var delete_id = checkboxes_tw[i]['name'];
-				console.log("Deleting tweet "+delete_id);
+				var delete_id_tw = checkboxes_twitter[i]['name'];
 
-		 		Parse.Cloud.run('DeleteTweet', {id : delete_id, oToken : token, oKey : cKey, tSec : tSecret, cSec : cSecret}, {
+		 		Parse.Cloud.run('DeleteTweet', {id : delete_id_tw, oToken : twitterToken, oKey : twitterCKey, tSec : twitterTSecret, cSec : twitterCSecret}, {
 		 			success: function(results){
 
-		 				alert("Last night never happened!");
+		 				alert("Last night's tweets never happened!");
 
-		 				location.reload();
 		 			},
 		 			error: function(error){
-		 				alert("Failed to delete tweet "+delete_id);
+		 				alert("Failed to delete tweet "+delete_id_tw);
 		 			}
 		 		});
 
+
 			}
 		}
+
+		var checkboxes_tumblr = $('#display-media .delete-tumblr input');
+
+		for(var i = 0;i<checkboxes_tumblr.length;i++)
+		{
+			if(checkboxes_tumblr[i]['checked'])
+			{
+				var delete_id_tm = checkboxes_tumblr[i]['name'];
+
+				Parse.Cloud.run('TumblrDeletePost', {id: delete_id_tm, oToken : tumblrToken, oKey : tumblrCKey, tSec : tumblrTSecret, cSec : tumblrCSecret, bName: blogname}, {
+					success: function(msg) {
+						alert("Last night's tumblr blog never happened!");
+					},
+					error: function(err) {
+						console.log(err);
+					}
+				});
+
+			}
+		}
+
 
 	});
 
@@ -208,14 +239,12 @@ $(document).ready(function(){
 		
 		var x_hours_difference = sec - last_x_hours_to_second;
 		var x_hours_before = new Date(x_hours_difference);
-		//console.log(two_hours_before);
+
 
 		var time = tweet['created_at'].toString();
-		//console.log(time);
+
 		var s = time.split(" ",6);
-		console.log(s[1]+" "+s[2]+", "+s[5]+" "+s[3]);
-		// var s2 = s[3].split(":");
-		// console.log(s2[0],s2[1],s2[2]);
+
 		var s3 = new Date(s[1]+" "+s[2]+", "+s[5]+" "+s[3]);
 		var s4 = s3.valueOf();
 

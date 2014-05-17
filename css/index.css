@@ -46,11 +46,11 @@
 
 .fb-time{padding-left:5px;}*/
 
-#display-tweets{
+#display-media{
 	margin-top:20px;
 	color:white;
 }
-#display-tweets .logo{
+#display-media .logo{
 	padding:3% 5px;
 
 }
@@ -61,12 +61,12 @@
 	margin:10%;
 }
 
-#display-tweets .row{
+#display-media .row{
 	background-color: rgba(0,0,0,0.9);
 	margin-bottom:20px;
 }
 
-#display-tweets .message{
+#display-media .message{
 	padding:3% 8px;
 }
 
