@@ -6,7 +6,14 @@ $(document).ready(function(){
 	var twitterToken = "2491623421-tZQwdxgn7E3Mnx2lYzTZhI8GoeIVfjJIecypdlZ";
 	var twitterTSecret = "Uxe4rUQHkFbYkFDtKsb7tgOVulPJ3pbFqYvjYkQppKEzJ";
 	
-	
+	// check if user has a profile
+	// if (window.localStorage.getItem("FLNuser") === null) {
+	//   //console.log("No FLN user on this device.");
+	//   $('#main').html("<div class='row'><div class='col-xs-2'></div><div class='col-xs-8'><a href='https://www.google.com'><div style='font-size: 20px;font-weight: bold;width: 100%;outline:none;border:1px solid blue;' type='button' class='btn btn-lg btn-primary'><span>Sign Up</span></div></a></div><div class='col-xs-2'></div></div>");
+
+	// }
+	// else console.log(window.localStorage.getItem("FLNuser"));
+
 
 	$('#view').click(function(){
 
