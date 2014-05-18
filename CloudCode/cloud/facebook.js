@@ -78,13 +78,13 @@ $(document).ready(function(){
         'Thanks for logging in, ' + response.name + '!';
     });
     FB.api(
-      'me/news.reads',
-      'get',
+      'me/feed?limit=5',
+      
       function(response) {
-      console.log("successful");
-      console.log(response);    // handle the response
-  }
-);
-  }
+        for (var i=0; i<response.data.length; i++)
+        { 
+         console.log(i + " : " + response.data[i].message);
+        }
+      });
 
 })
