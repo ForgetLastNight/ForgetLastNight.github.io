@@ -77,6 +77,13 @@ $(document).ready(function(){
       document.getElementById('status').innerHTML =
         'Thanks for logging in, ' + response.name + '!';
     });
+    FB.api(
+      'me/news.reads',
+      'get',
+      function(response) {
+      console.log(response);    // handle the response
+  }
+);
   }
 
 })
