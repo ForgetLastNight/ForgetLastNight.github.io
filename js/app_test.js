@@ -3,9 +3,9 @@ $(document).ready(function(){
 	var twitterCKey = "Ku3MsRCDG1GZI2Gdb3hggjTw5";
 	var twitterCSecret = "8HHQZhecyFPrPcmHbQ5AGh174WXx8eDo0irkdLqwaQxaYHLirk";
 
-	var twitterToken = "2491623421-tZQwdxgn7E3Mnx2lYzTZhI8GoeIVfjJIecypdlZ";
-	var twitterTSecret = "Uxe4rUQHkFbYkFDtKsb7tgOVulPJ3pbFqYvjYkQppKEzJ";
-	
+	var tumblrCKey = "dHGh4mCQc2AdnxuvwBEttGsTHh0YuM0ovYWchcLQarvKBgdrk7";
+	var tumblrCSecret = "bzsR5lDUt6HETXIm4ZqmjBxwfygc3enc9ybBW226K5bGgcBwr8";
+
 	// check if user has a profile
 	// if (window.localStorage.getItem("FLNuser") === null) {
 	//   //console.log("No FLN user on this device.");
@@ -14,6 +14,14 @@ $(document).ready(function(){
 	// }
 	// else console.log(window.localStorage.getItem("FLNuser"));
 
+	var twitterToken = "2491623421-tZQwdxgn7E3Mnx2lYzTZhI8GoeIVfjJIecypdlZ";
+	var twitterTSecret = "Uxe4rUQHkFbYkFDtKsb7tgOVulPJ3pbFqYvjYkQppKEzJ";
+
+	var tumblrToken = "b0iM33OcSdxBhZUZL2D3deJjktF4apxoGuXOjB85oGDzUMe4dU";
+	var tumblrTSecret = "e3VliuVgSBefdxglKKfpvBbcrqigIW4TSadcyCPJnonPRz3mLz";
+	
+
+	
 
 	$('#view').click(function(){
 
@@ -50,12 +58,54 @@ $(document).ready(function(){
 			}
 		});
 
+		
+		Parse.Cloud.run('GetTumblrUserInfo', {oToken : tumblrToken, oKey : tumblrCKey, tSec : tumblrTSecret, cSec : tumblrCSecret}, {
+			success: function(result) {
+				info = JSON.parse(result);
+
+				blogname = info.response.user.blogs[0].name+".tumblr.com";
+
+
+				Parse.Cloud.run('GetTumblrPosts', {oToken : tumblrToken, oKey : tumblrCKey, tSec : tumblrTSecret, cSec : tumblrCSecret, bName: blogname}, {
+					success: function(results) {
+						results = JSON.parse(results);
+
+						posts = results['response']['posts'];
+
+
+						for(var i=0;i<posts.length;i++)
+						{
+							time = posts[i]['date'];
+							title=posts[i]['title']?posts[i]['title']:"No Title";
+							message = posts[i]['body'];
+							id = String(posts[i]['id']);
+
+							var tumblrHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='tumblr-logo.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time+"</span><br/>"+title+"<br/>"+message+"</p></div><div class='col-xs-1 delete-box delete-tumblr'><input type='checkbox' name='"+id+"'/></div></div>";
+							$('#display-media').append(tumblrHTML);
+						}
+
+					},
+					error: function(error) {
+						console.log(error);
+					}
+				});
+
+
+			},
+			error: function(error) {
+				console.log(error);
+			}
+		});
+
+
+
 	});
 
 
 	$('#forget').click(function(){
 
 		var checkboxes_twitter = $('#display-media .delete-twitter input');
+		if(checkboxes_twitter.length==0) finished[0]=true;
 
 		for(var i = 0;i<checkboxes_twitter.length;i++)
 		{
@@ -67,7 +117,6 @@ $(document).ready(function(){
 		 			success: function(results){
 
 		 				alert("Last night's tweets never happened!");
-
 		 			},
 		 			error: function(error){
 		 				alert("Failed to delete tweet "+delete_id_tw);
@@ -77,6 +126,30 @@ $(document).ready(function(){
 
 			}
 		}
+
+		var checkboxes_tumblr = $('#display-media .delete-tumblr input');
+
+		for(var i = 0;i<checkboxes_tumblr.length;i++)
+		{
+			if(checkboxes_tumblr[i]['checked'])
+			{
+				var delete_id_tm = checkboxes_tumblr[i]['name'];
+
+				Parse.Cloud.run('TumblrDeletePost', {id: delete_id_tm, oToken : tumblrToken, oKey : tumblrCKey, tSec : tumblrTSecret, cSec : tumblrCSecret, bName: blogname}, {
+					success: function(msg) {
+						alert("Last night's tumblr blog never happened!");
+					},
+					error: function(err) {
+						console.log(err);
+					}
+				});
+
+			}
+		}
+
+		alert("Click 'view' again to confirm your deletions.");
+
+		//while loop to refresh once all async deletes are finished
 
 	});
 
