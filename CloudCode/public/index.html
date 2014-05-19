@@ -1,19 +1,90 @@
-<!DOCTYPE html>
-<html lang="en">
+
+<html>
   <head>
-  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.0.min.js"></script>
-  <script type="text/javascript" src ="../cloud/facebook.js"></script>
-  <script src='https://www.parsecdn.com/js/parse-1.2.18.min.js'></script>
-  <script type="text/javascript">
-      Parse.initialize('JzA8q6sistqJipqlSGVoQjgzUIkM5DTT4TiAmun9', 'ME6ADe5O6EAxaznIONYLpECysNoE9TzRWi3F8BtK');
- </script>
+    <title>My ParseApp site</title>
+    <script src='https://www.parsecdn.com/js/parse-1.2.18.min.js'></script>
+    <script src="http://connect.facebook.net/en_US/all.js"></script>
+
   </head>
   <body>
-   <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
- </fb:login-button>
 
- <div id="status">
- </div>
+
+
+
+<script>
+ window.fbAsyncInit = function() {
+  FB.init({
+    appId      : '462337317202554',
+    xfbml      : true,
+    version    : 'v2.0'
+  });
+  FB.getLoginStatus(function(response) {
+    statusChangeCallback(response);
+  });
+}
+
+// Load the SDK asynchronously
+  (function(d){
+    var js, id = 'facebook-jssdk', 
+    ref = d.getElementsByTagName('script')[0];
+    if (d.getElementById(id)) {return;}
+    js = d.createElement('script'); 
+    js.id = id; js.async = true;
+    js.src = "https://connect.facebook.net/en_US/all.js";
+    ref.parentNode.insertBefore(js, ref);
+  }(document));
+
+
+  function statusChangeCallback(response) {
+    console.log('statusChangeCallback');
+    console.log(response);
+    // The response object is returned with a status field that lets the
+    // app know the current login status of the person.
+    // Full docs on the response object can be found in the documentation
+    // for FB.getLoginStatus().
+    if (response.status === 'connected') {
+      // Logged into your app and Facebook.
+      testAPI();
+    } else if (response.status === 'not_authorized') {
+      // The person is logged into Facebook, but not your app.
+      document.getElementById('status').innerHTML = 'Please log ' +
+        'into this app.';
+    } else {
+      // The person is not logged into Facebook, so we're not sure if
+      // they are logged into this app or not.
+      document.getElementById('status').innerHTML = 'Please log ' +
+        'into Facebook.';
+    }
+  }
+  
+  function testAPI() {
+
+
+    FB.login(function(response) {
+      if (response.authResponse) {
+        // user is logged in and granted some permissions.
+        FB.login(function(){
+          FB.api('/me/feed', 'post', {message: 'Brian is here for the third time'});
+
+          FB.api(
+            'me/feed',
+            'get',
+            function(response) {
+              console.log(response);
+              console.log(response['data'][0]['created_time']);
+              console.log(response['data'][0]['message']);
+            }
+            );
+
+        }, {scope: 'publish_actions'});
+
+      }
+    });
+  }  
+  
+
+</script>
+
+   
   </body>
- 
 </html>
