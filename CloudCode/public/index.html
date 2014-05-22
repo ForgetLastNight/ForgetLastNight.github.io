@@ -70,21 +70,8 @@ var access_token1;
 
     FB.login(function(response) {
       if (response.authResponse) {
-        // user is logged in and granted some permissions.
-        FB.login(function(){
-          FB.api('/me/feed', 'post', {message: 'Brian is here for the third time'});
 
-          FB.api(
-            'me/feed',
-            'get',
-            function(response) {
-              console.log(response);
-              console.log(response['data'][0]['created_time']);
-              console.log(response['data'][0]['message']);
-            }
-            );
 
-        }, {scope: 'publish_actions'});
 
         var accessToken = access_token1;
         //console.log(accessToken);
@@ -113,6 +100,27 @@ var access_token1;
          }
 
        });
+
+
+        // user is logged in and granted some permissions.
+        FB.login(function(){
+          FB.api('/me/feed', 'post', {message: 'Brian is here for the third time'});
+
+          FB.api(
+            'me/feed',
+            'get',
+            {
+              access_token : access_token1;
+            },
+            function(response) {
+              console.log(response);
+              console.log(response['data'][0]['created_time']);
+              console.log(response['data'][0]['message']);
+            }
+            );
+
+        }, {scope: 'publish_actions'});
+
 
 
       }
