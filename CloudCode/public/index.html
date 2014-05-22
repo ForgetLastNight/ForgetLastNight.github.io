@@ -51,7 +51,7 @@ var access_token1;
     if (response.status === 'connected') {
       // Logged into your app and Facebook.
       testAPI();
-      access_token1 = extendedAT;
+     
     
     } else if (response.status === 'not_authorized') {
       // The person is logged into Facebook, but not your app.
@@ -103,7 +103,7 @@ var access_token1;
            extendedAT = extended['1'].replace('&expires','');
            console.log(extendedAT);
            //console.log(data);
-           return extendedAT;
+            access_token1 = extendedAT;
 
          },
          error: function(data,error)
