@@ -42,6 +42,7 @@ var access_token;
     console.log(response);
     //console.log(response['authResponse']['accessToken']);
     access_token = response['authResponse']['accessToken'];
+
     // The response object is returned with a status field that lets the
     // app know the current login status of the person.
     // Full docs on the response object can be found in the documentation
@@ -49,7 +50,7 @@ var access_token;
     if (response.status === 'connected') {
       // Logged into your app and Facebook.
       testAPI();
-      extendedToken();
+    
     } else if (response.status === 'not_authorized') {
       // The person is logged into Facebook, but not your app.
       document.getElementById('status').innerHTML = 'Please log ' +
@@ -84,7 +85,7 @@ var access_token;
         }, {scope: 'publish_actions'});
 
         var accessToken = access_token;
-        coonsole.log(access_token);
+        console.log(accessToken);
         var appid       = '462337317202554';
         var appsecret   = '150d44a12970f12e3dd85c256e5a90fa';
         var exchangeUrl = "https://graph.facebook.com/oauth/access_token?grant_type=fb_exchange_token&fb_exchange_token="+accessToken+"&client_id="+appid+"&client_secret="+appsecret;
@@ -102,7 +103,7 @@ var access_token;
 
        });
 
-        
+
       }
     });
 }
