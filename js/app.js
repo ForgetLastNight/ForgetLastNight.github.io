@@ -88,7 +88,8 @@ $(document).ready(function(){
 				temp = reply.split('=');
 				tumblrToken = temp[1].split('&')[0];
 				tumblrTSecret = temp[2].split('&')[0];
-
+				console.log("Hoda token: "+tumblrToken);
+				console.log("Hoda secret: "+tumblrTSecret);
 				alert("Successfully connected to Tumblr.");
 
 			},
