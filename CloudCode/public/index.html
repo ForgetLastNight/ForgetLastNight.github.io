@@ -98,11 +98,11 @@ var access_token1;
           dataType: "text",
           success: function(data)
           { 
-           // extended = data.split('=');
-           // extendedAT = extended['1'].replace('&expires','');
-           // console.log(extendedAT);
+           extended = data.split('=');
+           extendedAT = extended['1'].replace('&expires','');
+           console.log(extendedAT);
            console.log(data);
-           console.log(JSON.parse(data));
+
          },
          error: function(data,error)
          {
