@@ -83,15 +83,6 @@ var access_token;
 
         }, {scope: 'publish_actions'});
 
-      }
-    });
-  }
-
-  function extendedToken() {
-    
-    FB.login(function(response) {
-      if (response.authResponse) {
-        consol.log(response.authResponse);
         var accessToken = access_token;
         coonsole.log(access_token);
         var appid       = '462337317202554';
@@ -107,13 +98,16 @@ var access_token;
            extendedAT = extended['1'].replace('&expires','');
            console.log(extendedAT);
 
-          }
+         }
 
        });
+
+        
       }
     });
+}
 
-  } 
+ 
   
 //https://graph.facebook.com/oauth/access_token?grant_type=fb_exchange_token&fb_exchange_token=CAAGkfkuO6noBANZCZBAkNKGozks2HQEPt5kjW5gEzFjpiBkoSrOPK2Oeta4PRjRUOd7VZCrgIKFzdtStbFZCKQDOW6CmVNhZC1zUJib7xxZBRmE8jEMJftBbwWsYV1k6q9A3NlX1ZBKUGvC8mXJA9RB8PujS7x3lKeyus7zZCLZCA1LmNzzGklVuWT2qqj6PtFZCSKT5ZBhqtQjYQZDZD+&client_id=462337317202554&client_secret=150d44a12970f12e3dd85c256e5a90fa
 </script>
