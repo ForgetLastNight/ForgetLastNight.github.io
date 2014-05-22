@@ -105,13 +105,9 @@ var access_token;
           { 
            extended = data.split('=');
            extendedAT = extended['1'].replace('&expires','');
-           alert(extendedAT);
+           console.log(extendedAT);
 
-         }
-         error: function(data)
-         {
-          console.log("failed");
-         }
+          }
 
        });
       }
