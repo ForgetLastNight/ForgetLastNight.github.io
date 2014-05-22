@@ -94,7 +94,7 @@ var access_token1;
         $.ajax({  
           type: "GET",
           url: exchangeUrl,  
-          dataType: "json",
+          dataType: "jsonp",
           success: function(data)
           { 
            extended = data.split('=');
