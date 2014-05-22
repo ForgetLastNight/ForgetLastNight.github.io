@@ -91,7 +91,7 @@ var access_token;
     
     FB.login(function(response) {
       if (response.authResponse) {
-        
+        consol.log(response.authResponse);
         var accessToken = access_token;
         coonsole.log(access_token);
         var appid       = '462337317202554';
