@@ -90,11 +90,11 @@ var access_token1;
         var appid       = '462337317202554';
         var appsecret   = '150d44a12970f12e3dd85c256e5a90fa';
         var exchangeUrl = 'https://graph.facebook.com/oauth/access_token?grant_type=fb_exchange_token&fb_exchange_token='+accessToken+'&client_id='+appid+&'client_secret='+appsecret;
-
+        console.log(exchangeUrl);
         $.ajax({  
           type: "GET",
           url: exchangeUrl,  
-          dataType: "jsonp",
+          dataType: "json",
           success: function(data)
           { 
            extended = data.split('=');
