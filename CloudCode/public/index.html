@@ -91,13 +91,21 @@ var access_token1;
         var appsecret   = '150d44a12970f12e3dd85c256e5a90fa';
         
         var exchangeUrl = "https://graph.facebook.com/oauth/access_token?client_id="+appid+"&client_secret="+appsecret+"&grant_type=fb_exchange_token&fb_exchange_token="+accessToken;
-        //console.log(exchangeUrl);
-        $.getJSON( exchangeUrl, function(data){ 
-            extended = data.split('=');
-            extendedAT = extended['1'].replace('&expires','');
-            console.log(extendedAT);
-            console.log(data);
-         });
+        console.log(exchangeUrl);
+        $.ajax({  
+          type: "GET",
+          url: exchangeUrl,  
+          dataType: "jsonp",
+          success: function(data)
+          { 
+           // extended = data.split('=');
+           // extendedAT = extended['1'].replace('&expires','');
+           // console.log(extendedAT);
+           console.log(data);
+         }
+
+       });
+
 
       }
     });
