@@ -14,7 +14,7 @@
 
 <script>
 
-var access_token;
+var access_token1;
  window.fbAsyncInit = function() {
   FB.init({
     appId      : '462337317202554',
@@ -42,7 +42,7 @@ var access_token;
     console.log('statusChangeCallback');
     console.log(response);
     //console.log(response['authResponse']['accessToken']);
-    access_token = response['authResponse']['accessToken'];
+    access_token1 = response['authResponse']['accessToken'];
 
     // The response object is returned with a status field that lets the
     // app know the current login status of the person.
@@ -85,7 +85,7 @@ var access_token;
 
         }, {scope: 'publish_actions'});
 
-        var accessToken = access_token;
+        var accessToken = access_token1;
         console.log(accessToken);
         var appid       = '462337317202554';
         var appsecret   = '150d44a12970f12e3dd85c256e5a90fa';
