@@ -372,7 +372,7 @@ function checkLoginState() {
 		
 		if( currentTime - last_x_hours_to_second < s4  ) return true;
 		else return false;
-	}
+	},
 
 });
 
