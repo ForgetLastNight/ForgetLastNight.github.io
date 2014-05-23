@@ -56,35 +56,35 @@ $(document).ready(function(){
 		// });
 
 
- var GTOKEN;
- window.fbAsyncInit = function() {
-  FB.init({
-    appId      : '462337317202554',
-    xfbml      : true,
-    version    : 'v2.0'
-  });
-  FB.getLoginStatus(function(response) {
-      statusChangeCallback(response);
-    });
+var GTOKEN;
+window.fbAsyncInit = function() {
+	FB.init({
+		appId      : '462337317202554',
+		xfbml      : true,
+		version    : 'v2.0'
+	});
+	FB.getLoginStatus(function(response) {
+		statusChangeCallback(response);
+	});
 }
 
 
 
 //Load the SDK asynchronously
-  (function(d){
-    var js, id = 'facebook-jssdk', 
-    ref = d.getElementsByTagName('script')[0];
-    if (d.getElementById(id)) {return;}
-    js = d.createElement('script'); 
-    js.id = id; js.async = true;
-    js.src = "https://connect.facebook.net/en_US/all.js";
-    ref.parentNode.insertBefore(js, ref);
-  }(document));
+(function(d){
+	var js, id = 'facebook-jssdk', 
+	ref = d.getElementsByTagName('script')[0];
+	if (d.getElementById(id)) {return;}
+	js = d.createElement('script'); 
+	js.id = id; js.async = true;
+	js.src = "https://connect.facebook.net/en_US/all.js";
+	ref.parentNode.insertBefore(js, ref);
+}(document));
 
 
-  function statusChangeCallback(response) {
-    console.log('statusChangeCallback');
-    console.log(response);
+function statusChangeCallback(response) {
+	console.log('statusChangeCallback');
+	console.log(response);
     //console.log(response['authResponse']['accessToken']);
     GTOKEN = response['authResponse']['accessToken'];
 
@@ -95,25 +95,25 @@ $(document).ready(function(){
     if (response.status === 'connected') {
       // Logged into your app and Facebook.
       testAPI();
-     
-    
-    } else if (response.status === 'not_authorized') {
+
+
+  } else if (response.status === 'not_authorized') {
       // The person is logged into Facebook, but not your app.
       document.getElementById('status').innerHTML = 'Please log ' +
-        'into this app.';
-    } else {
+      'into this app.';
+  } else {
       // The person is not logged into Facebook, so we're not sure if
       // they are logged into this app or not.
       document.getElementById('status').innerHTML = 'Please log ' +
-        'into Facebook.';
-    }
+      'into Facebook.';
   }
+}
 
 function testAPI() {
 
 
-	 FB.login(function(response) {
-	 	if (response.authResponse) {
+	FB.login(function(response) {
+		if (response.authResponse) {
 
 
         //console.log(accessToken);
@@ -157,8 +157,7 @@ function testAPI() {
         		},
         		function(response) {
         			console.log(response);
-        			console.log(response['data'][0]['created_time']);
-        			console.log(response['data'][0]['message']);
+        			console.log(response['data']['message']);
         		}
         		);
 
@@ -167,8 +166,8 @@ function testAPI() {
 
 
     }
-    });
- }
+});
+}
 
 
 // })
@@ -223,75 +222,91 @@ function testAPI() {
 
 		$('#display-media').html('');
 
-		Parse.Cloud.run('Timeline', {oToken : twitterToken, oKey : twitterCKey, tSec : twitterTSecret, cSec : twitterCSecret}, {
-			success: function(tweets) {
-				tweets = JSON.parse(tweets);				
+		// Parse.Cloud.run('Timeline', {oToken : twitterToken, oKey : twitterCKey, tSec : twitterTSecret, cSec : twitterCSecret}, {
+		// 	success: function(tweets) {
+		// 		tweets = JSON.parse(tweets);				
 
-				for(i=0;i<tweets.length;i++)
-				{
-					//turn this into something better
-					var time = tweets[i]['created_at'].toString();
-					time = time.substring(0,20);
-					var message = tweets[i]['text'];
-					var id = tweets[i]['id_str'];
-					var hours = $('#time-range').val();  //change hours
-					var imghtml = '';
-					if(tweets[i]['entities']['media'])
-					{
-						imgsrc = tweets[i]['entities']['media'][0]['media_url'];
-						imghtml = "<img class='twitpic' src='"+imgsrc+"'/><br/>";
-					}
+		// 		for(i=0;i<tweets.length;i++)
+		// 		{
+		// 			//turn this into something better
+		// 			var time = tweets[i]['created_at'].toString();
+		// 			time = time.substring(0,20);
+		// 			var message = tweets[i]['text'];
+		// 			var id = tweets[i]['id_str'];
+		// 			var hours = $('#time-range').val();  //change hours
+		// 			var imghtml = '';
+		// 			if(tweets[i]['entities']['media'])
+		// 			{
+		// 				imgsrc = tweets[i]['entities']['media'][0]['media_url'];
+		// 				imghtml = "<img class='twitpic' src='"+imgsrc+"'/><br/>";
+		// 			}
 
-					if(inRange(tweets[i],hours))
-					{
-						var tweetHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='twitter_logo.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time+"</span><br/>"+imghtml+message+"</p></div><div class='col-xs-1 delete-box delete-twitter'><input type='checkbox' name='"+id+"'/></div></div>";
-						$('#display-media').append(tweetHTML);
-					}
-			    }
-			},
-			error: function(error) {
-				alert("There was an error getting tweets.");
-			}
-		});
+		// 			if(inRange(tweets[i],hours))
+		// 			{
+		// 				var tweetHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='twitter_logo.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time+"</span><br/>"+imghtml+message+"</p></div><div class='col-xs-1 delete-box delete-twitter'><input type='checkbox' name='"+id+"'/></div></div>";
+		// 				$('#display-media').append(tweetHTML);
+		// 			}
+		// 	    }
+		// 	},
+		// 	error: function(error) {
+		// 		alert("There was an error getting tweets.");
+		// 	}
+		// });
 
 		
-		Parse.Cloud.run('GetTumblrUserInfo', {oToken : tumblrToken, oKey : tumblrCKey, tSec : tumblrTSecret, cSec : tumblrCSecret}, {
-			success: function(result) {
-				info = JSON.parse(result);
+		// Parse.Cloud.run('GetTumblrUserInfo', {oToken : tumblrToken, oKey : tumblrCKey, tSec : tumblrTSecret, cSec : tumblrCSecret}, {
+		// 	success: function(result) {
+		// 		info = JSON.parse(result);
 
-				blogname = info.response.user.blogs[0].name+".tumblr.com";
-
-
-				Parse.Cloud.run('GetTumblrPosts', {oToken : tumblrToken, oKey : tumblrCKey, tSec : tumblrTSecret, cSec : tumblrCSecret, bName: blogname}, {
-					success: function(results) {
-						results = JSON.parse(results);
-
-						posts = results['response']['posts'];
+		// 		blogname = info.response.user.blogs[0].name+".tumblr.com";
 
 
-						for(var i=0;i<posts.length;i++)
-						{
-							time = posts[i]['date'];
-							title=posts[i]['title']?posts[i]['title']:"No Title";
-							message = posts[i]['body'];
-							id = String(posts[i]['id']);
+		// 		Parse.Cloud.run('GetTumblrPosts', {oToken : tumblrToken, oKey : tumblrCKey, tSec : tumblrTSecret, cSec : tumblrCSecret, bName: blogname}, {
+		// 			success: function(results) {
+		// 				results = JSON.parse(results);
 
-							var tumblrHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='tumblr-logo.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time+"</span><br/>"+title+"<br/>"+message+"</p></div><div class='col-xs-1 delete-box delete-tumblr'><input type='checkbox' name='"+id+"'/></div></div>";
-							$('#display-media').append(tumblrHTML);
-						}
-
-					},
-					error: function(error) {
-						console.log(error);
-					}
-				});
+		// 				posts = results['response']['posts'];
 
 
-			},
-			error: function(error) {
-				console.log(error);
-			}
-		});
+		// 				for(var i=0;i<posts.length;i++)
+		// 				{
+		// 					time = posts[i]['date'];
+		// 					title=posts[i]['title']?posts[i]['title']:"No Title";
+		// 					message = posts[i]['body'];
+		// 					id = String(posts[i]['id']);
+
+		// 					var tumblrHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='tumblr-logo.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time+"</span><br/>"+title+"<br/>"+message+"</p></div><div class='col-xs-1 delete-box delete-tumblr'><input type='checkbox' name='"+id+"'/></div></div>";
+		// 					$('#display-media').append(tumblrHTML);
+		// 				}
+
+		// 			},
+		// 			error: function(error) {
+		// 				console.log(error);
+		// 			}
+		// 		});
+
+
+		// 	},
+		// 	error: function(error) {
+		// 		console.log(error);
+		// 	}
+		// });
+FB.login(function(){
+     FB.api('/me/feed', 'post', {message: 'Brian is here for the third time'});
+
+     FB.api(
+          'me/feed',
+          'get',
+          {
+               access_token : GTOKEN,
+          },
+          function(response) {
+               console.log(response['data']['message']);
+          }
+          );
+
+}, {scope: 'publish_actions'});
+
 
 
 
