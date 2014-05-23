@@ -133,7 +133,7 @@ FB.getLoginStatus(function(response) {
            //console.log(extendedAT);
            //console.log(data);
            access_token1 = extendedAT;
-           alert("your access token is : "+access_token1);
+           console.log("your extended access token is : "+access_token1);
 
        },
        error: function(data,error)
