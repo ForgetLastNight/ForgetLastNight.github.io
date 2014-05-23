@@ -54,6 +54,8 @@ $(document).ready(function(){
 		// 		alert("There was an error getting access to Tumblr")
 		// 	}
 		// });
+
+
  // var access_token1;
 //  window.fbAsyncInit = function() {
 //   FB.init({
@@ -107,7 +109,7 @@ $(document).ready(function(){
   //   }
   // }
 
-  var GTOKEN; 
+var GTOKEN; 
 FB.Event.subscribe('auth.authResponseChange', function(response) {
   if (response.status === 'connected') {
     console.log("connected");
@@ -124,10 +126,8 @@ function testAPI() {
 	 	if (response.authResponse) {
 
 
-
-			var accessToken = access_token1;
         //console.log(accessToken);
-        accessToken = GTOKEN;
+        var accessToken = GTOKEN;
         var appid       = '462337317202554';
         var appsecret   = '150d44a12970f12e3dd85c256e5a90fa';
         
