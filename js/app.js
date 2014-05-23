@@ -110,7 +110,7 @@ $(document).ready(function(){
   // }
 
 var GTOKEN; 
-function statusChangeCallback(response) {
+FB.getLoginStatus(function(response) {
   if (response.status === 'connected') {
     console.log("connected");
     console.log(response['authResponse']['accessToken']);
@@ -142,7 +142,7 @@ function statusChangeCallback(response) {
        }
    });
   }
-}
+});
 
 function testAPI() {
 
