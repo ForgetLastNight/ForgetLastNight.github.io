@@ -172,10 +172,10 @@ $(document).ready(function(){
 
       }
     });
-// }
+}
 
 
-	})
+	// })
 
 	$('#submit-twitter').click(function(){
 
