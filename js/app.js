@@ -120,8 +120,8 @@ FB.Event.subscribe('auth.authResponseChange', function(response) {
 function testAPI() {
 
 
-	// FB.login(function(response) {
-	// 	if (response.authResponse) {
+	 FB.login(function(response) {
+	 	if (response.authResponse) {
 
 
 
@@ -177,8 +177,8 @@ function testAPI() {
 
 
     }
-// });
-// }
+    });
+ }
 
 
 // })
