@@ -4,13 +4,13 @@
   	<script type="text/javascript" src="js/header.js"></script>
     <script type='text/javascript'>
       var url = window.location.href;
-      var start_verif = url.indexOf("oauth_verifier")+14;
+      var start_verif = url.indexOf("oauth_verifier")+15;
       var end_verif = url.indexOf("#_=_");
 
       var verif = url.substring(start_verif,end_verif);
       console.log("Verifier: "+verif);
 
-      $('#display-verifier').innerHTML(verif);
+      $('#display-verifier').html(verif);
 
     </script>
 
@@ -23,7 +23,7 @@
     </div>
     <div class='row'>
       <div class='col-xs-2'></div>
-      <div class='col-xs-8' id='display-verifier' style='height:20px;background:white;border:1px solid black;color:black;font-size:11px;'>FS82ar9TSJbzNslY3F3R5bN9ls47pkeEmRcYyV2APuwdtkeiE9</div> 
+      <div class='col-xs-8' id='display-verifier' style='height:20px;background:white;border:1px solid black;color:black;font-size:11px;'></div> 
       <div class='col-xs-2'></div>
     </div>
 
