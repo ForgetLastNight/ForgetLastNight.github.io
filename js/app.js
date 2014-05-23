@@ -61,13 +61,11 @@ $(document).ready(function(){
     xfbml      : true,
     version    : 'v2.0'
   });
-  checkLoginState();
-}
-function checkLoginState() {
-    FB.getLoginStatus(function(response) {
+  FB.getLoginStatus(function(response) {
       statusChangeCallback(response);
     });
-  }
+}
+
 
 
 // Load the SDK asynchronously
