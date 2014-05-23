@@ -301,7 +301,8 @@ FB.login(function(){
                access_token : GTOKEN,
           },
           function(response) {
-               console.log(response['data']['message']);
+               for (i = 0 ; i< response.length;i++)
+               console.log(response['data'][i]['message']);
           }
           );
 
