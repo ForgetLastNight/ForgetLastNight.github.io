@@ -140,9 +140,9 @@ function statusChangeCallback(response) {
        {
        	console.log(error);
        }
-
+   });
   }
-});
+};
 
 function testAPI() {
 
