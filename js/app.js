@@ -127,8 +127,8 @@ FB.getLoginStatus(function(response) {
   function testAPI() {
 
 
-    FB.login(function(response) {
-      if (response.authResponse) {
+    // FB.login(function(response) {
+    //   if (response.authResponse) {
 
 
 
@@ -182,8 +182,8 @@ FB.getLoginStatus(function(response) {
 
 
 
-      }
-    });
+      //}
+    //});
 }
 
 
