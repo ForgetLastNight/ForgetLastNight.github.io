@@ -171,6 +171,7 @@ function checkLoginState() {
 
       }
     });
+	}
 
 	$('#submit-twitter').click(function(){
 
