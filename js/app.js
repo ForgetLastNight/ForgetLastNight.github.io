@@ -20,7 +20,7 @@ $(document).ready(function(){
 	//need to only do this if not already authorized 
 	//(use parse to check for key?)
 
-	$('#getpin').click(function(){
+	// $('#getpin').click(function(){
 
 		// Parse.Cloud.run('TwitterRequestToken', {oKey : twitterCKey, cSec : twitterCSecret, oCall : 'oob'}, {
 		// 	success: function(reply) {
@@ -54,58 +54,63 @@ $(document).ready(function(){
 		// 		alert("There was an error getting access to Tumblr")
 		// 	}
 		// });
- var access_token1;
- window.fbAsyncInit = function() {
-  FB.init({
-    appId      : '462337317202554',
-    xfbml      : true,
-    version    : 'v2.0'
-  });
-  FB.getLoginStatus(function(response) {
-      statusChangeCallback(response);
-    });
-}
+ // var access_token1;
+//  window.fbAsyncInit = function() {
+//   FB.init({
+//     appId      : '462337317202554',
+//     xfbml      : true,
+//     version    : 'v2.0'
+//   });
+//   FB.getLoginStatus(function(response) {
+//       statusChangeCallback(response);
+//     });
+// }
 
 
 
 // Load the SDK asynchronously
-  (function(d){
-    var js, id = 'facebook-jssdk', 
-    ref = d.getElementsByTagName('script')[0];
-    if (d.getElementById(id)) {return;}
-    js = d.createElement('script'); 
-    js.id = id; js.async = true;
-    js.src = "https://connect.facebook.net/en_US/all.js";
-    ref.parentNode.insertBefore(js, ref);
-  }(document));
+  // (function(d){
+  //   var js, id = 'facebook-jssdk', 
+  //   ref = d.getElementsByTagName('script')[0];
+  //   if (d.getElementById(id)) {return;}
+  //   js = d.createElement('script'); 
+  //   js.id = id; js.async = true;
+  //   js.src = "https://connect.facebook.net/en_US/all.js";
+  //   ref.parentNode.insertBefore(js, ref);
+  // }(document));
 
 
-  function statusChangeCallback(response) {
-    console.log('statusChangeCallback');
-    console.log(response);
-    //console.log(response['authResponse']['accessToken']);
-    access_token1 = response['authResponse']['accessToken'];
+  // function statusChangeCallback(response) {
+  //   console.log('statusChangeCallback');
+  //   console.log(response);
+  //   //console.log(response['authResponse']['accessToken']);
+  //   access_token1 = response['authResponse']['accessToken'];
 
-    // The response object is returned with a status field that lets the
-    // app know the current login status of the person.
-    // Full docs on the response object can be found in the documentation
-    // for FB.getLoginStatus().
-    if (response.status === 'connected') {
-      // Logged into your app and Facebook.
-      testAPI();
+  //   // The response object is returned with a status field that lets the
+  //   // app know the current login status of the person.
+  //   // Full docs on the response object can be found in the documentation
+  //   // for FB.getLoginStatus().
+  //   if (response.status === 'connected') {
+  //     // Logged into your app and Facebook.
+  //     testAPI();
      
     
-    } else if (response.status === 'not_authorized') {
-      // The person is logged into Facebook, but not your app.
-      document.getElementById('status').innerHTML = 'Please log ' +
-        'into this app.';
-    } else {
-      // The person is not logged into Facebook, so we're not sure if
-      // they are logged into this app or not.
-      document.getElementById('status').innerHTML = 'Please log ' +
-        'into Facebook.';
-    }
+  //   } else if (response.status === 'not_authorized') {
+  //     // The person is logged into Facebook, but not your app.
+  //     document.getElementById('status').innerHTML = 'Please log ' +
+  //       'into this app.';
+  //   } else {
+  //     // The person is not logged into Facebook, so we're not sure if
+  //     // they are logged into this app or not.
+  //     document.getElementById('status').innerHTML = 'Please log ' +
+  //       'into Facebook.';
+  //   }
+  // }
+  FB.Event.subscribe('auth.authResponseChange', function(response) {
+  if (response.status === 'connected') {
+    testAPI();
   }
+});
   
   function testAPI() {
 
@@ -167,7 +172,7 @@ $(document).ready(function(){
 
       }
     });
-}
+// }
 
 
 	})
