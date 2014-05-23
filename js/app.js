@@ -54,7 +54,9 @@ $(document).ready(function(){
 		// 		alert("There was an error getting access to Tumblr")
 		// 	}
 		// });
-	var access_token1;
+	})
+
+var access_token1;
  window.fbAsyncInit = function() {
   FB.init({
     appId      : '462337317202554',
@@ -169,10 +171,6 @@ function checkLoginState() {
 
       }
     });
-}
-
-
-	})
 
 	$('#submit-twitter').click(function(){
 
