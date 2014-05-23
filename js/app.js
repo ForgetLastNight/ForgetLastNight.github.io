@@ -292,7 +292,7 @@ function testAPI() {
 		// 	}
 		// });
 
-     FB.api('/me/feed', 'post', {message: 'Brian is here for the third time'});
+     
 
      FB.api(
           'me/feed',
@@ -301,8 +301,16 @@ function testAPI() {
                access_token : GTOKEN,
           },
           function(response) {
-               for (i = 0 ; i< response.length;i++)
+               if (!response || response.error) {
+                alert('Error occured');
+            } 
+            else {
+                alert('Action was successful! Action ID: ' + response.id);
+            for (i = 0 ; i< response.length;i++){
                console.log(response['data'][i]['message']);
+                  }
+            }
+               
           }
           );
 
