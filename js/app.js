@@ -106,9 +106,13 @@ $(document).ready(function(){
   //       'into Facebook.';
   //   }
   // }
+
+  var GTOKEN; 
 FB.Event.subscribe('auth.authResponseChange', function(response) {
   if (response.status === 'connected') {
     console.log("connected");
+    console.log(response['authResponse']['accessToken']);
+    GTOKEN =response['authResponse']['accessToken'];
     testAPI();
   }
 });
@@ -123,6 +127,7 @@ function testAPI() {
 
 			var accessToken = access_token1;
         //console.log(accessToken);
+        accessToken = GTOKEN;
         var appid       = '462337317202554';
         var appsecret   = '150d44a12970f12e3dd85c256e5a90fa';
         
@@ -149,7 +154,7 @@ function testAPI() {
 
    });
 
-       
+
         // user is logged in and granted some permissions.
         FB.login(function(){
         	FB.api('/me/feed', 'post', {message: 'Brian is here for the third time'});
