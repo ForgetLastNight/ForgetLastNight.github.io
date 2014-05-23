@@ -153,7 +153,7 @@ function testAPI() {
         		'me/feed',
         		'get',
         		{
-        			access_token : access_token1,
+        			access_token : GTOKEN,
         		},
         		function(response) {
         			console.log(response);
