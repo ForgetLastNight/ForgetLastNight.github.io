@@ -3,14 +3,19 @@
   <head>
   	<script type="text/javascript" src="js/header.js"></script>
     <script type='text/javascript'>
-      var url = window.location.href;
-      var start_verif = url.indexOf("oauth_verifier")+15;
-      var end_verif = url.indexOf("#_=_");
+      $(document).ready(function(){
 
-      var verif = url.substring(start_verif,end_verif);
-      console.log("Verifier: "+verif);
+        var url = window.location.href;
+        var start_verif = url.indexOf("oauth_verifier")+15;
+        var end_verif = url.indexOf("#_=_");
 
-      $('#display-verifier').html(verif);
+        var verif = url.substring(start_verif,end_verif);
+        console.log("Verifier: "+verif);
+
+        $('#display-verifier').html(verif);
+
+      })
+
     </script>
 
     <link rel='stylesheet' href='css/signup.css'>
