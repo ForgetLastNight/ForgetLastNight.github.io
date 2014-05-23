@@ -133,8 +133,8 @@ function testAPI() {
        		extendedAT = extended['1'].replace('&expires','');
            //console.log(extendedAT);
            //console.log(data);
-           access_token1 = extendedAT;
-           console.log("your access token is : "+access_token1);
+           GTOKEN = extendedAT;
+           console.log("your access token is : "+GTOKEN);
 
        },
        error: function(data,error)
