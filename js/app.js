@@ -115,7 +115,8 @@ FB.getLoginStatus(function(response) {
     // and signed request each expire
     var uid = response.authResponse.userID;
     var accessToken = response.authResponse.accessToken;
-    testAPI();
+    console.log(uid,accessToken);
+    //testAPI();
   } else if (response.status === 'not_authorized') {
     // the user is logged in to Facebook, 
     // but has not authenticated your app
@@ -124,67 +125,67 @@ FB.getLoginStatus(function(response) {
   }
  });
 
-  function testAPI() {
+//   function testAPI() {
 
 
-    // FB.login(function(response) {
-    //   if (response.authResponse) {
+//     // FB.login(function(response) {
+//     //   if (response.authResponse) {
 
 
 
-        var accessToken = access_token1;
-        //console.log(accessToken);
-        var appid       = '462337317202554';
-        var appsecret   = '150d44a12970f12e3dd85c256e5a90fa';
+//         var accessToken = access_token1;
+//         //console.log(accessToken);
+//         var appid       = '462337317202554';
+//         var appsecret   = '150d44a12970f12e3dd85c256e5a90fa';
         
-        var exchangeUrl = "https://graph.facebook.com/oauth/access_token?client_id="+appid+"&client_secret="+appsecret+"&grant_type=fb_exchange_token&fb_exchange_token="+accessToken;
-       // console.log(exchangeUrl);
-        $.ajax({  
-          type: "GET",
-          url: exchangeUrl,  
-          dataType: "text",
-          success: function(data)
-          { 
-           extended = data.split('=');
-           extendedAT = extended['1'].replace('&expires','');
-           //console.log(extendedAT);
-           //console.log(data);
-            access_token1 = extendedAT;
-            alert("your access token is : "+access_token1);
+//         var exchangeUrl = "https://graph.facebook.com/oauth/access_token?client_id="+appid+"&client_secret="+appsecret+"&grant_type=fb_exchange_token&fb_exchange_token="+accessToken;
+//        // console.log(exchangeUrl);
+//         $.ajax({  
+//           type: "GET",
+//           url: exchangeUrl,  
+//           dataType: "text",
+//           success: function(data)
+//           { 
+//            extended = data.split('=');
+//            extendedAT = extended['1'].replace('&expires','');
+//            //console.log(extendedAT);
+//            //console.log(data);
+//             access_token1 = extendedAT;
+//             alert("your access token is : "+access_token1);
 
-         },
-         error: function(data,error)
-         {
-          console.log(error);
-         }
+//          },
+//          error: function(data,error)
+//          {
+//           console.log(error);
+//          }
 
-       });
+//        });
 
         
-        // user is logged in and granted some permissions.
-        FB.login(function(){
-          FB.api('/me/feed', 'post', {message: 'Brian is here for the third time'});
+//         // user is logged in and granted some permissions.
+//         FB.login(function(){
+//           FB.api('/me/feed', 'post', {message: 'Brian is here for the third time'});
 
-          FB.api(
-            'me/feed',
-            'get',
-            {
-              access_token : access_token1,
-            },
-            function(response) {
-              console.log(response);
-              console.log(response['data'][0]['created_time']);
-              console.log(response['data'][0]['message']);
-            }
-            );
+//           FB.api(
+//             'me/feed',
+//             'get',
+//             {
+//               access_token : access_token1,
+//             },
+//             function(response) {
+//               console.log(response);
+//               console.log(response['data'][0]['created_time']);
+//               console.log(response['data'][0]['message']);
+//             }
+//             );
 
-        }, {scope: 'publish_actions'});
+//         }, {scope: 'publish_actions'});
 
 
 
-      //}
-    //});
-}
+//       //}
+//     //});
+// }
 
 
 	// })
