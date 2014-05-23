@@ -305,10 +305,9 @@ function testAPI() {
                 alert('Error occured');
             } 
             else {
-                alert('Action was successful! Action ID: ' + response.name);
-                var j = 0;
-                var i = j.toString;
-               for (; i< response.length;i++){
+                alert('Action was successful!');
+                
+               for (var i = 0 ; i< response.data.length;i++){
                console.log(response['data'][i]['message']);
                   }
             }
