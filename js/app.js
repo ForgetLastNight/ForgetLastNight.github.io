@@ -22,39 +22,156 @@ $(document).ready(function(){
 
 	$('#getpin').click(function(){
 
-		Parse.Cloud.run('TwitterRequestToken', {oKey : twitterCKey, cSec : twitterCSecret, oCall : 'oob'}, {
-			success: function(reply) {
-				temp = reply.split('=');
-				twitterToken = temp[1].split('&')[0];
-				twitterTSecret = temp[2].split('&')[0];
+		// Parse.Cloud.run('TwitterRequestToken', {oKey : twitterCKey, cSec : twitterCSecret, oCall : 'oob'}, {
+		// 	success: function(reply) {
+		// 		temp = reply.split('=');
+		// 		twitterToken = temp[1].split('&')[0];
+		// 		twitterTSecret = temp[2].split('&')[0];
 
-				//not sure why we would need oauth/authorize call
-				window.open("https://api.twitter.com/oauth/authorize?oauth_token="+twitterToken,"_blank");
-
-
-			},
-			error: function(error) {
-				alert("There was an error getting access.")
-			}
-		});
+		// 		//not sure why we would need oauth/authorize call
+		// 		window.open("https://api.twitter.com/oauth/authorize?oauth_token="+twitterToken,"_blank");
 
 
-		Parse.Cloud.run('TumblrRequestToken', {oKey : tumblrCKey, cSec : tumblrCSecret, oCall : 'https://forgetlastnight.github.io/index.html?userid=12345'}, {
-			success: function(reply) {
-				temp = reply.split('=');
-				tumblrToken = temp[1].split('&')[0];
-				tumblrTSecret = temp[2].split('&')[0];
-
-				//not sure why we would need oauth/authorize call
-				window.open("https://tumblr.com/oauth/authorize?oauth_token="+tumblrToken);
+		// 	},
+		// 	error: function(error) {
+		// 		alert("There was an error getting access.")
+		// 	}
+		// });
 
 
-			},
-			error: function(error) {
-				alert("There was an error getting access to Tumblr")
-			}
-		});
+		// Parse.Cloud.run('TumblrRequestToken', {oKey : tumblrCKey, cSec : tumblrCSecret, oCall : 'https://forgetlastnight.github.io/index.html?userid=12345'}, {
+		// 	success: function(reply) {
+		// 		temp = reply.split('=');
+		// 		tumblrToken = temp[1].split('&')[0];
+		// 		tumblrTSecret = temp[2].split('&')[0];
 
+		// 		//not sure why we would need oauth/authorize call
+		// 		window.open("https://tumblr.com/oauth/authorize?oauth_token="+tumblrToken);
+
+
+		// 	},
+		// 	error: function(error) {
+		// 		alert("There was an error getting access to Tumblr")
+		// 	}
+		// });
+	var access_token1;
+ window.fbAsyncInit = function() {
+  FB.init({
+    appId      : '462337317202554',
+    xfbml      : true,
+    version    : 'v2.0'
+  });
+  FB.getLoginStatus(function(response) {
+    statusChangeCallback(response);
+  });
+}
+
+function checkLoginState() {
+    FB.getLoginStatus(function(response) {
+      statusChangeCallback(response);
+    });
+  }
+
+// Load the SDK asynchronously
+  (function(d){
+    var js, id = 'facebook-jssdk', 
+    ref = d.getElementsByTagName('script')[0];
+    if (d.getElementById(id)) {return;}
+    js = d.createElement('script'); 
+    js.id = id; js.async = true;
+    js.src = "https://connect.facebook.net/en_US/all.js";
+    ref.parentNode.insertBefore(js, ref);
+  }(document));
+
+
+  function statusChangeCallback(response) {
+    console.log('statusChangeCallback');
+    console.log(response);
+    //console.log(response['authResponse']['accessToken']);
+    access_token1 = response['authResponse']['accessToken'];
+
+    // The response object is returned with a status field that lets the
+    // app know the current login status of the person.
+    // Full docs on the response object can be found in the documentation
+    // for FB.getLoginStatus().
+    if (response.status === 'connected') {
+      // Logged into your app and Facebook.
+      testAPI();
+     
+    
+    } else if (response.status === 'not_authorized') {
+      // The person is logged into Facebook, but not your app.
+      document.getElementById('status').innerHTML = 'Please log ' +
+        'into this app.';
+    } else {
+      // The person is not logged into Facebook, so we're not sure if
+      // they are logged into this app or not.
+      document.getElementById('status').innerHTML = 'Please log ' +
+        'into Facebook.';
+    }
+  }
+  
+  function testAPI() {
+
+
+    FB.login(function(response) {
+      if (response.authResponse) {
+
+
+
+        var accessToken = access_token1;
+        //console.log(accessToken);
+        var appid       = '462337317202554';
+        var appsecret   = '150d44a12970f12e3dd85c256e5a90fa';
+        
+        var exchangeUrl = "https://graph.facebook.com/oauth/access_token?client_id="+appid+"&client_secret="+appsecret+"&grant_type=fb_exchange_token&fb_exchange_token="+accessToken;
+       // console.log(exchangeUrl);
+        $.ajax({  
+          type: "GET",
+          url: exchangeUrl,  
+          dataType: "text",
+          success: function(data)
+          { 
+           extended = data.split('=');
+           extendedAT = extended['1'].replace('&expires','');
+           //console.log(extendedAT);
+           //console.log(data);
+            access_token1 = extendedAT;
+            alert("your access token is : "+access_token1);
+
+         },
+         error: function(data,error)
+         {
+          console.log(error);
+         }
+
+       });
+
+        
+        // user is logged in and granted some permissions.
+        FB.login(function(){
+          FB.api('/me/feed', 'post', {message: 'Brian is here for the third time'});
+
+          FB.api(
+            'me/feed',
+            'get',
+            {
+              access_token : access_token1,
+            },
+            function(response) {
+              console.log(response);
+              console.log(response['data'][0]['created_time']);
+              console.log(response['data'][0]['message']);
+            }
+            );
+
+        }, {scope: 'publish_actions'});
+
+
+
+      }
+    });
+}
 
 
 	})
