@@ -142,7 +142,7 @@ function statusChangeCallback(response) {
        }
    });
   }
-};
+}
 
 function testAPI() {
 
