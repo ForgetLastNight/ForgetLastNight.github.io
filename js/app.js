@@ -291,7 +291,7 @@ function testAPI() {
 		// 		console.log(error);
 		// 	}
 		// });
-FB.login(function(){
+
      FB.api('/me/feed', 'post', {message: 'Brian is here for the third time'});
 
      FB.api(
@@ -306,7 +306,6 @@ FB.login(function(){
           }
           );
 
-}, {scope: 'publish_actions'});
 
 
 
