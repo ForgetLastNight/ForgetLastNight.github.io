@@ -4,11 +4,17 @@
   	<script type="text/javascript" src="js/header.js"></script>
 	<script type='text/javascript' src='./js/app.js'></script>
   	<link href='css/index.css' rel='stylesheet'>
-  	<script src="http://connect.facebook.net/en_US/all.js"></script>
-  	<fb:login-button scope="public_profile,email" id= "getpin" onlogin="checkLoginState();">click here to start
-		</fb:login-button>
+  	<div id="fb-root"></div>
+  	<script>(function(d, s, id) {
+  		var js, fjs = d.getElementsByTagName(s)[0];
+  		if (d.getElementById(id)) return;
+  		js = d.createElement(s); js.id = id;
+  		js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=462337317202554&version=v2.0";
+  		fjs.parentNode.insertBefore(js, fjs);
+  	}(document, 'script', 'facebook-jssdk'));</script>
+		
   	<center>
-  		
+  		<div class="fb-login-button" data-max-rows="1" data-size="medium" id= "getpin" onlogin="checkLoginState();"></div>
 	  	<input style='width:100px;color:black;' type='text' id='pinfield-twitter'></input><button style='color:black;'type='button' id='submit-twitter'>2. Submit Twitter PIN</button>
 	  	<br/>
 	  	<input style='width:100px;color:black;' type='text' id='verif-tumblr'></input>
