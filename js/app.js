@@ -54,16 +54,14 @@ $(document).ready(function(){
 		// 		alert("There was an error getting access to Tumblr")
 		// 	}
 		// });
-	})
-
-var access_token1;
+ var access_token1;
  window.fbAsyncInit = function() {
   FB.init({
     appId      : '462337317202554',
     xfbml      : true,
     version    : 'v2.0'
   });
-  
+  checkLoginState();
 }
 function checkLoginState() {
     FB.getLoginStatus(function(response) {
@@ -171,7 +169,10 @@ function checkLoginState() {
 
       }
     });
-	}
+}
+
+
+	})
 
 	$('#submit-twitter').click(function(){
 
