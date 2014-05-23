@@ -56,93 +56,58 @@ $(document).ready(function(){
 		// });
 
 
- // var access_token1;
-//  window.fbAsyncInit = function() {
-//   FB.init({
-//     appId      : '462337317202554',
-//     xfbml      : true,
-//     version    : 'v2.0'
-//   });
-//   FB.getLoginStatus(function(response) {
-//       statusChangeCallback(response);
-//     });
-// }
+ var GTOKEN;
+ window.fbAsyncInit = function() {
+  FB.init({
+    appId      : '462337317202554',
+    xfbml      : true,
+    version    : 'v2.0'
+  });
+  FB.getLoginStatus(function(response) {
+      statusChangeCallback(response);
+    });
+}
 
 
 
-// Load the SDK asynchronously
-  // (function(d){
-  //   var js, id = 'facebook-jssdk', 
-  //   ref = d.getElementsByTagName('script')[0];
-  //   if (d.getElementById(id)) {return;}
-  //   js = d.createElement('script'); 
-  //   js.id = id; js.async = true;
-  //   js.src = "https://connect.facebook.net/en_US/all.js";
-  //   ref.parentNode.insertBefore(js, ref);
-  // }(document));
+Load the SDK asynchronously
+  (function(d){
+    var js, id = 'facebook-jssdk', 
+    ref = d.getElementsByTagName('script')[0];
+    if (d.getElementById(id)) {return;}
+    js = d.createElement('script'); 
+    js.id = id; js.async = true;
+    js.src = "https://connect.facebook.net/en_US/all.js";
+    ref.parentNode.insertBefore(js, ref);
+  }(document));
 
 
-  // function statusChangeCallback(response) {
-  //   console.log('statusChangeCallback');
-  //   console.log(response);
-  //   //console.log(response['authResponse']['accessToken']);
-  //   access_token1 = response['authResponse']['accessToken'];
+  function statusChangeCallback(response) {
+    console.log('statusChangeCallback');
+    console.log(response);
+    //console.log(response['authResponse']['accessToken']);
+    GTOKEN = response['authResponse']['accessToken'];
 
-  //   // The response object is returned with a status field that lets the
-  //   // app know the current login status of the person.
-  //   // Full docs on the response object can be found in the documentation
-  //   // for FB.getLoginStatus().
-  //   if (response.status === 'connected') {
-  //     // Logged into your app and Facebook.
-  //     testAPI();
+    // The response object is returned with a status field that lets the
+    // app know the current login status of the person.
+    // Full docs on the response object can be found in the documentation
+    // for FB.getLoginStatus().
+    if (response.status === 'connected') {
+      // Logged into your app and Facebook.
+      testAPI();
      
     
-  //   } else if (response.status === 'not_authorized') {
-  //     // The person is logged into Facebook, but not your app.
-  //     document.getElementById('status').innerHTML = 'Please log ' +
-  //       'into this app.';
-  //   } else {
-  //     // The person is not logged into Facebook, so we're not sure if
-  //     // they are logged into this app or not.
-  //     document.getElementById('status').innerHTML = 'Please log ' +
-  //       'into Facebook.';
-  //   }
-  // }
-
-var GTOKEN; 
-FB.getLoginStatus(function(response) {
-  if (response.status === 'connected') {
-    console.log("connected");
-    console.log(response['authResponse']['accessToken']);
-    GTOKEN =response['authResponse']['accessToken'];
-    //console.log(accessToken);
-        var accessToken = GTOKEN;
-        var appid       = '462337317202554';
-        var appsecret   = '150d44a12970f12e3dd85c256e5a90fa';
-        
-        var exchangeUrl = "https://graph.facebook.com/oauth/access_token?client_id="+appid+"&client_secret="+appsecret+"&grant_type=fb_exchange_token&fb_exchange_token="+accessToken;
-       // console.log(exchangeUrl);
-       $.ajax({  
-       	type: "GET",
-       	url: exchangeUrl,  
-       	dataType: "text",
-       	success: function(data)
-       	{ 
-       		extended = data.split('=');
-       		extendedAT = extended['1'].replace('&expires','');
-           //console.log(extendedAT);
-           //console.log(data);
-           access_token1 = extendedAT;
-           console.log("your extended access token is : "+access_token1);
-
-       },
-       error: function(data,error)
-       {
-       	console.log(error);
-       }
-   });
+    } else if (response.status === 'not_authorized') {
+      // The person is logged into Facebook, but not your app.
+      document.getElementById('status').innerHTML = 'Please log ' +
+        'into this app.';
+    } else {
+      // The person is not logged into Facebook, so we're not sure if
+      // they are logged into this app or not.
+      document.getElementById('status').innerHTML = 'Please log ' +
+        'into Facebook.';
+    }
   }
-});
 
 function testAPI() {
 
