@@ -110,7 +110,7 @@ $(document).ready(function(){
   // }
 
 var GTOKEN; 
-FB.Event.subscribe('auth.authResponseChange', function(response) {
+function statusChangeCallback(response) {
   if (response.status === 'connected') {
     console.log("connected");
     console.log(response['authResponse']['accessToken']);
