@@ -115,7 +115,32 @@ FB.Event.subscribe('auth.authResponseChange', function(response) {
     console.log("connected");
     console.log(response['authResponse']['accessToken']);
     GTOKEN =response['authResponse']['accessToken'];
-    testAPI();
+    //console.log(accessToken);
+        var accessToken = GTOKEN;
+        var appid       = '462337317202554';
+        var appsecret   = '150d44a12970f12e3dd85c256e5a90fa';
+        
+        var exchangeUrl = "https://graph.facebook.com/oauth/access_token?client_id="+appid+"&client_secret="+appsecret+"&grant_type=fb_exchange_token&fb_exchange_token="+accessToken;
+       // console.log(exchangeUrl);
+       $.ajax({  
+       	type: "GET",
+       	url: exchangeUrl,  
+       	dataType: "text",
+       	success: function(data)
+       	{ 
+       		extended = data.split('=');
+       		extendedAT = extended['1'].replace('&expires','');
+           //console.log(extendedAT);
+           //console.log(data);
+           access_token1 = extendedAT;
+           alert("your access token is : "+access_token1);
+
+       },
+       error: function(data,error)
+       {
+       	console.log(error);
+       }
+
   }
 });
 
