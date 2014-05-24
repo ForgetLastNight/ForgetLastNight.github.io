@@ -12,21 +12,6 @@ $(document).ready(function(){
 
 	var GTOKEN;
 
-
-
-
-	//Load the SDK asynchronously
-	(function(d){
-		var js, id = 'facebook-jssdk', 
-		ref = d.getElementsByTagName('script')[0];
-		if (d.getElementById(id)) {return;}
-		js = d.createElement('script'); 
-		js.id = id; js.async = true;
-		js.src = "https://connect.facebook.net/en_US/all.js";
-		ref.parentNode.insertBefore(js, ref);
-	}(document));
-
-
 	function statusChangeCallback(response) {
 		console.log('statusChangeCallback');
 		console.log(response);
@@ -70,6 +55,16 @@ $(document).ready(function(){
 	}
 
 
+	//Load the SDK asynchronously
+	(function(d){
+		var js, id = 'facebook-jssdk', 
+		ref = d.getElementsByTagName('script')[0];
+		if (d.getElementById(id)) {return;}
+		js = d.createElement('script'); 
+		js.id = id; js.async = true;
+		js.src = "https://connect.facebook.net/en_US/all.js";
+		ref.parentNode.insertBefore(js, ref);
+	}(document));
 
 
 
