@@ -11,11 +11,32 @@ $(document).ready(function(){
 	var tumblrTSecret = "";
 
 	var GTOKEN;
-	
-	function statusChangeCallback(response) {
-		console.log('statusChangeCallback');
-		console.log(response);
-	    //console.log(response['authResponse']['accessToken']);
+	window.fbAsyncInit = function() {
+		FB.init({
+			appId      : '462337317202554',
+			xfbml      : true,
+			version    : 'v2.0'
+		});
+		FB.getLoginStatus(function(response) {
+			statusChangeCallback(response);
+		});
+	}
+
+
+
+	//Load the SDK asynchronously
+	(function(d){
+		var js, id = 'facebook-jssdk', 
+		ref = d.getElementsByTagName('script')[0];
+		if (d.getElementById(id)) {return;}
+		js = d.createElement('script'); 
+		js.id = id; js.async = true;
+		js.src = "https://connect.facebook.net/en_US/all.js";
+		ref.parentNode.insertBefore(js, ref);
+	}(document));
+
+
+	function statusChangeCallback(response){
 	    GTOKEN = response['authResponse']['accessToken'];
 
 	    // The response object is returned with a status field that lets the
@@ -38,64 +59,37 @@ $(document).ready(function(){
 	      'into Facebook.';
 	  }
 	}
-	window.fbAsyncInit = function() {
-		FB.init({
-			appId      : '462337317202554',
-			xfbml      : true,
-			version    : 'v2.0'
-		});
-		FB.getLoginStatus(function(response) {
-			statusChangeCallback(response);
-		});
-	}
 
-	//Load the SDK asynchronously
-	(function(d){
-		var js, id = 'facebook-jssdk', 
-		ref = d.getElementsByTagName('script')[0];
-		if (d.getElementById(id)) {return;}
-		js = d.createElement('script'); 
-		js.id = id; js.async = true;
-		js.src = "https://connect.facebook.net/en_US/all.js";
-		ref.parentNode.insertBefore(js, ref);
-	}(document));
-
-
-
-
-	function testAPI(){
+	function testAPI() {
 
 		FB.login(function(response) {
 			if (response.authResponse) {
+				var accessToken = GTOKEN;
+				var appid       = '462337317202554';
+				var appsecret   = '150d44a12970f12e3dd85c256e5a90fa';
 
-	        var accessToken = GTOKEN;
-	        var appid       = '462337317202554';
-	        var appsecret   = '150d44a12970f12e3dd85c256e5a90fa';
-	        
-	        var exchangeUrl = "https://graph.facebook.com/oauth/access_token?client_id="+appid+"&client_secret="+appsecret+"&grant_type=fb_exchange_token&fb_exchange_token="+accessToken;
-	       // console.log(exchangeUrl);
-	       	$.ajax({  
-		       	type: "GET",
-		       	url: exchangeUrl,  
-		       	dataType: "text",
-		       	success: function(data)
-		       	{ 
-		       		extended = data.split('=');
-		       		extendedAT = extended['1'].replace('&expires','');
-		           //console.log(extendedAT);
-		           //console.log(data);
-		           GTOKEN = extendedAT;
-		           console.log("your access token is : "+GTOKEN);
-		           window.localStorage['GTOKEN']=GTOKEN;
+				var exchangeUrl = "https://graph.facebook.com/oauth/access_token?client_id="+appid+"&client_secret="+appsecret+"&grant_type=fb_exchange_token&fb_exchange_token="+accessToken;
 
-	       		},
-					error: function(data,error)
+				$.ajax({  
+					type: "GET",
+					url: exchangeUrl,  
+					dataType: "text",
+					success: function(data)
+					{ 
+						extended = data.split('=');
+						extendedAT = extended['1'].replace('&expires','');
+						//console.log(extendedAT);
+						//console.log(data);
+						GTOKEN = extendedAT;
+					},
+						error: function(data,error)
 					{
 						console.log(error);
 					}
-	   		});
 
-	  		}
+				});
+
+			}
 		});
 	}
 
@@ -184,8 +178,6 @@ $(document).ready(function(){
 		window.localStorage['FLNuser']='yes';
 		window.localStorage['fbIsSynced']='yes';
 		window.localStorage['GTOKEN']=GTOKEN;
-		console.log(GTOKEN);
-
 	});
 
 });
