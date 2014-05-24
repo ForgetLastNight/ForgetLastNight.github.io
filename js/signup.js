@@ -17,6 +17,7 @@ $(document).ready(function(){
 			xfbml      : true,
 			version    : 'v2.0'
 		});
+		
 		FB.getLoginStatus(function(response) {
 			statusChangeCallback(response);
 		});

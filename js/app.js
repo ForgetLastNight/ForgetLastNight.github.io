@@ -123,11 +123,9 @@ $(document).ready(function(){
 			},
 			function(response) {
 				if (!response || response.error) {
-				alert('Error occured');
+				alert('There was an error connecting to Facebook.');
 				} 
 				else {
-					alert('Action was successful!');
-
 					for (var i = 0 ; i< response.data.length;i++)
 					{
 						console.log(response['data'][i]['message']);
