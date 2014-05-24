@@ -6,21 +6,11 @@ $(document).ready(function(){
 	var tumblrCKey = "dHGh4mCQc2AdnxuvwBEttGsTHh0YuM0ovYWchcLQarvKBgdrk7";
 	var tumblrCSecret = "bzsR5lDUt6HETXIm4ZqmjBxwfygc3enc9ybBW226K5bGgcBwr8";
 
-	// check if user has a profile
-	// if (window.localStorage.getItem("FLNuser") === null) {
-	//   //console.log("No FLN user on this device.");
-	//   $('#main').html("<div class='row'><div class='col-xs-2'></div><div class='col-xs-8'><a href='https://www.google.com'><div style='font-size: 20px;font-weight: bold;width: 100%;outline:none;border:1px solid blue;' type='button' class='btn btn-lg btn-primary'><span>Sign Up</span></div></a></div><div class='col-xs-2'></div></div>");
-
-	// }
-	// else console.log(window.localStorage.getItem("FLNuser"));
-
 	var twitterToken = "2491623421-tZQwdxgn7E3Mnx2lYzTZhI8GoeIVfjJIecypdlZ";
 	var twitterTSecret = "Uxe4rUQHkFbYkFDtKsb7tgOVulPJ3pbFqYvjYkQppKEzJ";
 
 	var tumblrToken = "b0iM33OcSdxBhZUZL2D3deJjktF4apxoGuXOjB85oGDzUMe4dU";
 	var tumblrTSecret = "e3VliuVgSBefdxglKKfpvBbcrqigIW4TSadcyCPJnonPRz3mLz";
-	
-
 	
 
 	$('#view').click(function(){
@@ -76,8 +66,8 @@ $(document).ready(function(){
 						for(var i=0;i<posts.length;i++)
 						{
 							time = posts[i]['date'];
-							title=posts[i]['title']?posts[i]['title']:"No Title";
-							message = posts[i]['body'];
+							title=posts[i]['title']?posts[i]['title']:"(No title)";
+							message=posts[i]['message']?posts[i]['message']:"(No body text)";
 							id = String(posts[i]['id']);
 
 							var tumblrHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='tumblr-logo.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time+"</span><br/>"+title+"<br/>"+message+"</p></div><div class='col-xs-1 delete-box delete-tumblr'><input type='checkbox' name='"+id+"'/></div></div>";
@@ -147,7 +137,6 @@ $(document).ready(function(){
 			}
 		}
 
-		alert("Click 'view' again to confirm your deletions.");
 
 		//while loop to refresh once all async deletes are finished
 
