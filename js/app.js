@@ -145,23 +145,7 @@ function testAPI() {
    });
 
 
-        // user is logged in and granted some permissions.
-        FB.login(function(){
-        	FB.api('/me/feed', 'post', {message: 'Brian is here for the third time'});
-
-        	FB.api(
-        		'me/feed',
-        		'get',
-        		{
-        			access_token : GTOKEN,
-        		},
-        		function(response) {
-        			console.log(response);
-        			console.log(response['data']['message']);
-        		}
-        		);
-
-        }, {scope: 'publish_actions'});
+       
 
 
 
