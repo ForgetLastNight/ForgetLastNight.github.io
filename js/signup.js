@@ -36,9 +36,6 @@ window.fbAsyncInit = function() {
 
 
 function statusChangeCallback(response) {
-	console.log('statusChangeCallback');
-	console.log(response);
-    //console.log(response['authResponse']['accessToken']);
     GTOKEN = response['authResponse']['accessToken'];
 
     // The response object is returned with a status field that lets the
@@ -87,8 +84,6 @@ function testAPI() {
            //console.log(extendedAT);
            //console.log(data);
            GTOKEN = extendedAT;
-           console.log("your access token is : "+GTOKEN);
-
        },
        error: function(data,error)
        {
@@ -189,8 +184,6 @@ function testAPI() {
 		window.localStorage['FLNuser']='yes';
 		window.localStorage['fbIsSynced']='yes';
 		window.localStorage['GTOKEN']=GTOKEN;
-		console.log(GTOKEN);
-
 	});
 
 });
