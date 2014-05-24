@@ -25,23 +25,23 @@ $(document).ready(function(){
 	}
 	else{
 		console.log("User found");
-		if(localStorage['twitterIsSynced']=='yes')
+		if(window.localStorage['twitterIsSynced']=='yes')
 		{
 			console.log("getting twitter token");
-			twitterToken = localStorage['twitterToken'];
-			twitterTSecret = localStorage['twitterTSecret'];
+			twitterToken = window.localStorage['twitterToken'];
+			twitterTSecret = window.localStorage['twitterTSecret'];
 		}
 
-		if(localStorage['tumblrIsSynced']=='yes')
+		if(window.localStorage['tumblrIsSynced']=='yes')
 		{
 			console.log("getting tumblr token");
-			tumblrToken = localStorage['tumblrToken'];
-			tumblrTSecret = localStorage['tumblrTSecret'];
+			tumblrToken = window.localStorage['tumblrToken'];
+			tumblrTSecret = window.localStorage['tumblrTSecret'];
 		}
 
-		if(localStorage['fbIsSynced']=='yes')
+		if(window.localStorage['fbIsSynced']=='yes')
 		{
-			fbToken = localStorage['GTOKEN'];
+			fbToken = window.localStorage['GTOKEN'];
 		}
 	}
 	
