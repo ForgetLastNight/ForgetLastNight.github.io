@@ -16,6 +16,7 @@ $(document).ready(function(){
 	var tumblrToken = "";
 	var tumblrTSecret = "";
 	
+	var fbToken = "";
 
 	//check if user has a profile
 	if (window.localStorage.getItem("FLNuser") != 'yes' || window.localStorage.getItem("FLNuser") === null) {
@@ -36,6 +37,11 @@ $(document).ready(function(){
 			console.log("getting tumblr token");
 			tumblrToken = localStorage['tumblrToken'];
 			tumblrTSecret = localStorage['tumblrTSecret'];
+		}
+
+		if(localStorage['fbIsSynced']=='yes')
+		{
+			fbToken = localStorage['GTOKEN'];
 		}
 	}
 	
@@ -120,7 +126,7 @@ $(document).ready(function(){
 			'me/feed',
 			'get',
 			{
-				access_token : GTOKEN,
+				access_token : fbToken,
 			},
 			function(response) {
 				if (!response || response.error) {

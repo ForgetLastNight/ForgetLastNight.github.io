@@ -95,7 +95,6 @@ $(document).ready(function(){
 		//how to make sure all async calls are finished?
 		window.localStorage['FLNuser']='yes';
 
-
 	});
 
 
@@ -177,6 +176,7 @@ $(document).ready(function(){
 		           //console.log(data);
 		           GTOKEN = extendedAT;
 		           console.log("your access token is : "+GTOKEN);
+		           window.localStorage['GTOKEN']=GTOKEN;
 
 	       		},
 					error: function(data,error)
