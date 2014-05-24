@@ -6,10 +6,6 @@ $(document).ready(function(){
 	var tumblrCKey = "dHGh4mCQc2AdnxuvwBEttGsTHh0YuM0ovYWchcLQarvKBgdrk7";
 	var tumblrCSecret = "bzsR5lDUt6HETXIm4ZqmjBxwfygc3enc9ybBW226K5bGgcBwr8";
 
-
-	//do a parse call here to check if the current user has a token
-	// if so set it to this
-
 	var twitterToken = "";
 	var twitterTSecret = "";
 
@@ -127,11 +123,9 @@ $(document).ready(function(){
 			},
 			function(response) {
 				if (!response || response.error) {
-				alert('Error occured');
+				alert('There was an error connecting to Facebook.');
 				} 
 				else {
-					alert('Action was successful!');
-
 					for (var i = 0 ; i< response.data.length;i++)
 					{
 						console.log(response['data'][i]['message']);
