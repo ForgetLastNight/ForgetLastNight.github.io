@@ -87,9 +87,8 @@ $(document).ready(function(){
 					success: function(results) {
 						results = JSON.parse(results);
 
+
 						posts = results['response']['posts'];
-
-
 						for(var i=0;i<posts.length;i++)
 						{
 							time = posts[i]['date'];
