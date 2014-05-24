@@ -10,6 +10,8 @@ $(document).ready(function(){
 	var tumblrToken = "";
 	var tumblrTSecret = "";
 
+	var GTOKEN;
+
 
 	$('#get-twitter').click(function(){
 		Parse.Cloud.run('TwitterRequestToken', {oKey : twitterCKey, cSec : twitterCSecret, oCall : 'oob'}, {
@@ -94,6 +96,8 @@ $(document).ready(function(){
 
 		//how to make sure all async calls are finished?
 		window.localStorage['FLNuser']='yes';
+		window.localStorage['GTOKEN']=GTOKEN;
+		console.log(GTOKEN);
 
 	});
 
@@ -101,7 +105,7 @@ $(document).ready(function(){
 
 
 
-	var GTOKEN;
+	
 
 	window.fbAsyncInit = function() {
 		FB.init({
