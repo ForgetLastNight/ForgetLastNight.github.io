@@ -181,7 +181,7 @@ $(document).ready(function(){
 
 		//how to make sure all async calls are finished?
 		window.localStorage['FLNuser']='yes';
-		window.localStorage['fbIsSynced']=='yes';
+		window.localStorage['fbIsSynced']='yes';
 		window.localStorage['GTOKEN']=GTOKEN;
 		console.log(GTOKEN);
 
