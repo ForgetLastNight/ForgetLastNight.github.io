@@ -145,9 +145,17 @@ $(document).ready(function(){
 		var tumblr_auth = $('#auth-tumblr .auth-input').val();
 		var fb_auth = $('#auth-fb .auth-input').val();
 
+		if(twitter_auth==''&&tumblr_auth==''&&fb_auth==''){
+			alert("You did not connect with any apps. Please enter one or more authentication codes.")
+			return;
+		}
+
+		$('#finish-signup').css({"display":"none"});
+		$('#after-submit').css({"display":"inline"});
+
 		if(twitter_auth!='')
 		{
-
+			$('#twitter-ready').css({"display":"inline"});
 			Parse.Cloud.run('TwitterAccessToken', {oVer: twitter_auth, oToken : twitterToken, oKey : twitterCKey, tSec : twitterTSecret, cSec : twitterCSecret}, {
 				success: function(reply) {
 					temp = reply.split('=');
@@ -158,7 +166,7 @@ $(document).ready(function(){
 					window.localStorage['twitterToken']=twitterToken;
 					window.localStorage['twitterTSecret']=twitterTSecret;
 
-					alert("Successfully connected to Twitter.");
+					$('#twitter-ready').css({'opacity':'1.0'});
 
 				},
 				error: function(error) {
@@ -167,9 +175,11 @@ $(document).ready(function(){
 				}
 			});
 		}
+		else window.localStorage['twitterIsSynced']='no';
 		
 		if(tumblr_auth!='')
 		{
+			$('#tumblr-ready').css({"display":"inline"});
 			Parse.Cloud.run('TumblrAccessToken', {oVer: tumblr_auth, oToken : tumblrToken, oKey : tumblrCKey, tSec : tumblrTSecret, cSec : tumblrCSecret}, {
 				success: function(reply) {
 					temp = reply.split('=');
@@ -179,7 +189,7 @@ $(document).ready(function(){
 					window.localStorage['tumblrIsSynced']='yes';
 					window.localStorage['tumblrToken']=tumblrToken;
 					window.localStorage['tumblrTSecret']=tumblrTSecret;
-					alert("Successfully connected to Tumblr.");
+					$('#tumblr-ready').css({'opacity':'1.0'});
 				},
 				error: function(error) {
 					console.log(error);
@@ -187,6 +197,7 @@ $(document).ready(function(){
 				}
 			});
 		}
+		else window.localStorage['tumblrIsSynced']='no';
 
 		//how to make sure all async calls are finished?
 		window.localStorage['FLNuser']='yes';

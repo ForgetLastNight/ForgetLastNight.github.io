@@ -4,7 +4,7 @@ var oauth = require('cloud/oauth.js');
 var sha = require('cloud/sha1.js');
 
 Parse.Cloud.define("Timeline", function(request, response) {
-    var urlLink = 'https://api.twitter.com/1.1/statuses/user_timeline.json';
+    var urlLink = 'https://api.twitter.com/1.1/statuses/user_timeline.json?count='+request.params.num;
 
     var consumerSecret = request.params.cSec;
     var tokenSecret = request.params.tSec;
@@ -27,7 +27,7 @@ Parse.Cloud.define("Timeline", function(request, response) {
         "oauth_token": oauth_token,
         "oauth_timestamp": timestamp,
         "oauth_nonce": nonce,
-        "oauth_signature_method": "HMAC-SHA1"
+        "oauth_signature_method": "HMAC-SHA1",
     };
     var message = {
         "method": "GET",
