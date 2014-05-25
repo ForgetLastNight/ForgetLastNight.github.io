@@ -25,3 +25,11 @@
 .su-logo{
 	cursor:pointer;
 }
+
+.jqi{
+z-index: 1000;
+position: absolute;
+top: 15%;
+left: 50%;
+margin-left: -200px;
+}
