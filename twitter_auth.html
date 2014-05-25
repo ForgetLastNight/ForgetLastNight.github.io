@@ -7,7 +7,7 @@
 
         var url = window.location.href;
         var start_verif = url.indexOf("oauth_verifier")+15;
-        var end_verif = url.indexOf("#_=_");
+        var end_verif = url.length;
 
         var verif = url.substring(start_verif,end_verif);
         console.log("Verifier: "+verif);
@@ -22,7 +22,7 @@
 
     <div class='row'>
       <div class='col-xs-2'></div>
-      <div class='col-xs-8' style=' background:rgba(0,0,0,0.6); color:white;border:2px solid black;'>Copy the code below and paste it into the "Enter Code" field for Tumblr. Then you may close this page.</div> 
+      <div class='col-xs-8' style=' background:rgba(0,0,0,0.6); color:white;border:2px solid black;'>Copy the code below and paste it into the "Enter Code" field for Twitter. Then you may close this page.</div> 
       <div class='col-xs-2'></div>
     </div>
     <div class='row'>

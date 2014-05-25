@@ -95,7 +95,7 @@ $(document).ready(function(){
 	}
 
 	$('#get-twitter').click(function(){
-		Parse.Cloud.run('TwitterRequestToken', {oKey : twitterCKey, cSec : twitterCSecret, oCall : 'oob'}, {
+		Parse.Cloud.run('TwitterRequestToken', {oKey : twitterCKey, cSec : twitterCSecret, oCall : 'https://forgetlastnight.github.io/twitter_auth.html?'}, {
 			success: function(reply) {
 				temp = reply.split('=');
 				twitterToken = temp[1].split('&')[0];
