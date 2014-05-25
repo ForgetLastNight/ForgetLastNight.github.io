@@ -101,7 +101,15 @@ $(document).ready(function(){
 				twitterToken = temp[1].split('&')[0];
 				twitterTSecret = temp[2].split('&')[0];
 
-				window.open("https://api.twitter.com/oauth/authorize?oauth_token="+twitterToken,"_blank");
+				auth_url = "https://api.twitter.com/oauth/authorize?oauth_token="+twitterToken;
+
+				$.prompt("<a href='"+auth_url+"' target='_blank'>Get Twitter code</a>",{
+					title: "Follow the link below!",
+					buttons: {"Done":true}
+				});
+				 //  window.open("https://api.twitter.com/oauth/authorize?oauth_token="+twitterToken,"_blank");
+
+				
 			},
 			error: function(error) {
 				alert("There was an error getting access to Twitter.")
@@ -116,7 +124,12 @@ $(document).ready(function(){
 				tumblrToken = temp[1].split('&')[0];
 				tumblrTSecret = temp[2].split('&')[0];
 
-				window.open("https://tumblr.com/oauth/authorize?oauth_token="+tumblrToken);
+				//window.open("https://tumblr.com/oauth/authorize?oauth_token="+tumblrToken);
+				auth_url = "https://tumblr.com/oauth/authorize?oauth_token="+tumblrToken;
+				$.prompt("<a href='"+auth_url+"' target='_blank'>Get Tumblr code</a>",{
+					title: "Follow the link below!",
+					buttons: {"Done":true}
+				});				
 			},
 			error: function(error) {
 				alert("There was an error getting access to Tumblr")
