@@ -10,56 +10,82 @@ $(document).ready(function(){
 	var tumblrToken = "";
 	var tumblrTSecret = "";
 
+	var fbAppId = '462337317202554';
+	var fbAppSecret ='150d44a12970f12e3dd85c256e5a90fa';
+	var fbToken = "";
+
 /**************FB************************************/
 
-      // This is called with the results from from FB.getLoginStatus().
-   function statusChangeCallback(response) {
-     console.log('statusChangeCallback');
-     console.log(response);
-     var accessToken = response['authResponse']['accessToken'];
-     // The response object is returned with a status field that lets the
-     // app know the current login status of the person.
-     // Full docs on the response object can be found in the documentation
-     // for FB.getLoginStatus().
-     if (response.status === 'connected') {
-       // Logged into your app and Facebook.
-       var appid       = '462337317202554';
-       var appsecret   = '150d44a12970f12e3dd85c256e5a90fa';
+	function extendToken(res)
+	{
+		accessToken = res.authResponse.accessToken;
+		console.log("initial access token: "+ accessToken);
+      var exchangeUrl = "https://graph.facebook.com/oauth/access_token?client_id="+fbAppId+"&client_secret="+fbAppSecret+"&grant_type=fb_exchange_token&fb_exchange_token="+accessToken;
+		$.ajax({  
+			type: "GET",
+			url: exchangeUrl,  
+			dataType: "text",
+			success: function(data)
+			{ 
+			 extended = data.split('=');
+			 longToken = extended['1'].replace('&expires','');
+			 console.log("longToken is "+longToken);
+			 return longToken;
+			},
+			 error: function(data,error)
+			{
+			 console.log(error);
+			 return;
+			}
+		});
+	}
 
-       var exchangeUrl = "https://graph.facebook.com/oauth/access_token?client_id="+appid+"&client_secret="+appsecret+"&grant_type=fb_exchange_token&fb_exchange_token="+accessToken;
+   // // This is called with the results from from FB.getLoginStatus().
+   // function statusChangeCallback(response) {
+   //   console.log('statusChangeCallback');
+   //   console.log(response);
 
-       $.ajax({  
-         type: "GET",
-         url: exchangeUrl,  
-         dataType: "text",
-         success: function(data)
-         { 
-          extended = data.split('=');
-          longToken = extended['1'].replace('&expires','');
-         },
-          error: function(data,error)
-         {
-          console.log(error);
-         }
-       });
+   //   // The response object is returned with a status field that lets the
+   //   // app know the current login status of the person.
+   //   // Full docs on the response object can be found in the documentation
+   //   // for FB.getLoginStatus().
+   //   if (response.status === 'connected') {
+   //     // Logged into your app and Facebook.
+   //     var appid       = '462337317202554';
+   //     var appsecret   = '150d44a12970f12e3dd85c256e5a90fa';
 
-     } else if (response.status === 'not_authorized') {
-       console.log("The person is logged into Facebook, but not your app");
+   //     var exchangeUrl = "https://graph.facebook.com/oauth/access_token?client_id="+appid+"&client_secret="+appsecret+"&grant_type=fb_exchange_token&fb_exchange_token="+accessToken;
+
+   //     $.ajax({  
+   //       type: "GET",
+   //       url: exchangeUrl,  
+   //       dataType: "text",
+   //       success: function(data)
+   //       { 
+   //        extended = data.split('=');
+   //        longToken = extended['1'].replace('&expires','');
+   //       },
+   //        error: function(data,error)
+   //       {
+   //        console.log(error);
+   //       }
+   //     });
+
+   //   } else if (response.status === 'not_authorized') {
+   //     console.log("The person is logged into Facebook, but not your app");
       
-     } else {
-       console.log("The person is not logged into Facebook, so we're not sure if they are logged into this app or not");
+   //   } else {
+   //     console.log("The person is not logged into Facebook, so we're not sure if they are logged into this app or not");
 
-     }
-   }
+   //   }
+   // }
 
-   // This function is called when someone finishes with the Login
-   // Button.  See the onlogin handler attached to it in the sample
-   // code below.
-   function checkLoginState() {
-     FB.getLoginStatus(function(response) {
-       statusChangeCallback(response);
-     });
-   }
+   // // This function is called when someone finishes with the Login
+   // // Button.  See the onlogin handler attached to it in the sample
+   // // code below.
+   // function checkLoginState() {
+
+   // }
 
    window.fbAsyncInit = function() {
      FB.init({
@@ -144,35 +170,28 @@ $(document).ready(function(){
 
 
 	$('#get-fb').click(function(){
-		FB.login(function(response){
-			accessToken = response.authResponse.accessToken;
-			console.log("initial access token: "+ accessToken);
+
+		FB.getLoginStatus(function(response) {
 			if(response.status=='connected')
 			{
-				console.log(response);
-		      var appid       = '462337317202554';
-		      var appsecret   = '150d44a12970f12e3dd85c256e5a90fa';
-
-		      var exchangeUrl = "https://graph.facebook.com/oauth/access_token?client_id="+appid+"&client_secret="+appsecret+"&grant_type=fb_exchange_token&fb_exchange_token="+accessToken;
-				$.ajax({  
-					type: "GET",
-					url: exchangeUrl,  
-					dataType: "text",
-					success: function(data)
-					{ 
-					 extended = data.split('=');
-					 longToken = extended['1'].replace('&expires','');
-					 console.log("longToken is "+longToken);
-					},
-					 error: function(data,error)
-					{
-					 console.log(error);
-					}
-				});
+				//get token and save it function
+				fbToken = extendToken(response);
+				//put it in a new window like the others?
 			}
-			else alert("Connection to Facebook failed, please try again.")
+			else{
+				FB.login(function(resp){
+					if(resp.status=='connected')
+					{
+						fbToken = extendToken(resp);
 
-		}, {scope: 'public_profile'});
+					}
+					else alert("Connection to Facebook failed, please try again.")
+
+				}, {scope: 'public_profile'});
+
+			}
+
+		});
 
 	});
 
