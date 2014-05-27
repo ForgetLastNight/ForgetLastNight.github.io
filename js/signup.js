@@ -23,7 +23,6 @@ $(document).ready(function(){
 		accessToken = res.authResponse.accessToken;
 
       var exchangeUrl = "https://graph.facebook.com/oauth/access_token?client_id="+fbAppId+"&client_secret="+fbAppSecret+"&grant_type=fb_exchange_token&fb_exchange_token="+accessToken;
-      console.log("got exchangeUrl: "+ exchangeUrl);
 
 		$.ajax({  
 			type: "GET",
@@ -182,13 +181,22 @@ $(document).ready(function(){
 				//get token and save it function
 				fbToken = extendToken(response);
 				//put it in a new window like the others?
+				auth_url = "https://forgetlastnight.github.io/fb_auth.html?token="+fbToken;
+				$.prompt("<a href='"+auth_url+"' target='_blank'>Get Facebook code</a>",{
+					title: "Follow the link below!",
+					buttons: {"Done":true}
+				});	
 			}
 			else{
 				FB.login(function(resp){
 					if(resp.status=='connected')
 					{
 						fbToken = extendToken(resp);
-						
+						auth_url = "https://forgetlastnight.github.io/fb_auth.html?token="+fbToken;
+						$.prompt("<a href='"+auth_url+"' target='_blank'>Get Facebook code</a>",{
+							title: "Follow the link below!",
+							buttons: {"Done":true}
+						});	
 					}
 					else alert("Connection to Facebook failed, please try again.")
 
@@ -211,6 +219,7 @@ $(document).ready(function(){
 			alert("You did not connect with any apps. Please enter one or more authentication codes.")
 			return;
 		}
+		window.localStorage['FLNuser']='yes';
 
 		$('#finish-signup').css({"display":"none"});
 		$('#after-submit').css({"display":"inline"});
@@ -261,10 +270,15 @@ $(document).ready(function(){
 		}
 		else window.localStorage['tumblrIsSynced']='no';
 
-		//how to make sure all async calls are finished?
-		window.localStorage['FLNuser']='yes';
-		// window.localStorage['fbIsSynced']='yes';
-		// window.localStorage['GTOKEN']=GTOKEN;
+		if(fb_auth!='')
+		{
+			$('#fb-ready').css({"display":"inline"});
+			window.localStorage['fbIsSynced']='yes';
+			window.localStorage['fbToken']=fbToken;
+
+		}
+		else window.localStorage['fbIsSynced']='no';
+
 	});
 
 });
