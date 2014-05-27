@@ -193,7 +193,7 @@ $(document).ready(function(){
 			// );
 
 			FB.api(
-				'me/posts',
+				'me/statuses',
 
 				'get',
 				{
