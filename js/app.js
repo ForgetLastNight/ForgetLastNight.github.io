@@ -35,7 +35,7 @@ $(document).ready(function(){
 
 		if(window.localStorage['fbIsSynced']=='yes')
 		{
-			fbToken = window.localStorage['GTOKEN'];
+			fbToken = window.localStorage['fbToken'];
 		}
 	}
 	
