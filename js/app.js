@@ -125,7 +125,7 @@ $(document).ready(function(){
 
 			var query = 'SELECT name FROM user WHERE uid = me()';
 
-			FB.api('/fql', {q: query}, function(r) {
+			FB.api('/fql', {q: query, access_token: fbToken}, function(r) {
 			        console.log(r)
 			});
 
