@@ -135,10 +135,14 @@ $(document).ready(function(){
 
 			FB.api('/fql', {q: {"query1":obj_likes,"query2":page_likes}, access_token: fbToken}, function(r) {
 			  console.log(r);
-	        likes=r.data;
-	        for(var i=0;i<likes.length;i++)
-	        {
+	        obj_likes=r.data[0].fql_result_set;
+	        page_likes=r.data[1].fql_result_set;
 
+	        for(var i=0;i<obj_likes.length;i++)
+	        {
+	        	id = obj_likes[i].object_id;
+	   		var FBHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='facebook-icon.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time+"</span><br/>User likes object id"+id +"</p></div><div class='col-xs-1'></div></div>";
+				$('#display-media').append(FBHTML);	        		
 	        }
 			});
 
