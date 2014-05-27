@@ -123,7 +123,7 @@ $(document).ready(function(){
 		{	
 
 
-			var query = 'SELECT name FROM user WHERE uid=me() AND access_token='+fbToken;
+			var query = 'SELECT name FROM user WHERE uid = me()';
 
 			FB.api('/fql', {q: query}, function(r) {
 			        console.log(r)
