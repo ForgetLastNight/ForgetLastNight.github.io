@@ -130,24 +130,18 @@ $(document).ready(function(){
 			//liking bands, movies, etc
 			var page_likes = "select page_id, name from page where page_id in (select page_id from page_fan where uid = me())";
 			var url_likes = "select url from url_like where user_id = me()";
+			var comments_query = "select text from comment where fromid = me()"
 
 			//doesn't work
 			//var comments = "SELECT text, fromid FROM comment WHERE post_id IN (SELECT post_id FROM stream WHERE filter_key IN (SELECT filter_key FROM stream_filter WHERE uid=me()) AND actor_id IN (SELECT uid1 FROM friend WHERE uid2=me()) order by created_time)";
 
 			//doesn't have timestamps of object likes
-			// FB.api('/fql', {q: {"query1":obj_likes,"query2":page_likes}, access_token: fbToken}, function(r) {
-			//   console.log(r);
-	  //       obj_likes=r.data[0].fql_result_set;
-	  //       page_likes=r.data[1].fql_result_set;
+			FB.api('/fql', {q: {"query1": comments_query}, access_token: fbToken}, function(r) {
+			  console.log(r);
 
-	  //       for(var i=0;i<obj_likes.length;i++)
-	  //       {
-	  //       	id = obj_likes[i].object_id;
-	  //  		var FBHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='facebook-icon.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time+"</span><br/>User likes object id"+id +"</p></div><div class='col-xs-1'></div></div>";
-			// 	$('#display-media').append(FBHTML);	        		
-	  //       }
-			// });
+			});
 
+			//gets user permissions
 			// FB.api(
 			// 	'me/permissions',
 
@@ -192,33 +186,34 @@ $(document).ready(function(){
 			// 	}
 			// );
 
-			FB.api(
-				'me/statuses',
+			//gets home feed
+			// FB.api(
+			// 	'me/posts',
 
-				'get',
-				{
-					access_token : fbToken,
-					limit:50
-				},
-				function(response) {
-					if (!response || response.error) {
-					alert('There was an error connecting to Facebook.');
-					} 
-					else {
-						console.log(response);
-						for (var i = 0 ; i< response.data.length;i++)
-						{
-							message = response.data[i].story?response.data[i].story:response['data'][i]['message'];
-							time = response['data'][i]['created_time'];
-							type = response['data'][i]['type'];
+			// 	'get',
+			// 	{
+			// 		access_token : fbToken,
+			// 		limit:50
+			// 	},
+			// 	function(response) {
+			// 		if (!response || response.error) {
+			// 		alert('There was an error connecting to Facebook.');
+			// 		} 
+			// 		else {
+			// 			console.log(response);
+			// 			for (var i = 0 ; i< response.data.length;i++)
+			// 			{
+			// 				message = response.data[i].story?response.data[i].story:response['data'][i]['message'];
+			// 				time = response['data'][i]['created_time'];
+			// 				type = response['data'][i]['type'];
 
-							var FBHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='facebook-icon.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time+"</span><br/>"+type+"<br/>"+message+"</p></div><div class='col-xs-1'></div></div>";
-							$('#display-media').append(FBHTML);
-						}
-					}
+			// 				var FBHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='facebook-icon.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time+"</span><br/>"+type+"<br/>"+message+"</p></div><div class='col-xs-1'></div></div>";
+			// 				$('#display-media').append(FBHTML);
+			// 			}
+			// 		}
 
-				}
-			);
+			// 	}
+			// );
 
 		}
 
