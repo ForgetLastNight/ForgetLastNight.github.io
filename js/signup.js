@@ -193,11 +193,7 @@ $(document).ready(function(){
 					 extended = data.split('=');
 					 fbToken = extended['1'].replace('&expires','');
 
-					 auth_url = "https://forgetlastnight.github.io/fb_auth.html?token="+fbToken;
-					 $.prompt("<a href='"+auth_url+"' target='_blank'>Get Facebook code</a>",{
-						title: "Follow the link below!",
-						buttons: {"Done":true}
-					 });	
+					 var fb_auth = $('#auth-fb .auth-input').html(fbToken);
 
 					},
 					 error: function(data,error)
@@ -223,12 +219,8 @@ $(document).ready(function(){
 							 console.log("ajax call successful");
 							 extended = data.split('=');
 							 fbToken = extended['1'].replace('&expires','');
+							 var fb_auth = $('#auth-fb .auth-input').html(fbToken);
 
-							 auth_url = "https://forgetlastnight.github.io/fb_auth.html?token="+fbToken;
-							 $.prompt("<a href='"+auth_url+"' target='_blank'>Get Facebook code</a>",{
-								title: "Follow the link below!",
-								buttons: {"Done":true}
-							 });	
 
 							},
 							 error: function(data,error)
