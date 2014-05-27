@@ -131,21 +131,18 @@ $(document).ready(function(){
 			var url_likes = "select url from url_like where user_id = me()";
 
 			//doesn't work
-			var comments = "SELECT text, fromid FROM comment WHERE post_id IN (SELECT post_id FROM stream WHERE filter_key IN (SELECT filter_key FROM stream_filter WHERE uid=me()) AND actor_id IN (SELECT uid1 FROM friend WHERE uid2=me()) order by created_time)";
+			//var comments = "SELECT text, fromid FROM comment WHERE post_id IN (SELECT post_id FROM stream WHERE filter_key IN (SELECT filter_key FROM stream_filter WHERE uid=me()) AND actor_id IN (SELECT uid1 FROM friend WHERE uid2=me()) order by created_time)";
 
 			FB.api('/fql', {q: {"query1":obj_likes,"query2":page_likes}, access_token: fbToken}, function(r) {
-			        console.log(r)
+			        console.log(r);
+			        likes=r.data;
+			        for(var i=0;i<likes.length;i++)
+			        {
+
+			        }
+
+
 			});
-
-			// FB.api("/fql?q=SELECT name FROM user WHERE uid=me()&access_token="+fbToken,
-
-			//  // 'get',
-			//  // {
-			//  // 	access_token: fbToken,
-			//  // },
-			//  function(response) {
-			// 	console.log(response);
-			// });
 
 			//statuses, links, statuses tagged in
 			FB.api(
@@ -160,15 +157,15 @@ $(document).ready(function(){
 					} 
 					else {
 						console.log(response);
-						// for (var i = 0 ; i< response.data.length;i++)
-						// {
-						// 	time = response['data'][i]['created_time'];
-						// 	title = "no title";
-						// 	id = response['data'][i]['id'];
-						// 	message = response['data'][i]['message'];
-						// 	var FBHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='facebook-icon.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time+"</span><br/>"+title+"<br/>"+message+"</p></div><div class='col-xs-1'></div></div>";
-						// 	$('#display-media').append(FBHTML);
-						// }
+						for (var i = 0 ; i< response.data.length;i++)
+						{
+							time = response['data'][i]['created_time'];
+							title = "no title";
+							id = response['data'][i]['id'];
+							message = response['data'][i]['message'];
+							var FBHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='facebook-icon.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time+"</span><br/>"+title+"<br/>"+message+"</p></div><div class='col-xs-1'></div></div>";
+							$('#display-media').append(FBHTML);
+						}
 					}
 
 				}

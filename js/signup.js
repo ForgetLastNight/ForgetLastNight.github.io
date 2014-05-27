@@ -131,7 +131,7 @@ $(document).ready(function(){
 					}
 					else alert("Connection to Facebook failed, please try again.");
 
-				}, {scope: 'user_activities'});
+				}, {scope: 'user_likes, user_activities, read_stream'});
 
 			}
 
