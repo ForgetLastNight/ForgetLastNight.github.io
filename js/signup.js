@@ -187,8 +187,31 @@ $(document).ready(function(){
 				FB.login(function(resp){
 					if(resp.status=='connected')
 					{
-						fbToken = extendToken(resp);
+						//fbToken = extendToken(resp);
+						accessToken = resp.authResponse.accessToken;
+						console.log("initial access token: "+ accessToken);
 
+				      var exchangeUrl = "https://graph.facebook.com/oauth/access_token?client_id="+fbAppId+"&client_secret="+fbAppSecret+"&grant_type=fb_exchange_token&fb_exchange_token="+accessToken;
+				      console.log("got exchangeUrl: "+ exchangeUrl);
+
+						$.ajax({  
+							type: "GET",
+							url: exchangeUrl,  
+							dataType: "text",
+							success: function(data)
+							{ 
+							 console.log("ajax call successful");
+							 extended = data.split('=');
+							 longToken = extended['1'].replace('&expires','');
+							 console.log("longToken is "+longToken);
+							 //return longToken;
+							},
+							 error: function(data,error)
+							{
+							 console.log(error);
+							 //return "failure";
+							}
+						});						
 					}
 					else alert("Connection to Facebook failed, please try again.")
 
