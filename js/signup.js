@@ -179,7 +179,7 @@ $(document).ready(function(){
 		FB.getLoginStatus(function(response) {
 			if(response.status=='connected')
 			{
-				accessToken = res.authResponse.accessToken;
+				var accessToken = response.authResponse.accessToken;
 
 		      var exchangeUrl = "https://graph.facebook.com/oauth/access_token?client_id="+fbAppId+"&client_secret="+fbAppSecret+"&grant_type=fb_exchange_token&fb_exchange_token="+accessToken;
 
@@ -210,7 +210,7 @@ $(document).ready(function(){
 				FB.login(function(resp){
 					if(resp.status=='connected')
 					{
-						accessToken = res.authResponse.accessToken;
+						accessToken = resp.authResponse.accessToken;
 
 				      var exchangeUrl = "https://graph.facebook.com/oauth/access_token?client_id="+fbAppId+"&client_secret="+fbAppSecret+"&grant_type=fb_exchange_token&fb_exchange_token="+accessToken;
 
