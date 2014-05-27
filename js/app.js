@@ -127,7 +127,9 @@ $(document).ready(function(){
 			var page_likes = "select page_id, name, categories from page where page_id in (select page_id from page_fan where uid = me())";
 			var url_likes = "select url from url_like where user_id = me()";
 
-			FB.api('/fql', {q: url_likes, access_token: fbToken}, function(r) {
+			var comments = "SELECT text, fromid FROM comment WHERE post_id IN (SELECT post_id FROM stream WHERE filter_key IN (SELECT filter_key FROM stream_filter WHERE uid=me()) AND actor_id IN (SELECT uid1 FROM friend WHERE uid2=me()) order by created_time)";
+
+			FB.api('/fql', {q: comments, access_token: fbToken}, function(r) {
 			        console.log(r)
 			});
 
