@@ -127,8 +127,7 @@ $(document).ready(function(){
 
 			FB.api('/fql', {q: query}, function(r) {
 			        console.log(r)
-			    });
-			}
+			});
 
 			// FB.api("/fql?q=SELECT name FROM user WHERE uid=me()&access_token="+fbToken,
 
