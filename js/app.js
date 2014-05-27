@@ -148,19 +148,6 @@ $(document).ready(function(){
 	        }
 			});
 
-			//statuses, etc but no likes of external pages
-			// FB.api(
-			// 	{
-			// 	method: 'fql.query',
-			// 	query: 'SELECT name FROM user WHERE uid=me()'
-			// 	},
-			// function(response) {
-			// 	alert('Your name is ' + response[0].name);
-			// 	}
-			//  );
-
-
-
 			// FB.api(
 			// 	'me/permissions',
 
