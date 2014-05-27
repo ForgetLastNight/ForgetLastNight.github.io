@@ -134,14 +134,12 @@ $(document).ready(function(){
 			//var comments = "SELECT text, fromid FROM comment WHERE post_id IN (SELECT post_id FROM stream WHERE filter_key IN (SELECT filter_key FROM stream_filter WHERE uid=me()) AND actor_id IN (SELECT uid1 FROM friend WHERE uid2=me()) order by created_time)";
 
 			FB.api('/fql', {q: {"query1":obj_likes,"query2":page_likes}, access_token: fbToken}, function(r) {
-			        console.log(r);
-			        likes=r.data;
-			        for(var i=0;i<likes.length;i++)
-			        {
+			  console.log(r);
+	        likes=r.data;
+	        for(var i=0;i<likes.length;i++)
+	        {
 
-			        }
-
-
+	        }
 			});
 
 			//statuses, links, statuses tagged in
@@ -166,6 +164,23 @@ $(document).ready(function(){
 							var FBHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='facebook-icon.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time+"</span><br/>"+title+"<br/>"+message+"</p></div><div class='col-xs-1'></div></div>";
 							$('#display-media').append(FBHTML);
 						}
+					}
+
+				}
+			 );
+
+			FB.api(
+				'me/permissions',
+				'get',
+				{
+					access_token : fbToken,
+				},
+				function(response) {
+					if (!response || response.error) {
+					alert('There was an error connecting to Facebook.');
+					} 
+					else {
+						console.log(response);
 					}
 
 				}
