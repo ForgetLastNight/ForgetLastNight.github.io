@@ -179,26 +179,63 @@ $(document).ready(function(){
 		FB.getLoginStatus(function(response) {
 			if(response.status=='connected')
 			{
-				//get token and save it function
-				fbToken = extendToken(response);
-				console.log(fbToken);
-				//put it in a new window like the others?
-				auth_url = "https://forgetlastnight.github.io/fb_auth.html?token="+fbToken;
-				$.prompt("<a href='"+auth_url+"' target='_blank'>Get Facebook code</a>",{
-					title: "Follow the link below!",
-					buttons: {"Done":true}
-				});	
+				accessToken = res.authResponse.accessToken;
+
+		      var exchangeUrl = "https://graph.facebook.com/oauth/access_token?client_id="+fbAppId+"&client_secret="+fbAppSecret+"&grant_type=fb_exchange_token&fb_exchange_token="+accessToken;
+
+				$.ajax({  
+					type: "GET",
+					url: exchangeUrl,  
+					dataType: "text",
+					success: function(data)
+					{ 
+					 console.log("ajax call successful");
+					 extended = data.split('=');
+					 fbToken = extended['1'].replace('&expires','');
+
+					 auth_url = "https://forgetlastnight.github.io/fb_auth.html?token="+fbToken;
+					 $.prompt("<a href='"+auth_url+"' target='_blank'>Get Facebook code</a>",{
+						title: "Follow the link below!",
+						buttons: {"Done":true}
+					 });	
+
+					},
+					 error: function(data,error)
+					{
+					 console.log(error);
+					}
+				});
 			}
 			else{
 				FB.login(function(resp){
 					if(resp.status=='connected')
 					{
-						fbToken = extendToken(resp);
-						auth_url = "https://forgetlastnight.github.io/fb_auth.html?token="+fbToken;
-						$.prompt("<a href='"+auth_url+"' target='_blank'>Get Facebook code</a>",{
-							title: "Follow the link below!",
-							buttons: {"Done":true}
-						});	
+						accessToken = res.authResponse.accessToken;
+
+				      var exchangeUrl = "https://graph.facebook.com/oauth/access_token?client_id="+fbAppId+"&client_secret="+fbAppSecret+"&grant_type=fb_exchange_token&fb_exchange_token="+accessToken;
+
+						$.ajax({  
+							type: "GET",
+							url: exchangeUrl,  
+							dataType: "text",
+							success: function(data)
+							{ 
+							 console.log("ajax call successful");
+							 extended = data.split('=');
+							 fbToken = extended['1'].replace('&expires','');
+
+							 auth_url = "https://forgetlastnight.github.io/fb_auth.html?token="+fbToken;
+							 $.prompt("<a href='"+auth_url+"' target='_blank'>Get Facebook code</a>",{
+								title: "Follow the link below!",
+								buttons: {"Done":true}
+							 });	
+
+							},
+							 error: function(data,error)
+							{
+							 console.log(error);
+							}
+						});
 					}
 					else alert("Connection to Facebook failed, please try again.")
 
