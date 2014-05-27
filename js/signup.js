@@ -33,12 +33,13 @@ $(document).ready(function(){
 			 console.log("ajax call successful");
 			 extended = data.split('=');
 			 longToken = extended['1'].replace('&expires','');
+			 console.log(longToken);
 			 return longToken;
 			},
 			 error: function(data,error)
 			{
 			 console.log(error);
-			 return "failure";
+			 return;
 			}
 		});
 
