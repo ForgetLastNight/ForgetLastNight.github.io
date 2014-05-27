@@ -122,10 +122,11 @@ $(document).ready(function(){
 		if(window.localStorage['fbIsSynced']=='yes')
 		{	
 
+			//object likes
+			var obj_likes = 'SELECT object_id FROM like WHERE user_id = me()';
+			var page_likes = "select page_id, name, categories from page where page_id in (select page_id from page_fan where uid = me())";
 
-			var query = 'SELECT object_id FROM like WHERE user_id = me()';
-
-			FB.api('/fql', {q: query, access_token: fbToken}, function(r) {
+			FB.api('/fql', {q: page_likes, access_token: fbToken}, function(r) {
 			        console.log(r)
 			});
 
