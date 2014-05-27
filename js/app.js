@@ -144,7 +144,7 @@ $(document).ready(function(){
 
 			//statuses, links, statuses tagged in
 			FB.api(
-				'me/feed',
+				'me/posts',
 				'get',
 				{
 					access_token : fbToken,
@@ -158,10 +158,10 @@ $(document).ready(function(){
 						for (var i = 0 ; i< response.data.length;i++)
 						{
 							time = response['data'][i]['created_time'];
-							title = "no title";
 							id = response['data'][i]['id'];
+							type = response.data[i].type;
 							message = response['data'][i]['message'];
-							var FBHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='facebook-icon.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time+"</span><br/>"+title+"<br/>"+message+"</p></div><div class='col-xs-1'></div></div>";
+							var FBHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='facebook-icon.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time+"</span><br/>"+type+"<br/>"+message+"</p></div><div class='col-xs-1'></div></div>";
 							$('#display-media').append(FBHTML);
 						}
 					}
@@ -169,22 +169,22 @@ $(document).ready(function(){
 				}
 			 );
 
-			FB.api(
-				'me/permissions',
-				'get',
-				{
-					access_token : fbToken,
-				},
-				function(response) {
-					if (!response || response.error) {
-					alert('There was an error connecting to Facebook.');
-					} 
-					else {
-						console.log(response);
-					}
+			// FB.api(
+			// 	'me/permissions',
+			// 	'get',
+			// 	{
+			// 		access_token : fbToken,
+			// 	},
+			// 	function(response) {
+			// 		if (!response || response.error) {
+			// 		alert('There was an error connecting to Facebook.');
+			// 		} 
+			// 		else {
+			// 			console.log(response);
+			// 		}
 
-				}
-			 );
+			// 	}
+			//  );
 		}
 
 	});
