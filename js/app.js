@@ -149,7 +149,7 @@ $(document).ready(function(){
 
 			//statuses, etc but no likes of external pages
 			FB.api(
-				'me/posts',
+				'me/feed',
 				'get',
 				{
 					access_token : fbToken,
@@ -172,6 +172,15 @@ $(document).ready(function(){
 
 				}
 			 );
+
+			FB.api(
+			    "/me/og.likes",
+			    function (response) {
+			      if (response && !response.error) {
+			        console.log(response);
+			      }
+			    }
+			);
 
 			// FB.api(
 			// 	'me/permissions',
