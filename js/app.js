@@ -122,7 +122,7 @@ $(document).ready(function(){
 		if(window.localStorage['fbIsSynced']=='yes')
 		{	
 
-			FB.api("/fql?q=SELECT+name+FROM+user+WHERE+uid=me()", function(response) {
+			FB.api("/fql?q=SELECT&name&FROM&user&WHERE&uid=me()", function(response) {
 				console.log(response);
 
 			});
