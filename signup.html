@@ -97,56 +97,6 @@
         fjs.parentNode.insertBefore(js, fjs);
       }(document, 'script', 'facebook-jssdk'));
     </script>
-
-<!--
-    //   window.fbAsyncInit = function() {
-    //     //init the FB JS SDK
-    //     FB.init({
-    //       appId      : '462337317202554',
-    //       xfbml      : true,
-    //       version    : 'v2.0'
-    //     });
-        
-
-    //     //anything to be called after SDK loads goes after FB init
-    //     FB.getLoginStatus(function(resp) {
-    //       statusChangeCallback(resp);
-    //     });
-    //   }
-
-
-    //   (function(d, s, id) {
-    //     var js, fjs = d.getElementsByTagName(s)[0];
-    //     if (d.getElementById(id)) return;
-    //     js = d.createElement(s); js.id = id;
-    //     js.src = "https://connect.facebook.net/en_US/sdk.js"; //#xfbml=1&appId=462337317202554&version=v2.0";
-    //     fjs.parentNode.insertBefore(js, fjs);
-    //   }(document, 'script', 'facebook-jssdk'));
-
-
-
-    //   function statusChangeCallback(response){
-    //     console.log("statusChangeCallback called");
-    //     console.log("Response:"+response)
-    //       GTOKEN = response['authResponse']['accessToken'];
-
-    //       // The response object is returned with a status field that lets the
-    //       // app know the current login status of the person.
-    //       // Full docs on the response object can be found in the documentation
-    //       // for FB.getLoginStatus().
-    //       if (response.status === 'connected') {
-    //         // Logged into your app and Facebook.
-    //         saveToken();
-    //     } else if (response.status === 'not_authorized') {
-    //         // The person is logged into Facebook, but not your app.
-    //         console.log("Not authorized for this app");
-    //     } else {
-    //         // The person is not logged into Facebook, so we're not sure if
-    //         // they are logged into this app or not.
-    //         console.log("Not logged into Facebook");
-    //     }
-    //   }
--->
   
     <div class='row'>
       <div class='col-xs-1'></div>
@@ -170,7 +120,7 @@
 
   	<div class='row' id='auth-fb'>
   		<div class='col-xs-1'></div>
-  		<div class='col-xs-5 su-logo'><div class="fb-login-button" onlogin= "checkLoginState()"></div><!-- <img src='facebook_signup.png' style='height:40px;'> --></div> 
+  		<div class='col-xs-5 su-logo'><img id='get-fb' src='facebook_signup.png' style='height:40px;'></div> 
   		<div class='col-xs-5'><input class='auth-input' type='text' placeholder='Enter code'></input></div> 
   		<div class='col-xs-1'></div>
   	</div>

@@ -10,65 +10,6 @@ $(document).ready(function(){
 	var tumblrToken = "";
 	var tumblrTSecret = "";
 
-	//var GTOKEN;
-
-	// function statusChangeCallback(response){
-	//     GTOKEN = response['authResponse']['accessToken'];
-
-	//     // The response object is returned with a status field that lets the
-	//     // app know the current login status of the person.
-	//     // Full docs on the response object can be found in the documentation
-	//     // for FB.getLoginStatus().
-	//     if (response.status === 'connected') {
-	//       // Logged into your app and Facebook.
-	//       saveToken();
-
-
-	//   } else if (response.status === 'not_authorized') {
-	//       // The person is logged into Facebook, but not your app.
-	//       document.getElementById('status').innerHTML = 'Please log ' +
-	//       'into this app.';
-	//   } else {
-	//       // The person is not logged into Facebook, so we're not sure if
-	//       // they are logged into this app or not.
-	//       document.getElementById('status').innerHTML = 'Please log ' +
-	//       'into Facebook.';
-	//   }
-	// }
-
-	// function saveToken() {
-
-	// 	FB.login(function(response) {
-	// 		if (response.authResponse) {
-	// 			var accessToken = GTOKEN;
-	// 			var appid       = '462337317202554';
-	// 			var appsecret   = '150d44a12970f12e3dd85c256e5a90fa';
-
-	// 			var exchangeUrl = "https://graph.facebook.com/oauth/access_token?client_id="+appid+"&client_secret="+appsecret+"&grant_type=fb_exchange_token&fb_exchange_token="+accessToken;
-
-	// 			$.ajax({  
-	// 				type: "GET",
-	// 				url: exchangeUrl,  
-	// 				dataType: "text",
-	// 				success: function(data)
-	// 				{ 
-	// 					extended = data.split('=');
-	// 					extendedAT = extended['1'].replace('&expires','');
-	// 					//console.log(extendedAT);
-	// 					//console.log(data);
-	// 					GTOKEN = extendedAT;
-	// 				},
-	// 					error: function(data,error)
-	// 				{
-	// 					console.log(error);
-	// 				}
-
-	// 			});
-
-	// 		}
-	// 	});
-	// }
-
 	$('#get-twitter').click(function(){
 		Parse.Cloud.run('TwitterRequestToken', {oKey : twitterCKey, cSec : twitterCSecret, oCall : 'https://forgetlastnight.github.io/twitter_auth.html?'}, {
 			success: function(reply) {
@@ -110,6 +51,14 @@ $(document).ready(function(){
 				alert("There was an error getting access to Tumblr")
 			}
 		});
+
+	});
+
+
+	$('#get-fb').click(function(){
+		FB.login(function(response){
+			console.log(response);
+		}, {scope: 'public_profile'});
 
 	});
 
