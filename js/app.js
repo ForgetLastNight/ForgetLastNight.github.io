@@ -155,7 +155,12 @@ $(document).ready(function(){
 				query: 'SELECT name FROM user WHERE uid=me()'
 				},
 			function(response) {
-				alert('Your name is ' + response[0].name);
+				if (!response || response.error) {
+				   alert("error");
+				}
+				else{
+					alert('Your name is ' + response[0].name);
+					}
 				}
 			);
 
