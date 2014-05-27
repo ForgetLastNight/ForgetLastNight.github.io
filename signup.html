@@ -16,13 +16,14 @@
       function statusChangeCallback(response) {
         console.log('statusChangeCallback');
         console.log(response);
+        GTOKEN = response['authResponse']['accessToken'];
         // The response object is returned with a status field that lets the
         // app know the current login status of the person.
         // Full docs on the response object can be found in the documentation
         // for FB.getLoginStatus().
         if (response.status === 'connected') {
           // Logged into your app and Facebook.
-          testAPI();
+          saveToken();
         } else if (response.status === 'not_authorized') {
           console.log("The person is logged into Facebook, but not your app");
          
@@ -79,11 +80,37 @@
 
       // Here we run a very simple test of the Graph API after login is
       // successful.  See statusChangeCallback() for when this call is made.
-      function testAPI() {
-        console.log('Welcome!  Fetching your information.... ');
-        FB.api('/me', function(response) {
-          console.log('Successful login for: ' + response.name);
-        });
+      function saveToken() {
+
+       FB.login(function(response) {
+         if (response.authResponse) {
+           var accessToken = GTOKEN;
+           var appid       = '462337317202554';
+           var appsecret   = '150d44a12970f12e3dd85c256e5a90fa';
+
+           var exchangeUrl = "https://graph.facebook.com/oauth/access_token?client_id="+appid+"&client_secret="+appsecret+"&grant_type=fb_exchange_token&fb_exchange_token="+accessToken;
+
+           $.ajax({  
+             type: "GET",
+             url: exchangeUrl,  
+             dataType: "text",
+             success: function(data)
+             { 
+               extended = data.split('=');
+               extendedAT = extended['1'].replace('&expires','');
+               //console.log(extendedAT);
+               //console.log(data);
+               GTOKEN = extendedAT;
+             },
+               error: function(data,error)
+             {
+               console.log(error);
+             }
+
+           });
+
+         }
+       });
       }
     </script>
 
