@@ -122,7 +122,7 @@ $(document).ready(function(){
 		if(window.localStorage['fbIsSynced']=='yes')
 		{	
 			FB.api(
-				'me/feed',
+				'me/activities',
 				'get',
 				{
 					access_token : fbToken,
@@ -132,15 +132,16 @@ $(document).ready(function(){
 					alert('There was an error connecting to Facebook.');
 					} 
 					else {
-						for (var i = 0 ; i< response.data.length;i++)
-						{
-							time = response['data'][i]['created_time'];
-							title = "no title";
-							id = response['data'][i]['id'];
-							message = response['data'][i]['message'];
-							var FBHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='facebook-icon.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time+"</span><br/>"+title+"<br/>"+message+"</p></div><div class='col-xs-1'></div></div>";
-							$('#display-media').append(FBHTML);
-						}
+						console.log(response);
+						// for (var i = 0 ; i< response.data.length;i++)
+						// {
+						// 	time = response['data'][i]['created_time'];
+						// 	title = "no title";
+						// 	id = response['data'][i]['id'];
+						// 	message = response['data'][i]['message'];
+						// 	var FBHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='facebook-icon.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time+"</span><br/>"+title+"<br/>"+message+"</p></div><div class='col-xs-1'></div></div>";
+						// 	$('#display-media').append(FBHTML);
+						// }
 					}
 
 				}
