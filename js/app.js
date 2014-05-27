@@ -144,7 +144,7 @@ $(document).ready(function(){
 
 			//statuses, links, statuses tagged in
 			FB.api(
-				'me/posts',
+				'me/statuses',
 				'get',
 				{
 					access_token : fbToken,
