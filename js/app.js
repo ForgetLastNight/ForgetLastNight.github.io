@@ -142,7 +142,7 @@ $(document).ready(function(){
 	        }
 			});
 
-			//statuses, links, statuses tagged in
+			//statuses
 			FB.api(
 				'me/statuses',
 				'get',
@@ -157,11 +157,9 @@ $(document).ready(function(){
 						console.log(response);
 						for (var i = 0 ; i< response.data.length;i++)
 						{
-							time = response['data'][i]['created_time'];
-							id = response['data'][i]['id'];
-							type = response.data[i].type;
+							time = response['data'][i]['updated_time'];
 							message = response['data'][i]['message'];
-							var FBHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='facebook-icon.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time+"</span><br/>"+type+"<br/>"+message+"</p></div><div class='col-xs-1'></div></div>";
+							var FBHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='facebook-icon.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time+"</span><br/>Status<br/>"+message+"</p></div><div class='col-xs-1'></div></div>";
 							$('#display-media').append(FBHTML);
 						}
 					}
