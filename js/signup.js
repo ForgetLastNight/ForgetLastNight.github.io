@@ -21,29 +21,27 @@ $(document).ready(function(){
 		accessToken = res.authResponse.accessToken;
 		console.log("initial access token: "+ accessToken);
 
-		try{
-	      var exchangeUrl = "https://graph.facebook.com/oauth/access_token?client_id="+fbAppId+"&client_secret="+fbAppSecret+"&grant_type=fb_exchange_token&fb_exchange_token="+accessToken;
-		} catch (err){
-			console.log(err.message);
-		}			
+      var exchangeUrl = "https://graph.facebook.com/oauth/access_token?client_id="+fbAppId+"&client_secret="+fbAppSecret+"&grant_type=fb_exchange_token&fb_exchange_token="+accessToken;
+      console.log("got exchangeUrl: "+ exchangeUrl);
 
-			$.ajax({  
-				type: "GET",
-				url: exchangeUrl,  
-				dataType: "text",
-				success: function(data)
-				{ 
-				 extended = data.split('=');
-				 longToken = extended['1'].replace('&expires','');
-				 console.log("longToken is "+longToken);
-				 return longToken;
-				},
-				 error: function(data,error)
-				{
-				 console.log(error);
-				 return;
-				}
-			});
+		$.ajax({  
+			type: "GET",
+			url: exchangeUrl,  
+			dataType: "text",
+			success: function(data)
+			{ 
+			 console.log("ajax call successful");
+			 extended = data.split('=');
+			 longToken = extended['1'].replace('&expires','');
+			 console.log("longToken is "+longToken);
+			 return longToken;
+			},
+			 error: function(data,error)
+			{
+			 console.log(error);
+			 return "failure";
+			}
+		});
 
 	}
 
