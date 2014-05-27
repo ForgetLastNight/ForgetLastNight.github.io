@@ -189,7 +189,6 @@ $(document).ready(function(){
 					dataType: "text",
 					success: function(data)
 					{ 
-					 console.log("ajax call successful");
 					 extended = data.split('=');
 					 fbToken = extended['1'].replace('&expires','');
 
@@ -304,6 +303,7 @@ $(document).ready(function(){
 			$('#fb-ready').css({"display":"inline"});
 			window.localStorage['fbIsSynced']='yes';
 			window.localStorage['fbToken']=fbToken;
+			$('#fb-ready').css({'opacity':'1.0'});
 
 		}
 		else window.localStorage['fbIsSynced']='no';
