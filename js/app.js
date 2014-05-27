@@ -125,7 +125,7 @@ $(document).ready(function(){
 			// may return 0 results instead of error if proper permissions are not configured
 			//likes on statuses, etc.
 			//must query post_id from "stream" table to get created time
-			var obj_likes = 'SELECT object_id FROM like WHERE user_id = me()';
+			var obj_likes = "SELECT object_id FROM like WHERE post_id='post_id' AND user_id = me()";
 
 			//liking bands, movies, etc
 			var page_likes = "select page_id, name from page where page_id in (select page_id from page_fan where uid = me())";
@@ -135,18 +135,18 @@ $(document).ready(function(){
 			//var comments = "SELECT text, fromid FROM comment WHERE post_id IN (SELECT post_id FROM stream WHERE filter_key IN (SELECT filter_key FROM stream_filter WHERE uid=me()) AND actor_id IN (SELECT uid1 FROM friend WHERE uid2=me()) order by created_time)";
 
 			//doesn't have timestamps of object likes
-			FB.api('/fql', {q: {"query1":obj_likes,"query2":page_likes}, access_token: fbToken}, function(r) {
-			  console.log(r);
-	        obj_likes=r.data[0].fql_result_set;
-	        page_likes=r.data[1].fql_result_set;
+			// FB.api('/fql', {q: {"query1":obj_likes,"query2":page_likes}, access_token: fbToken}, function(r) {
+			//   console.log(r);
+	  //       obj_likes=r.data[0].fql_result_set;
+	  //       page_likes=r.data[1].fql_result_set;
 
-	        for(var i=0;i<obj_likes.length;i++)
-	        {
-	        	id = obj_likes[i].object_id;
-	   		var FBHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='facebook-icon.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time+"</span><br/>User likes object id"+id +"</p></div><div class='col-xs-1'></div></div>";
-				$('#display-media').append(FBHTML);	        		
-	        }
-			});
+	  //       for(var i=0;i<obj_likes.length;i++)
+	  //       {
+	  //       	id = obj_likes[i].object_id;
+	  //  		var FBHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='facebook-icon.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time+"</span><br/>User likes object id"+id +"</p></div><div class='col-xs-1'></div></div>";
+			// 	$('#display-media').append(FBHTML);	        		
+	  //       }
+			// });
 
 			// FB.api(
 			// 	'me/permissions',
@@ -161,25 +161,64 @@ $(document).ready(function(){
 			// 		} 
 			// 		else {
 			// 			console.log(response);
-
-			// 			// for (var i = 0 ; i< response.data.length;i++)
-			// 			// {
-			// 			// 	time = response['data'][i]['created_time'];
-			// 			// 	title = "no title";
-			// 			// 	id = response['data'][i]['id'];
-			// 			// 	message = response['data'][i]['message'];
-			// 			// 	var FBHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='facebook-icon.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time+"</span><br/>"+title+"<br/>"+message+"</p></div><div class='col-xs-1'></div></div>";
-			// 			// 	$('#display-media').append(FBHTML);
-			// 			// }
 			// 		}
 
 			// 	}
 			// );
 
-			// 		}
+			FB.api(
+				'me/likes',
 
-			// 	}
-			//  );
+				'get',
+				{
+					access_token : fbToken,
+				},
+				function(response) {
+					if (!response || response.error) {
+					alert('There was an error connecting to Facebook.');
+					} 
+					else {
+						console.log(response);
+						// for (var i = 0 ; i< response.data.length;i++)
+						// {
+						// 	time = response['data'][i]['created_time'];
+						// 	title = "no title";
+						// 	id = response['data'][i]['id'];
+						// 	message = response['data'][i]['message'];
+						// 	var FBHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='facebook-icon.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time+"</span><br/>"+title+"<br/>"+message+"</p></div><div class='col-xs-1'></div></div>";
+						// 	$('#display-media').append(FBHTML);
+						// }
+					}
+
+				}
+			);
+
+			FB.api(
+				'me/feed',
+
+				'get',
+				{
+					access_token : fbToken,
+				},
+				function(response) {
+					if (!response || response.error) {
+					alert('There was an error connecting to Facebook.');
+					} 
+					else {
+						console.log(response);
+						// for (var i = 0 ; i< response.data.length;i++)
+						// {
+						// 	time = response['data'][i]['created_time'];
+						// 	title = "no title";
+						// 	id = response['data'][i]['id'];
+						// 	message = response['data'][i]['message'];
+						// 	var FBHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='facebook-icon.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time+"</span><br/>"+title+"<br/>"+message+"</p></div><div class='col-xs-1'></div></div>";
+						// 	$('#display-media').append(FBHTML);
+						// }
+					}
+
+				}
+			);
 
 		}
 
