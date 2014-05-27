@@ -133,6 +133,7 @@ $(document).ready(function(){
 			//doesn't work
 			//var comments = "SELECT text, fromid FROM comment WHERE post_id IN (SELECT post_id FROM stream WHERE filter_key IN (SELECT filter_key FROM stream_filter WHERE uid=me()) AND actor_id IN (SELECT uid1 FROM friend WHERE uid2=me()) order by created_time)";
 
+			//doesn't have timestamps of object likes
 			// FB.api('/fql', {q: {"query1":obj_likes,"query2":page_likes}, access_token: fbToken}, function(r) {
 			//   console.log(r);
 	  //       obj_likes=r.data[0].fql_result_set;
@@ -146,9 +147,9 @@ $(document).ready(function(){
 	  //       }
 			// });
 
-			//statuses
+			//statuses, etc but no likes of external pages
 			FB.api(
-				'me/feed',
+				'me/posts',
 				'get',
 				{
 					access_token : fbToken,
