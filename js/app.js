@@ -16,11 +16,11 @@ $(document).ready(function(){
 
 	//check if user has a profile
 	if (window.localStorage.getItem("FLNuser") != 'yes' || window.localStorage.getItem("FLNuser") === null) {
-		console.log("User not found");
+	
 	  $('#main').html("<div class='row'><div class='col-xs-2'></div><div class='col-xs-8'><a href='signup.html'><div style='font-size: 20px;font-weight: bold;width: 100%;outline:none;border:1px solid blue;' type='button' class='btn btn-lg btn-primary'><span>Sign Up</span></div></a></div><div class='col-xs-2'></div></div>");
 	}
 	else{
-		console.log("User found");
+		
 		if(window.localStorage['twitterIsSynced']=='yes')
 		{
 			twitterToken = window.localStorage['twitterToken'];
@@ -44,102 +44,108 @@ $(document).ready(function(){
 
 		$('#display-media').html('');
 
-		Parse.Cloud.run('Timeline', {oToken : twitterToken, oKey : twitterCKey, tSec : twitterTSecret, cSec : twitterCSecret, num: '50'}, {
-			success: function(tweets) {
-				tweets = JSON.parse(tweets);				
+		if(window.localStorage['twitterIsSynced']=='yes')
+		{
+			Parse.Cloud.run('Timeline', {oToken : twitterToken, oKey : twitterCKey, tSec : twitterTSecret, cSec : twitterCSecret, num: '50'}, {
+				success: function(tweets) {
+					tweets = JSON.parse(tweets);				
 
-				for(i=0;i<tweets.length;i++)
-				{
-					//turn this into something better
-					var time = tweets[i]['created_at'].toString();
-					time = time.substring(0,20);
-					var message = tweets[i]['text'];
-					var id = tweets[i]['id_str'];
-					var hours = $('#time-range').val();  //change hours
-					var imghtml = '';
-					if(tweets[i]['entities']['media'])
+					for(i=0;i<tweets.length;i++)
 					{
-						imgsrc = tweets[i]['entities']['media'][0]['media_url'];
-						imghtml = "<img class='twitpic' src='"+imgsrc+"'/><br/>";
-					}
-
-					if(inRange(tweets[i],hours))
-					{
-						var tweetHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='twitter_logo.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time+"</span><br/>"+imghtml+message+"</p></div><div class='col-xs-1 delete-box delete-twitter'><input type='checkbox' name='"+id+"'/></div></div>";
-						$('#display-media').append(tweetHTML);
-					}
-			    }
-			},
-			error: function(error) {
-				alert("There was an error getting tweets.");
-			}
-		});
-
-		
-		Parse.Cloud.run('GetTumblrUserInfo', {oToken : tumblrToken, oKey : tumblrCKey, tSec : tumblrTSecret, cSec : tumblrCSecret}, {
-			success: function(result) {
-				info = JSON.parse(result);
-
-				blogname = info.response.user.blogs[0].name+".tumblr.com";
-
-
-				Parse.Cloud.run('GetTumblrPosts', {oToken : tumblrToken, oKey : tumblrCKey, tSec : tumblrTSecret, cSec : tumblrCSecret, bName: blogname}, {
-					success: function(results) {
-						results = JSON.parse(results);
-
-
-						posts = results['response']['posts'];
-						for(var i=0;i<posts.length;i++)
+						//turn this into something better
+						var time = tweets[i]['created_at'].toString();
+						time = time.substring(0,20);
+						var message = tweets[i]['text'];
+						var id = tweets[i]['id_str'];
+						var hours = $('#time-range').val();  //change hours
+						var imghtml = '';
+						if(tweets[i]['entities']['media'])
 						{
-							time = posts[i]['date'];
-							title=posts[i]['title']?posts[i]['title']:"(No title)";
-							message=posts[i]['message']?posts[i]['message']:"(No body text)";
-							id = String(posts[i]['id']);
-
-							var tumblrHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='tumblr-logo.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time+"</span><br/>"+title+"<br/>"+message+"</p></div><div class='col-xs-1 delete-box delete-tumblr'><input type='checkbox' name='"+id+"'/></div></div>";
-							$('#display-media').append(tumblrHTML);
+							imgsrc = tweets[i]['entities']['media'][0]['media_url'];
+							imghtml = "<img class='twitpic' src='"+imgsrc+"'/><br/>";
 						}
 
-					},
-					error: function(error) {
-						console.log(error);
-					}
-				});
-
-
-			},
-			error: function(error) {
-				console.log(error);
-			}
-		});
-
-
-
-		FB.api(
-			'me/feed',
-			'get',
-			{
-				access_token : fbToken,
-			},
-			function(response) {
-				if (!response || response.error) {
-				alert('There was an error connecting to Facebook.');
-				} 
-				else {
-					for (var i = 0 ; i< response.data.length;i++)
-					{
-						console.log(response['data'][i]['message']);
-						time = response['data'][i]['created_time'];
-						title = "no title";
-						id = response['data'][i]['id'];
-						message = response['data'][i]['message'];
-						var FBHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='facebook-icon.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time+"</span><br/>"+title+"<br/>"+message+"</p></div><div class='col-xs-1'></div></div>";
-						$('#display-media').append(FBHTML);
-					}
+						if(inRange(tweets[i],hours))
+						{
+							var tweetHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='twitter_logo.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time+"</span><br/>"+imghtml+message+"</p></div><div class='col-xs-1 delete-box delete-twitter'><input type='checkbox' name='"+id+"'/></div></div>";
+							$('#display-media').append(tweetHTML);
+						}
+				    }
+				},
+				error: function(error) {
+					alert("There was an error getting tweets.");
 				}
+			});
+		}
 
-			}
-		);
+		if(window.localStorage['tumblrIsSynced']=='yes')
+		{		
+			Parse.Cloud.run('GetTumblrUserInfo', {oToken : tumblrToken, oKey : tumblrCKey, tSec : tumblrTSecret, cSec : tumblrCSecret}, {
+				success: function(result) {
+					info = JSON.parse(result);
+
+					blogname = info.response.user.blogs[0].name+".tumblr.com";
+
+
+					Parse.Cloud.run('GetTumblrPosts', {oToken : tumblrToken, oKey : tumblrCKey, tSec : tumblrTSecret, cSec : tumblrCSecret, bName: blogname}, {
+						success: function(results) {
+							results = JSON.parse(results);
+
+
+							posts = results['response']['posts'];
+							for(var i=0;i<posts.length;i++)
+							{
+								time = posts[i]['date'];
+								title=posts[i]['title']?posts[i]['title']:"(No title)";
+								message=posts[i]['message']?posts[i]['message']:"(No body text)";
+								id = String(posts[i]['id']);
+
+								var tumblrHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='tumblr-logo.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time+"</span><br/>"+title+"<br/>"+message+"</p></div><div class='col-xs-1 delete-box delete-tumblr'><input type='checkbox' name='"+id+"'/></div></div>";
+								$('#display-media').append(tumblrHTML);
+							}
+
+						},
+						error: function(error) {
+							console.log(error);
+						}
+					});
+
+
+				},
+				error: function(error) {
+					console.log(error);
+				}
+			});
+		}
+
+
+		if(window.localStorage['fbIsSynced']=='yes')
+		{	
+			FB.api(
+				'me/feed',
+				'get',
+				{
+					access_token : fbToken,
+				},
+				function(response) {
+					if (!response || response.error) {
+					alert('There was an error connecting to Facebook.');
+					} 
+					else {
+						for (var i = 0 ; i< response.data.length;i++)
+						{
+							time = response['data'][i]['created_time'];
+							title = "no title";
+							id = response['data'][i]['id'];
+							message = response['data'][i]['message'];
+							var FBHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='facebook-icon.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time+"</span><br/>"+title+"<br/>"+message+"</p></div><div class='col-xs-1'></div></div>";
+							$('#display-media').append(FBHTML);
+						}
+					}
+
+				}
+			);
+		}
 
 	});
 
