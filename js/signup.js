@@ -23,6 +23,10 @@ $(document).ready(function(){
 
 		try{
 	      var exchangeUrl = "https://graph.facebook.com/oauth/access_token?client_id="+fbAppId+"&client_secret="+fbAppSecret+"&grant_type=fb_exchange_token&fb_exchange_token="+accessToken;
+		} catch (err){
+			console.log(err.message);
+		}			
+
 			$.ajax({  
 				type: "GET",
 				url: exchangeUrl,  
@@ -40,7 +44,7 @@ $(document).ready(function(){
 				 return;
 				}
 			});
-		} catch (err){console.log(err.message);}
+
 	}
 
    // // This is called with the results from from FB.getLoginStatus().
