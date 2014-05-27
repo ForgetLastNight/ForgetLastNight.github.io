@@ -40,7 +40,7 @@ $(document).ready(function(){
 				 return;
 				}
 			});
-		} catch (err){console.log(error);}
+		} catch (err){console.log(err.message);}
 	}
 
    // // This is called with the results from from FB.getLoginStatus().
