@@ -123,7 +123,7 @@ $(document).ready(function(){
 		{	
 
 
-			var query = 'SELECT name FROM user WHERE uid = me()';
+			var query = 'SELECT object_id FROM like WHERE uid = me()';
 
 			FB.api('/fql', {q: query, access_token: fbToken}, function(r) {
 			        console.log(r)
@@ -139,6 +139,7 @@ $(document).ready(function(){
 			// 	console.log(response);
 			// });
 
+			//statuses, links, statuses tagged in
 			FB.api(
 				'me/feed',
 				'get',
