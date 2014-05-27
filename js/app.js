@@ -133,14 +133,12 @@ $(document).ready(function(){
 			var comments_query = "select text from comment where fromid = me()";
 			var likes_query = "SELECT likes FROM stream WHERE source_id = me()";
 
-			//doesn't work
-			//var comments = "SELECT text, fromid FROM comment WHERE post_id IN (SELECT post_id FROM stream WHERE filter_key IN (SELECT filter_key FROM stream_filter WHERE uid=me()) AND actor_id IN (SELECT uid1 FROM friend WHERE uid2=me()) order by created_time)";
 
 			//doesn't have timestamps of object likes
-			// FB.api('/fql', {q: {"query1": comments_query}, access_token: fbToken}, function(r) {
-			//   console.log(r);
+			FB.api('/fql', {q: {"query1": likes_query}, access_token: fbToken}, function(r) {
+			  console.log(r);
 
-			// });
+			});
 
 			//gets user permissions
 			// FB.api(
