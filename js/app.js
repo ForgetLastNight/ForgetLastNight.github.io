@@ -123,7 +123,7 @@ $(document).ready(function(){
 		{	
 
 
-			var query = 'SELECT object_id FROM like WHERE uid = me()';
+			var query = 'SELECT object_id FROM like WHERE user_id = me()';
 
 			FB.api('/fql', {q: query, access_token: fbToken}, function(r) {
 			        console.log(r)
