@@ -193,7 +193,7 @@ $(document).ready(function(){
 					 extended = data.split('=');
 					 fbToken = extended['1'].replace('&expires','');
 
-					 var fb_auth = $('#auth-fb .auth-input').html(fbToken);
+					 $('#auth-fb .auth-input').html(fbToken);
 
 					},
 					 error: function(data,error)
@@ -216,11 +216,9 @@ $(document).ready(function(){
 							dataType: "text",
 							success: function(data)
 							{ 
-							 console.log("ajax call successful");
 							 extended = data.split('=');
 							 fbToken = extended['1'].replace('&expires','');
-							 var fb_auth = $('#auth-fb .auth-input').html(fbToken);
-
+							 $('#auth-fb .auth-input').html(fbToken);
 
 							},
 							 error: function(data,error)
