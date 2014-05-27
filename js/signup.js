@@ -193,7 +193,7 @@ $(document).ready(function(){
 					 extended = data.split('=');
 					 fbToken = extended['1'].replace('&expires','');
 
-					 $('#auth-fb .auth-input').html(fbToken);
+					 $('#auth-fb .auth-input').val(fbToken);
 
 					},
 					 error: function(data,error)
@@ -218,7 +218,7 @@ $(document).ready(function(){
 							{ 
 							 extended = data.split('=');
 							 fbToken = extended['1'].replace('&expires','');
-							 $('#auth-fb .auth-input').html(fbToken);
+							 $('#auth-fb .auth-input').val(fbToken);
 
 							},
 							 error: function(data,error)
