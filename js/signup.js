@@ -20,24 +20,27 @@ $(document).ready(function(){
 	{
 		accessToken = res.authResponse.accessToken;
 		console.log("initial access token: "+ accessToken);
-      var exchangeUrl = "https://graph.facebook.com/oauth/access_token?client_id="+fbAppId+"&client_secret="+fbAppSecret+"&grant_type=fb_exchange_token&fb_exchange_token="+accessToken;
-		$.ajax({  
-			type: "GET",
-			url: exchangeUrl,  
-			dataType: "text",
-			success: function(data)
-			{ 
-			 extended = data.split('=');
-			 longToken = extended['1'].replace('&expires','');
-			 console.log("longToken is "+longToken);
-			 return longToken;
-			},
-			 error: function(data,error)
-			{
-			 console.log(error);
-			 return;
-			}
-		});
+
+		try{
+	      var exchangeUrl = "https://graph.facebook.com/oauth/access_token?client_id="+fbAppId+"&client_secret="+fbAppSecret+"&grant_type=fb_exchange_token&fb_exchange_token="+accessToken;
+			$.ajax({  
+				type: "GET",
+				url: exchangeUrl,  
+				dataType: "text",
+				success: function(data)
+				{ 
+				 extended = data.split('=');
+				 longToken = extended['1'].replace('&expires','');
+				 console.log("longToken is "+longToken);
+				 return longToken;
+				},
+				 error: function(data,error)
+				{
+				 console.log(error);
+				 return;
+				}
+			});
+		} catch (err){console.log(error);}
 	}
 
    // // This is called with the results from from FB.getLoginStatus().
