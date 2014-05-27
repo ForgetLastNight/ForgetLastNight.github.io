@@ -22,14 +22,6 @@ document.write(
   "</head>"+
   
   "<body>"+
-    "<div id='fb-root'></div>"+
-    "<script>(function(d, s, id) {"+
-      "var js, fjs = d.getElementsByTagName(s)[0];"+
-      "if (d.getElementById(id)) return;"+
-      "js = d.createElement(s); js.id = id;"+
-      "js.src = 'http://connect.facebook.net/en_US/sdk.js#xfbml=1&appId=462337317202554&version=v2.0';"+
-      "fjs.parentNode.insertBefore(js, fjs);"+
-    "}(document, 'script', 'facebook-jssdk'));</script>"+
     "<div class='navbar navbar-fixed-top' role='navigation'>"+
       "<center id='logo'>Forget Last Night"+
       "</center>"+

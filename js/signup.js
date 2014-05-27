@@ -11,31 +11,6 @@ $(document).ready(function(){
 	var tumblrTSecret = "";
 
 	var GTOKEN;
-	window.fbAsyncInit = function() {
-		FB.init({
-			appId      : '462337317202554',
-			xfbml      : true,
-			version    : 'v2.0'
-		});
-		
-		FB.getLoginStatus(function(response) {
-			statusChangeCallback(response);
-		});
-	}
-
-
-
-	//Load the SDK asynchronously
-	(function(d){
-		var js, id = 'facebook-jssdk', 
-		ref = d.getElementsByTagName('script')[0];
-		if (d.getElementById(id)) {return;}
-		js = d.createElement('script'); 
-		js.id = id; js.async = true;
-		js.src = "https://connect.facebook.net/en_US/all.js";
-		ref.parentNode.insertBefore(js, ref);
-	}(document));
-
 
 	function statusChangeCallback(response){
 	    GTOKEN = response['authResponse']['accessToken'];
@@ -46,7 +21,7 @@ $(document).ready(function(){
 	    // for FB.getLoginStatus().
 	    if (response.status === 'connected') {
 	      // Logged into your app and Facebook.
-	      testAPI();
+	      saveToken();
 
 
 	  } else if (response.status === 'not_authorized') {
@@ -61,7 +36,7 @@ $(document).ready(function(){
 	  }
 	}
 
-	function testAPI() {
+	function saveToken() {
 
 		FB.login(function(response) {
 			if (response.authResponse) {
