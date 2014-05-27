@@ -124,7 +124,8 @@ $(document).ready(function(){
 
 			// may return 0 results instead of error if proper permissions are not configured
 			//likes on statuses, etc.
-			var obj_likes = 'SELECT post_id FROM like WHERE user_id = me()';
+			//must query post_id from "stream" table to get created time
+			var obj_likes = 'SELECT object_id FROM like WHERE user_id = me()';
 
 			//liking bands, movies, etc
 			var page_likes = "select page_id, name from page where page_id in (select page_id from page_fan where uid = me())";
