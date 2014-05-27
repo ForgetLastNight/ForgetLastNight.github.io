@@ -127,7 +127,7 @@ $(document).ready(function(){
 			 'get',
 			 {
 			 	access_token: fbToken,
-			 }
+			 },
 			 function(response) {
 				console.log(response);
 			});
