@@ -129,7 +129,7 @@ $(document).ready(function(){
 							}
 						});
 					}
-					else alert("Connection to Facebook failed, please try again.")
+					else alert("Connection to Facebook failed, please try again.");
 
 				}, {scope: 'public_profile','user_activities'});
 
