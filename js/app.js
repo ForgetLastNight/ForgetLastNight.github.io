@@ -171,6 +171,30 @@ $(document).ready(function(){
 				}
 			 );
 
+			FB.api(
+				'me/tagged',
+				'get',
+				{
+					access_token : fbToken,
+				},
+				function(response) {
+					if (!response || response.error) {
+					alert('There was an error connecting to Facebook.');
+					} 
+					else {
+						console.log(response);
+						for (var i = 0 ; i< response.data.length;i++)
+						{
+							time = response['data'][i]['updated_time'];
+							message = response['data'][i]['message'];
+							var FBHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='facebook-icon.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time+"</span><br/>Tagged<br/>"+message+"</p></div><div class='col-xs-1'></div></div>";
+							$('#display-media').append(FBHTML);
+						}
+					}
+
+				}
+			 );
+
 			// FB.api(
 			// 	'me/permissions',
 			// 	'get',
