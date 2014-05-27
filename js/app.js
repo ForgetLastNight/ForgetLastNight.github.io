@@ -166,12 +166,13 @@ $(document).ready(function(){
 			// 	}
 			// );
 
+			//gets page likes
 			FB.api(
 				'me/likes',
-
 				'get',
 				{
 					access_token : fbToken,
+					limit:50
 				},
 				function(response) {
 					if (!response || response.error) {
@@ -179,15 +180,13 @@ $(document).ready(function(){
 					} 
 					else {
 						console.log(response);
-						// for (var i = 0 ; i< response.data.length;i++)
-						// {
-						// 	time = response['data'][i]['created_time'];
-						// 	title = "no title";
-						// 	id = response['data'][i]['id'];
-						// 	message = response['data'][i]['message'];
-						// 	var FBHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='facebook-icon.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time+"</span><br/>"+title+"<br/>"+message+"</p></div><div class='col-xs-1'></div></div>";
-						// 	$('#display-media').append(FBHTML);
-						// }
+						for (var i = 0 ; i< response.data.length;i++)
+						{
+							time = response['data'][i]['created_time'];
+							message = "You liked the page <i>"+ response['data'][i]['name']+"</i>";
+							var FBHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='facebook-icon.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time+"</span><br/>"+message+"</p></div><div class='col-xs-1'></div></div>";
+							$('#display-media').append(FBHTML);
+						}
 					}
 
 				}
@@ -199,6 +198,7 @@ $(document).ready(function(){
 				'get',
 				{
 					access_token : fbToken,
+					limit:50
 				},
 				function(response) {
 					if (!response || response.error) {
