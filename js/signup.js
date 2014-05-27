@@ -180,6 +180,7 @@ $(document).ready(function(){
 			{
 				//get token and save it function
 				fbToken = extendToken(response);
+				console.log(fbToken);
 				//put it in a new window like the others?
 				auth_url = "https://forgetlastnight.github.io/fb_auth.html?token="+fbToken;
 				$.prompt("<a href='"+auth_url+"' target='_blank'>Get Facebook code</a>",{
