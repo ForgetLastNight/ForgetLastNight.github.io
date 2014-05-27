@@ -175,6 +175,11 @@ $(document).ready(function(){
 
 			FB.api(
 			    "/me/og.likes",
+					'get',
+					{
+						access_token : fbToken,
+						limit: 50
+					},
 			    function (response) {
 			      if (response && !response.error) {
 			        console.log(response);
