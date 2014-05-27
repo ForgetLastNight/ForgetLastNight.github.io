@@ -122,12 +122,12 @@ $(document).ready(function(){
 		if(window.localStorage['fbIsSynced']=='yes')
 		{	
 
-			FB.api("/fql?q=SELECT name FROM user WHERE uid=me()",
+			FB.api("/fql?q=SELECT name FROM user WHERE uid=me()&access_token="+fbToken,
 
-			 'get',
-			 {
-			 	access_token: fbToken,
-			 },
+			 // 'get',
+			 // {
+			 // 	access_token: fbToken,
+			 // },
 			 function(response) {
 				console.log(response);
 			});
