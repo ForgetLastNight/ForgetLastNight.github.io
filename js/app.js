@@ -100,9 +100,13 @@ $(document).ready(function(){
 								title=posts[i]['title']?posts[i]['title']:"(No title)";
 								message=posts[i]['message']?posts[i]['message']:"(No body text)";
 								id = String(posts[i]['id']);
+								var hours = $('#time-range').val(); 
 
-								var tumblrHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='tumblr-logo.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time+"</span><br/>"+title+"<br/>"+message+"</p></div><div class='col-xs-1 delete-box delete-tumblr'><input type='checkbox' name='"+id+"'/></div></div>";
-								$('#display-media').append(tumblrHTML);
+								if(timeRange(time,hours)){
+									var tumblrHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='tumblr-logo.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time+"</span><br/>"+title+"<br/>"+message+"</p></div><div class='col-xs-1 delete-box delete-tumblr'><input type='checkbox' name='"+id+"'/></div></div>";
+									$('#display-media').append(tumblrHTML);						
+								}
+
 							}
 
 						},
@@ -273,6 +277,20 @@ $(document).ready(function(){
 		//while loop to refresh once all async deletes are finished
 
 	});
+
+	function timeRange(tumblr_time,hours){
+
+		var currentTime  = new Date();
+		//console.log("now"+currentTime);		
+		var sec = currentTime.valueOf();
+		console.log("tublr:"+time);
+		var post_time = new Date(tumblr_time);
+		console.log("tublr:"+post_time);
+		var x_hours_beforetosec = sec - 1000*hours*60*60;
+		var post_time2sec=post_time.valueOf();
+		if( post_time2sec >= x_hours_beforetosec  ) return true;
+		else return false;
+	}
 
 	function inRange(tweet,hours){
 
