@@ -1,11 +1,36 @@
 
 .col-xs-6{text-align: center;}
 #forget{
-	font-size: 20px;
+	font-size: 40px;
 	font-weight: bold;
 	width:100%;
 	outline:none;
-	border:1px solid red;
+	color:#9928DB;
+	background:rgba(0,0,0,0.9);
+	cursor:pointer;
+	visibility: hidden;
+}
+
+#time-select{
+	font-size: 40px;
+	font-weight: bold;
+	width:100%;
+	outline:none;
+	color:white;
+	background:rgba(0,0,0,0.9);
+	cursor:pointer;
+	border:0px;
+	text-align: center;
+}
+
+#time-range{
+	background:black;
+	color:#9928DB;
+}
+
+.full-row{
+	padding-left:0px;
+	padding-right: 0px;
 }
 
 
@@ -18,27 +43,6 @@
 	border:1px solid green;
 }
 
-/*.fb-box{
-  width:100%;
-
-}
-
-.fb-box .panel-heading{
-	text-align: left;
-}
-
-.fb-box .panel-body{
-	color:black;
-	padding-top:10px;
-	text-align: left;
-}
-
-.fb-logo{
-  width:30px;
-  height:30px;
-}
-
-.fb-time{padding-left:5px;}*/
 
 #display-media{
 	margin-top:20px;

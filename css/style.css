@@ -1,6 +1,6 @@
 html,body{
 	height:100%;
- 	background: url(../skyline.jpg) no-repeat center center fixed; 
+ 	background: url(../skyline.jpg) no-repeat center top fixed; 
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
@@ -8,15 +8,17 @@ html,body{
 }
 
 body{
-	padding-top:90px;
+	padding-top:155px;
+	padding-bottom:20px;
 }
 
 .navbar-fixed-top {
 	background-color: rgba(0, 0, 0, 0.7);
 }
 
+.navbar{margin-bottom:0px;}
+
 #main{
-	padding-top:20px;
 	min-height: 100%;
 	height: auto !important; /*min-height hack, make page fill up screen regardless of device*/
 	height: 100%;            /*min-height hack*/
@@ -33,7 +35,3 @@ body{
 #logo{margin-top:5px;color:white; font-family:BeautySC;font-size:4em;}
 
 .row{margin-left: 0px;margin-right: 0px;}
-
-#privacy{
-	color:white;
-}

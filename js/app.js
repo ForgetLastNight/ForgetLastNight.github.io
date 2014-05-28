@@ -40,7 +40,8 @@ $(document).ready(function(){
 	}
 	
 
-	$('#view').click(function(){
+
+	$('#time-range').change(function(){
 
 		$('#display-media').html('');
 
@@ -219,13 +220,14 @@ $(document).ready(function(){
 
 		}
 
+		$('#forget').css({"visibility":"visible"});
+
 	});
 
 
 	$('#forget').click(function(){
 
 		var checkboxes_twitter = $('#display-media .delete-twitter input');
-		if(checkboxes_twitter.length==0) finished[0]=true;
 
 		for(var i = 0;i<checkboxes_twitter.length;i++)
 		{

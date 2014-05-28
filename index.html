@@ -8,22 +8,43 @@
   	
   	<div id='fb-root'></div>
   	
+
 	<div class='row'>
+		<div class='col-xs-12 full-row'>
+			<div id='time-select'>
+			Last
+			<select id='time-range'>
+				<option value='' default selected>X</option>
+				<script type='text/javascript'>
+					for(var i=1;i<=48;i++){
+						document.write("<option value="+i+">"+i+"</option>");
+					}
+				</script>
+			</select>
+			Hours
+			</div>
+
+		</div>
+
+	</div>
+
+
+<!-- 	<div class='row'>
 		<div class='col-xs-2'></div>
 		<div  style='color:black;padding-bottom:20px;text-align:center;font-weight:bold;' class='col-xs-8'>
 			LAST <input id='time-range' value='48' style='width:50px;'> HOURS
 		</div>
 		<div class='col-xs-2'></div>
-	</div>
+	</div> -->
 
 
-	<div class='row'>
+<!-- 	<div class='row'>
 		<div class='col-xs-2'></div>
 		<div class='col-xs-8'>
 			<div  id="view" type="button" class="btn btn-lg btn-success"><span>View</span></div>
 		</div>
 		<div class='col-xs-2'></div>
-	</div>
+	</div> -->
 	
 	
 	<div id='display-media'>
@@ -32,11 +53,9 @@
 
 
 	<div class='row' style='padding-top:20px;'>
-		<div class='col-xs-2'></div>
-		<div class='col-xs-8'>
-			<div  id="forget" type="button" class="btn btn-lg btn-danger"><span>Forget Selected</span></div>
+		<div class='col-xs-12 full-row'>
+			<div  id="forget" type="button"><center>Forget</center></div>
 		</div>
-		<div class='col-xs-2'></div>
 
 	</div>
 
