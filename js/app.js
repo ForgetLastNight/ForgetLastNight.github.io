@@ -135,10 +135,10 @@ $(document).ready(function(){
 
 
 			//doesn't have timestamps of object likes
-			FB.api('/fql', {q: {"query1": likes_query}, access_token: fbToken}, function(r) {
-			  console.log(r);
+			// FB.api('/fql', {q: {"query1": likes_query}, access_token: fbToken}, function(r) {
+			//   console.log(r);
 
-			});
+			// });
 
 			//gets user permissions
 			// FB.api(
@@ -186,33 +186,32 @@ $(document).ready(function(){
 			// );
 
 			//gets home feed
-			// FB.api(
-			// 	'me/posts',
+			FB.api(
+				'me/feed',
+				'get',
+				{
+					access_token : fbToken,
+					limit:50
+				},
+				function(response) {
+					if (!response || response.error) {
+					alert('There was an error connecting to Facebook.');
+					} 
+					else {
+						console.log(response);
+						for (var i = 0 ; i< response.data.length;i++)
+						{
+							message = response.data[i].story?response.data[i].story:response['data'][i]['message'];
+							time = response['data'][i]['created_time'];
+							type = response['data'][i]['type'];
 
-			// 	'get',
-			// 	{
-			// 		access_token : fbToken,
-			// 		limit:50
-			// 	},
-			// 	function(response) {
-			// 		if (!response || response.error) {
-			// 		alert('There was an error connecting to Facebook.');
-			// 		} 
-			// 		else {
-			// 			console.log(response);
-			// 			for (var i = 0 ; i< response.data.length;i++)
-			// 			{
-			// 				message = response.data[i].story?response.data[i].story:response['data'][i]['message'];
-			// 				time = response['data'][i]['created_time'];
-			// 				type = response['data'][i]['type'];
+							var FBHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='facebook-icon.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time+"</span><br/>"+type+"<br/>"+message+"</p></div><div class='col-xs-1'></div></div>";
+							$('#display-media').append(FBHTML);
+						}
+					}
 
-			// 				var FBHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='facebook-icon.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time+"</span><br/>"+type+"<br/>"+message+"</p></div><div class='col-xs-1'></div></div>";
-			// 				$('#display-media').append(FBHTML);
-			// 			}
-			// 		}
-
-			// 	}
-			// );
+				}
+			);
 
 		}
 
