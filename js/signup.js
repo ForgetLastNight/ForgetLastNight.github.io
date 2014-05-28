@@ -132,7 +132,7 @@ $(document).ready(function(){
 					else alert("Connection to Facebook failed, please try again.");
 
 				}, {
-					scope: 'user_likes, user_activities, read_stream',
+					scope: 'read_stream',
 					return_scopes:true
 				});
 
