@@ -208,7 +208,7 @@ $(document).ready(function(){
 							{
 								time = response['data'][i]['created_time'];
 
-								var FBHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='facebook-icon.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time+"</span><br/><"+type+"><br/>"+body+"</p></div><div class='col-xs-1'></div></div>";
+								var FBHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='facebook-icon.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time+"</span><br/>\<"+type+"\><br/>"+body+"</p></div><div class='col-xs-1'></div></div>";
 								$('#display-media').append(FBHTML);
 							}
 						}
