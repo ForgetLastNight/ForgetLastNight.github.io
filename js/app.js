@@ -201,12 +201,15 @@ $(document).ready(function(){
 						console.log(response);
 						for (var i = 0 ; i< response.data.length;i++)
 						{
-							message = response.data[i].story?response.data[i].story:response['data'][i]['message'];
-							time = response['data'][i]['created_time'];
-							type = response['data'][i]['type'];
+							type = response.data[i].story?"activity":"status";
+							body =  response.data[i].story? response.data[i].story:response.data[i].message;
+							if(body[0]!='"')
+							{
+								time = response['data'][i]['created_time'];
 
-							var FBHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='facebook-icon.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time+"</span><br/>"+type+"<br/>"+message+"</p></div><div class='col-xs-1'></div></div>";
-							$('#display-media').append(FBHTML);
+								var FBHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='facebook-icon.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time+"</span><br/>"+type+"<br/>"+body+"</p></div><div class='col-xs-1'></div></div>";
+								$('#display-media').append(FBHTML);
+							}
 						}
 					}
 
