@@ -125,13 +125,13 @@ $(document).ready(function(){
 			// may return 0 results instead of error if proper permissions are not configured
 			//likes on statuses, etc.
 			//must query post_id from "stream" table to get created time
-			var obj_likes = "SELECT object_id FROM like WHERE post_id='post_id' AND user_id = me()";
+			// var obj_likes = "SELECT object_id FROM like WHERE post_id='post_id' AND user_id = me()";
 
-			//liking bands, movies, etc
-			var page_likes = "select page_id, name from page where page_id in (select page_id from page_fan where uid = me())";
-			var url_likes = "select url from url_like where user_id = me()";
-			var comments_query = "select text from comment where fromid = me()";
-			var likes_query = "SELECT likes FROM stream WHERE source_id = me()";
+			// //liking bands, movies, etc
+			// var page_likes = "select page_id, name from page where page_id in (select page_id from page_fan where uid = me())";
+			// var url_likes = "select url from url_like where user_id = me()";
+			// var comments_query = "select text from comment where fromid = me()";
+			// var likes_query = "SELECT likes FROM stream WHERE source_id = me()";
 
 
 			//doesn't have timestamps of object likes
@@ -198,16 +198,17 @@ $(document).ready(function(){
 					alert('There was an error connecting to Facebook.');
 					} 
 					else {
-						console.log(response);
+						//console.log(response);
 						for (var i = 0 ; i< response.data.length;i++)
 						{
 							type = response.data[i].story?"activity":"status";
+							type = type.charAt(0).toUpperCase() + type.slice(1);
 							body =  response.data[i].story? response.data[i].story:response.data[i].message;
 							if(body[0]!='"')
 							{
 								time = response['data'][i]['created_time'];
 
-								var FBHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='facebook-icon.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time+"</span><br/>"+type+"<br/>"+body+"</p></div><div class='col-xs-1'></div></div>";
+								var FBHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='facebook-icon.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time+"</span><br/><"+type+"><br/>"+body+"</p></div><div class='col-xs-1'></div></div>";
 								$('#display-media').append(FBHTML);
 							}
 						}
