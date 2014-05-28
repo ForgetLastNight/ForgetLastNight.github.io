@@ -201,8 +201,8 @@ $(document).ready(function(){
 						//console.log(response);
 						for (var i = 0 ; i< response.data.length;i++)
 						{
-							type = response.data[i].story?"activity":"status";
-							type = type.charAt(0).toUpperCase() + type.slice(1);
+							temp = response.data[i].story?"activity":"status";
+							type = temp.charAt(0).toUpperCase() + temp.slice(1);
 							body =  response.data[i].story? response.data[i].story:response.data[i].message;
 							if(body[0]!='"')
 							{
