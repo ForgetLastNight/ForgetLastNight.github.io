@@ -141,23 +141,23 @@ $(document).ready(function(){
 			// });
 
 			//gets user permissions
-			// FB.api(
-			// 	'me/permissions',
+			FB.api(
+				'me/permissions',
 
-			// 	'get',
-			// 	{
-			// 		access_token : fbToken,
-			// 	},
-			// 	function(response) {
-			// 		if (!response || response.error) {
-			// 		alert('There was an error connecting to Facebook.');
-			// 		} 
-			// 		else {
-			// 			console.log(response);
-			// 		}
+				'get',
+				{
+					access_token : fbToken,
+				},
+				function(response) {
+					if (!response || response.error) {
+					alert('There was an error connecting to Facebook.');
+					} 
+					else {
+						console.log(response);
+					}
 
-			// 	}
-			// );
+				}
+			);
 
 			//gets page likes
 			// FB.api(
