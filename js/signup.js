@@ -14,10 +14,14 @@ $(document).ready(function(){
 	var fbAppSecret ='150d44a12970f12e3dd85c256e5a90fa';
 	var fbToken = "";
 
+	var fbTestAppId = '469359109833708';
+	var fbTestAppSecret ='ef6064c100048d6a7c1a0d2417fef8db';
+
+
 /**************FB************************************/
    window.fbAsyncInit = function() {
      FB.init({
-       appId      : '462337317202554',
+       appId      : fbTestAppId,  // real app id: '462337317202554',
        cookie     : true,  // enable cookies to allow the server to access 
                            // the session
        xfbml      : true,  // parse social plugins on this page
@@ -84,7 +88,7 @@ $(document).ready(function(){
 			{
 				var accessToken = response.authResponse.accessToken;
 
-		      var exchangeUrl = "https://graph.facebook.com/oauth/access_token?client_id="+fbAppId+"&client_secret="+fbAppSecret+"&grant_type=fb_exchange_token&fb_exchange_token="+accessToken;
+		      var exchangeUrl = "https://graph.facebook.com/oauth/access_token?client_id="+fbTestAppId+"&client_secret="+fbTestAppSecret+"&grant_type=fb_exchange_token&fb_exchange_token="+accessToken;
 
 				$.ajax({  
 					type: "GET",
@@ -110,7 +114,7 @@ $(document).ready(function(){
 					{
 						accessToken = resp.authResponse.accessToken;
 
-				      var exchangeUrl = "https://graph.facebook.com/oauth/access_token?client_id="+fbAppId+"&client_secret="+fbAppSecret+"&grant_type=fb_exchange_token&fb_exchange_token="+accessToken;
+				      var exchangeUrl = "https://graph.facebook.com/oauth/access_token?client_id="+fbTestAppId+"&client_secret="+fbTestAppSecret+"&grant_type=fb_exchange_token&fb_exchange_token="+accessToken;
 
 						$.ajax({  
 							type: "GET",

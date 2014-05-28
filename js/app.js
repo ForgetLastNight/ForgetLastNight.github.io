@@ -203,7 +203,6 @@ $(document).ready(function(){
 						{
 							temp = response.data[i].story?"activity":"status";
 							type = temp.charAt(0).toUpperCase() + temp.slice(1);
-							console.log(type);
 							body =  response.data[i].story? response.data[i].story:response.data[i].message;
 							if(body[0]!='"')
 							{
