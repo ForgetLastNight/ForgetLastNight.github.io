@@ -12,7 +12,7 @@
 }
 
 #time-select{
-	font-size: 40px;
+	font-size: 30px;
 	font-weight: bold;
 	width:100%;
 	outline:none;
@@ -26,6 +26,7 @@
 #time-range{
 	background:black;
 	color:#9928DB;
+	font-size: 20px;
 }
 
 .full-row{
@@ -75,7 +76,7 @@
 
 
 .twitpic{
-height:441px;
-width: 339px;
+height:221px;
+width: 170px;
 
 }
