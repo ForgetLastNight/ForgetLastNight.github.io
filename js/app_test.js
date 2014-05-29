@@ -67,12 +67,12 @@ $(document).ready(function(){
 							{
 								time = posts[i]['date'];
 								title=posts[i]['title']?posts[i]['title']:"(No title)";
-								message=posts[i]['message']?posts[i]['message']:"(No body text)";
+								message=posts[i]['body']?posts[i]['body']:"(No body text)";
 								id = String(posts[i]['id']);
 								var hours = $('#time-range').val(); 
 
 								if(timeRange(time,hours)){
-									var tumblrHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='tumblr-logo.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time+"</span><br/>"+title+"<br/>"+message+"</p></div><div class='col-xs-1 delete-box delete-tumblr'><input type='checkbox' name='"+id+"'/></div></div>";
+									var tumblrHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='tumblr-logo.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time+"</span><br/><b>"+title+"</b><br/>"+message+"</p></div><div class='col-xs-1 delete-box delete-tumblr'><input type='checkbox' name='"+id+"'/></div></div>";
 									$('#display-media').append(tumblrHTML);						
 								}
 
