@@ -14,9 +14,12 @@
 			<div id='time-select'>
 			Last
 			<select id='time-range'>
-				<option value='' default selected>X</option>
 				<script type='text/javascript'>
-					for(var i=1;i<=48;i++){
+					for(var i=1;i<=23;i++){
+						document.write("<option value="+i+">"+i+"</option>");
+					}
+					document.write("<option value=24 default selected>24</option>");
+					for(var i=25;i<=48;i++){
 						document.write("<option value="+i+">"+i+"</option>");
 					}
 				</script>
