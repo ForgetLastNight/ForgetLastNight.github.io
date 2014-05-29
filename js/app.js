@@ -55,7 +55,10 @@ $(document).ready(function(){
 					{
 						//turn this into something better
 						var time = tweets[i]['created_at'].toString();
-						time = time.substring(0,20);
+						
+						var local_time = new Date(time).toString();
+						time = local_time.substring(0,50);
+						console.log(time);
 						var message = tweets[i]['text'];
 						var id = tweets[i]['id_str'];
 						var hours = $('#time-range').val();  //change hours
@@ -97,6 +100,7 @@ $(document).ready(function(){
 							for(var i=0;i<posts.length;i++)
 							{
 								time = posts[i]['date'];
+
 								title=posts[i]['title']?posts[i]['title']:"(No title)";						
 								message=posts[i]['body']?posts[i]['body']:"(No body text)";
 								id = String(posts[i]['id']);
@@ -292,10 +296,10 @@ $(document).ready(function(){
 		else return false;
 	}
 
+	//twitter
 	function inRange(tweet,hours){
 
 		var currentTime  = new Date();
-		
 		var sec = currentTime.valueOf();
 		
 		var x_hours_difference = sec - last_x_hours_to_second;
