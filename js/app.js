@@ -55,11 +55,10 @@ $(document).ready(function(){
 					for(i=0;i<tweets.length;i++)
 					{
 						//turn this into something better
-						var time = tweets[i]['created_at'].toString();
+						var time = tweets[i]['created_at'];
 						
-						var local_time = new Date(time).toString();
-						time = local_time.substring(0,24)+local_time.substring(33,50);
-						console.log(time);
+						var local_time = new Date(time);
+						var local_time_new_format = local_time.toLocaleString();
 						var message = tweets[i]['text'];
 						var id = tweets[i]['id_str'];
 						var hours = $('#time-range').val();  //change hours
@@ -72,7 +71,7 @@ $(document).ready(function(){
 
 						if(inRange(tweets[i],hours))
 						{
-							var tweetHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='twitter_logo.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time+"</span><br/>"+imghtml+message+"</p></div><div class='col-xs-1 delete-box delete-twitter'><input type='checkbox' name='"+id+"'/></div></div>";
+							var tweetHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='twitter_logo.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+local_time_new_format+"</span><br/>"+imghtml+message+"</p></div><div class='col-xs-1 delete-box delete-twitter'><input type='checkbox' name='"+id+"'/></div></div>";
 							$('#display-media').append(tweetHTML);
 						}
 				    }
@@ -196,11 +195,10 @@ $(document).ready(function(){
 						console.log(response);
 						for(var i=0;i<response.data.length;i++)
 						{
-						var GMT_time =response['data'][i]['created_time'].substring(0,33)+
-						response['data'][i]['created_time'].substring(40,50);
+						var GMT_time =response['data'][i]['created_time'];
 						console.log(GMT_time);
 						
-						var local_time_fb = new Date(GMT_time);
+						var local_time_fb = new Date(GMT_time).toLocaleString();
 
 
 						
