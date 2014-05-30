@@ -105,9 +105,10 @@ $(document).ready(function(){
 								message=posts[i]['body']?posts[i]['body']:"(No body text)";
 								id = String(posts[i]['id']);
 								var hours = $('#time-range').val(); 
-								console.log(Date(time));
+								var t_time=new Date(time);
+								var showtime=t_time.toLocaleString();
 								if(timeRange(time,hours)){
-									var tumblrHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='tumblr-logo.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+Date(time)+"</span><br/><b>"+title+"</b><br/>"+message+"</p></div><div class='col-xs-1 delete-box delete-tumblr'><input type='checkbox' name='"+id+"'/></div></div>";
+									var tumblrHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='tumblr-logo.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+showtime+"</span><br/><b>"+title+"</b><br/>"+message+"</p></div><div class='col-xs-1 delete-box delete-tumblr'><input type='checkbox' name='"+id+"'/></div></div>";
 									$('#display-media').append(tumblrHTML);						
 								}
 
