@@ -58,7 +58,7 @@ $(document).ready(function(){
 						var time = tweets[i]['created_at'].toString();
 						
 						var local_time = new Date(time).toString();
-						time = local_time.toLocaleString();
+						var local_time_new_format = local_time.toLocaleString();
 						console.log(time);
 						var message = tweets[i]['text'];
 						var id = tweets[i]['id_str'];
@@ -72,7 +72,7 @@ $(document).ready(function(){
 
 						if(inRange(tweets[i],hours))
 						{
-							var tweetHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='twitter_logo.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time+"</span><br/>"+imghtml+message+"</p></div><div class='col-xs-1 delete-box delete-twitter'><input type='checkbox' name='"+id+"'/></div></div>";
+							var tweetHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='twitter_logo.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+local_time_new_format+"</span><br/>"+imghtml+message+"</p></div><div class='col-xs-1 delete-box delete-twitter'><input type='checkbox' name='"+id+"'/></div></div>";
 							$('#display-media').append(tweetHTML);
 						}
 				    }
