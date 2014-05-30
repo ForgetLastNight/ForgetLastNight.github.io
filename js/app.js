@@ -166,12 +166,12 @@ $(document).ready(function(){
 						console.log(response);
 						for(var i=0;i<response.data.length;i++)
 						{
-						var GMT_time =response[i]['Object']['created_time'];
+						var GMT_time =response['data'][i]['Object']['created_time'];
 						var local_time_fb = new Date(GMT_time);
 
 						//title=response[i]['Object']['title']?posts[i]['title']:"(No title)";						
-						message=response[i]['Object']['message'];
-						id = String(response[i]['Object']['id']);
+						message=response['data'][i]['Object']['message'];
+						id = String(response['data'][i]['Object']['id']);
 						var hours = $('#time-range').val(); 
 						if(fb_inrange(local_time_fb,hours)){
 							console.log(fb_inrange(local_time_fb,hours));
