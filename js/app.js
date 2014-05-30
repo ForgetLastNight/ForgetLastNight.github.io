@@ -196,9 +196,12 @@ $(document).ready(function(){
 						console.log(response);
 						for(var i=0;i<response.data.length;i++)
 						{
-						var GMT_time =response['data'][i]['created_time'];
+						var GMT_time =response['data'][i]['created_time'].substring(0,33)+
+						response['data'][i]['created_time'].substring(40,50);
 						console.log(GMT_time);
+						
 						var local_time_fb = new Date(GMT_time);
+
 
 						
 						temp = response.data[i].story?"activity":"status";
@@ -207,12 +210,10 @@ $(document).ready(function(){
 						var hours = $('#time-range').val(); 
 						if(fb_inrange(local_time_fb,hours)){
 						console.log("here");
-						var FBHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='facebook-icon.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time+"</span><br/>"+type+"<br/>"+body+"</p></div><div class='col-xs-1'></div></div>";
+						var FBHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='facebook-icon.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+local_time_fb+"</span><br/>"+type+"<br/>"+body+"</p></div><div class='col-xs-1'></div></div>";
 									$('#display-media').append(FBHTML);						
 								}
-								else {
-									console.log("error");
-								}
+
 						}
 
 					}
