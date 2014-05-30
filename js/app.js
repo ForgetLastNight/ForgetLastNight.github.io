@@ -310,6 +310,7 @@ $(document).ready(function(){
 		console.log("fb:"+post_time);
 		var x_hours_beforetosec = sec - 1000*hours*60*60;
 		var post_time2sec=post_time.valueOf();
+		console.log(post_time2sec);
 		if( post_time2sec >= x_hours_beforetosec  ) return true;
 		else return false;
 	}
