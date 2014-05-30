@@ -164,9 +164,7 @@ $(document).ready(function(){
 					} 
 					else {
 						console.log(response);
-						var fb_posts = response['Object']['data']['Object'];
-						console.log(fb_posts);
-						for(var i=0;i<fb_posts.length;i++)
+						for(var i=0;i<response.data.length;i++)
 						{
 						var GMT_time =response[i]['Object']['created_time'];
 						var local_time_fb = new Date(GMT_time);
