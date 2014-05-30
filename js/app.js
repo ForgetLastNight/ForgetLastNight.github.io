@@ -55,9 +55,9 @@ $(document).ready(function(){
 					for(i=0;i<tweets.length;i++)
 					{
 						//turn this into something better
-						var time = tweets[i]['created_at'].toString();
+						var time = tweets[i]['created_at'];
 						
-						var local_time = new Date(time).toString();
+						var local_time = new Date(time);
 						var local_time_new_format = local_time.toLocaleString();
 						var message = tweets[i]['text'];
 						var id = tweets[i]['id_str'];
