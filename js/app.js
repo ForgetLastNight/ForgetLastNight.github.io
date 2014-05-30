@@ -196,8 +196,7 @@ $(document).ready(function(){
 						console.log(response);
 						for(var i=0;i<response.data.length;i++)
 						{
-						var GMT_time =response['data'][i]['created_time'].substring(0,33)+
-						response['data'][i]['created_time'].substring(40,50);
+						var GMT_time =response['data'][i]['created_time'].toLocaleString();
 						console.log(GMT_time);
 						
 						var local_time_fb = new Date(GMT_time);
