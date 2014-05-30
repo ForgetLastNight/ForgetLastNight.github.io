@@ -56,7 +56,10 @@ $(document).ready(function(){
 					{
 						//turn this into something better
 						var time = tweets[i]['created_at'].toString();
-						time = time.substring(0,20);
+						
+						var local_time = new Date(time).toString();
+						time = local_time.substring(0,24)+local_time.substring(33,50);
+						console.log(time);
 						var message = tweets[i]['text'];
 						var id = tweets[i]['id_str'];
 						var hours = $('#time-range').val();  //change hours
@@ -131,9 +134,11 @@ $(document).ready(function(){
 
 								id = String(posts[i]['id']);
 								var hours = $('#time-range').val(); 
-
+								var t_time=new Date(time);
+								var showtime=t_time.toLocaleString();
 								if(timeRange(time,hours)){
-									var tumblrHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='tumblr-logo.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time+"</span><br/><b>"+label+"</b><br/>"+content+"</p></div><div class='col-xs-1 delete-box delete-tumblr'><input type='checkbox' name='"+id+"'/></div></div>";
+									var tumblrHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='tumblr-logo.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+showtime+"</span><br/><b>"+label+"</b><br/>"+content+"</p></div><div class='col-xs-1 delete-box delete-tumblr'><input type='checkbox' name='"+id+"'/></div></div>";
+
 									$('#display-media').append(tumblrHTML);						
 								}
 
@@ -177,7 +182,7 @@ $(document).ready(function(){
 
 			//gets user permissions
 			FB.api(
-				'me/permissions',
+				'me/feed',
 
 				'get',
 				{
@@ -189,6 +194,27 @@ $(document).ready(function(){
 					} 
 					else {
 						console.log(response);
+						for(var i=0;i<response.data.length;i++)
+						{
+						var GMT_time =response['data'][i]['created_time'];
+						console.log(GMT_time);
+						var local_time_fb = new Date(GMT_time);
+
+						//title=response[i]['Object']['title']?posts[i]['title']:"(No title)";						
+						message=response['data'][i]['message'];
+						console.log(message);
+						id = String(response['data'][i]['id']);
+						console.log(id);
+						var hours = $('#time-range').val(); 
+						if(fb_inrange(local_time_fb,hours)){
+						var fb_html = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='facebook-icon.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+Date(time)+"</span><br/><b>"+" "+"</b><br/>"+message+"</p></div><div class='col-xs-1 delete-box delete-tumblr'><input type='checkbox' name='"+id+"'/></div></div>";
+									$('#display-media').append(fb_html);						
+								}
+								else {
+									console.log("error");
+								}
+						}
+
 					}
 
 				}
@@ -221,36 +247,36 @@ $(document).ready(function(){
 			// );
 
 			//gets home feed
-			FB.api(
-				'me/feed',
-				'get',
-				{
-					access_token : fbToken,
-					limit:50
-				},
-				function(response) {
-					if (!response || response.error) {
-					alert('There was an error connecting to Facebook.');
-					} 
-					else {
-						//console.log(response);
-						for (var i = 0 ; i< response.data.length;i++)
-						{
-							temp = response.data[i].story?"activity":"status";
-							type = temp.charAt(0).toUpperCase() + temp.slice(1);
-							body =  response.data[i].story? response.data[i].story:response.data[i].message;
-							if(body[0]!='"')
-							{
-								time = response['data'][i]['created_time'];
+			// FB.api(
+			// 	'me/feed',
+			// 	'get',
+			// 	{
+			// 		access_token : fbToken,
+			// 		limit:50
+			// 	},
+			// 	function(response) {
+			// 		if (!response || response.error) {
+			// 		alert('There was an error connecting to Facebook.');
+			// 		} 
+			// 		else {
+			// 			//console.log(response);
+			// 			for (var i = 0 ; i< response.data.length;i++)
+			// 			{
+			// 				temp = response.data[i].story?"activity":"status";
+			// 				type = temp.charAt(0).toUpperCase() + temp.slice(1);
+			// 				body =  response.data[i].story? response.data[i].story:response.data[i].message;
+			// 				if(body[0]!='"')
+			// 				{
+			// 					time = response['data'][i]['created_time'];
 
-								var FBHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='facebook-icon.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time+"</span><br/>"+type+"<br/>"+body+"</p></div><div class='col-xs-1'></div></div>";
-								$('#display-media').append(FBHTML);
-							}
-						}
-					}
+			// 					var FBHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='facebook-icon.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time+"</span><br/>"+type+"<br/>"+body+"</p></div><div class='col-xs-1'></div></div>";
+			// 					$('#display-media').append(FBHTML);
+			// 				}
+			// 			}
+			// 		}
 
-				}
-			);
+			// 	}
+			// );
 
 		}
 
@@ -308,24 +334,38 @@ $(document).ready(function(){
 
 	});
 
+	function fb_inrange(fb_time,hours){
+		var currentTime  = new Date();
+		//console.log("now"+currentTime);		
+		var sec = currentTime.valueOf();
+		//console.log("tublr:"+time);
+		var post_time = new Date(fb_time);
+		console.log("fb:"+post_time);
+		var x_hours_beforetosec = sec - 1000*hours*60*60;
+		var post_time2sec=post_time.valueOf();
+		console.log(post_time2sec);
+		if( post_time2sec >= x_hours_beforetosec  ) return true;
+		else return false;
+	}
+
 	function timeRange(tumblr_time,hours){
 
 		var currentTime  = new Date();
 		//console.log("now"+currentTime);		
 		var sec = currentTime.valueOf();
-		console.log("tublr:"+time);
+		//console.log("tublr:"+time);
 		var post_time = new Date(tumblr_time);
-		console.log("tublr:"+post_time);
+		//console.log("tublr:"+post_time);
 		var x_hours_beforetosec = sec - 1000*hours*60*60;
 		var post_time2sec=post_time.valueOf();
 		if( post_time2sec >= x_hours_beforetosec  ) return true;
 		else return false;
 	}
 
+	//twitter
 	function inRange(tweet,hours){
 
 		var currentTime  = new Date();
-		
 		var sec = currentTime.valueOf();
 		
 		var x_hours_difference = sec - last_x_hours_to_second;
