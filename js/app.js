@@ -210,9 +210,7 @@ $(document).ready(function(){
 						var FBHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='facebook-icon.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+local_time_fb+"</span><br/>"+type+"<br/>"+body+"</p></div><div class='col-xs-1'></div></div>";
 									$('#display-media').append(FBHTML);						
 								}
-								else {
-									console.log("error");
-								}
+
 						}
 
 					}
