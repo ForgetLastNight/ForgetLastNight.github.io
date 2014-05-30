@@ -212,36 +212,36 @@ $(document).ready(function(){
 			// );
 
 			//gets home feed
-			FB.api(
-				'me/feed',
-				'get',
-				{
-					access_token : fbToken,
-					limit:50
-				},
-				function(response) {
-					if (!response || response.error) {
-					alert('There was an error connecting to Facebook.');
-					} 
-					else {
-						//console.log(response);
-						for (var i = 0 ; i< response.data.length;i++)
-						{
-							temp = response.data[i].story?"activity":"status";
-							type = temp.charAt(0).toUpperCase() + temp.slice(1);
-							body =  response.data[i].story? response.data[i].story:response.data[i].message;
-							if(body[0]!='"')
-							{
-								time = response['data'][i]['created_time'];
+			// FB.api(
+			// 	'me/feed',
+			// 	'get',
+			// 	{
+			// 		access_token : fbToken,
+			// 		limit:50
+			// 	},
+			// 	function(response) {
+			// 		if (!response || response.error) {
+			// 		alert('There was an error connecting to Facebook.');
+			// 		} 
+			// 		else {
+			// 			//console.log(response);
+			// 			for (var i = 0 ; i< response.data.length;i++)
+			// 			{
+			// 				temp = response.data[i].story?"activity":"status";
+			// 				type = temp.charAt(0).toUpperCase() + temp.slice(1);
+			// 				body =  response.data[i].story? response.data[i].story:response.data[i].message;
+			// 				if(body[0]!='"')
+			// 				{
+			// 					time = response['data'][i]['created_time'];
 
-								var FBHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='facebook-icon.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time+"</span><br/>"+type+"<br/>"+body+"</p></div><div class='col-xs-1'></div></div>";
-								$('#display-media').append(FBHTML);
-							}
-						}
-					}
+			// 					var FBHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='facebook-icon.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time+"</span><br/>"+type+"<br/>"+body+"</p></div><div class='col-xs-1'></div></div>";
+			// 					$('#display-media').append(FBHTML);
+			// 				}
+			// 			}
+			// 		}
 
-				}
-			);
+			// 	}
+			// );
 
 		}
 
