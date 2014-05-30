@@ -177,7 +177,7 @@ $(document).ready(function(){
 						var hours = $('#time-range').val(); 
 						if(fb_inrange(local_time_fb,hours)){
 						var FBHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='facebook-icon.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time+"</span><br/>"+type+"<br/>"+body+"</p></div><div class='col-xs-1'></div></div>";
-									$('#display-media').append(fb_html);						
+									$('#display-media').append(FBHTML);						
 								}
 								else {
 									console.log("error");
