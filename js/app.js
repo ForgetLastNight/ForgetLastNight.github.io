@@ -307,7 +307,7 @@ $(document).ready(function(){
 		var sec = currentTime.valueOf();
 		//console.log("tublr:"+time);
 		var post_time = new Date(fb_time);
-		//console.log("tublr:"+post_time);
+		console.log("fb:"+post_time);
 		var x_hours_beforetosec = sec - 1000*hours*60*60;
 		var post_time2sec=post_time.valueOf();
 		if( post_time2sec >= x_hours_beforetosec  ) return true;
