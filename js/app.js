@@ -44,6 +44,7 @@ $(document).ready(function(){
 	$('#time-range').change(function(){
 
 		$('#display-media').html('');
+		$('#logo').html("<img style='height:120px; margin-top:15px;margin-bottom:15px;' src='flnLogo.png'/>");
 
 		if(window.localStorage['twitterIsSynced']=='yes')
 		{
@@ -63,7 +64,7 @@ $(document).ready(function(){
 						if(tweets[i]['entities']['media'])
 						{
 							imgsrc = tweets[i]['entities']['media'][0]['media_url'];
-							imghtml = "<img class='twitpic' src='"+imgsrc+"'/><br/>";
+							imghtml = "<img class='pic' src='"+imgsrc+"'/><br/>";
 						}
 
 						if(inRange(tweets[i],hours))
@@ -96,14 +97,43 @@ $(document).ready(function(){
 							posts = results['response']['posts'];
 							for(var i=0;i<posts.length;i++)
 							{
+								switch(posts[i].type){
+
+									case 'text':
+										label=posts[i].title;
+										content=posts[i].body;
+										break;
+
+									case 'link':
+										label=posts[i].title;
+										content="<a href='"+posts[i].url+"'>"+posts[i].url+"</a>";
+										break;
+
+									case 'photo':
+										label=posts[i].caption;
+										content="";
+										for(var j=0;j<posts[i].photos.length;j++){
+											content = content.concat("<img class='pic' src='"+posts[i].photos[j].original_size.url+"'/><br/>");
+										}
+										break;
+
+									case 'quote':
+										label=posts[i].source;
+										content='<i>"'+posts[i].text+'"</i>';
+										break;
+
+									default:
+										label='(No title)';
+										content='(No content)';
+										break;
+								}
 								time = posts[i]['date'];
-								title=posts[i]['title']?posts[i]['title']:"(No title)";						
-								message=posts[i]['body']?posts[i]['body']:"(No body text)";
+
 								id = String(posts[i]['id']);
 								var hours = $('#time-range').val(); 
 
 								if(timeRange(time,hours)){
-									var tumblrHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='tumblr-logo.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time+"</span><br/><b>"+title+"</b><br/>"+message+"</p></div><div class='col-xs-1 delete-box delete-tumblr'><input type='checkbox' name='"+id+"'/></div></div>";
+									var tumblrHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='tumblr-logo.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time+"</span><br/><b>"+label+"</b><br/>"+content+"</p></div><div class='col-xs-1 delete-box delete-tumblr'><input type='checkbox' name='"+id+"'/></div></div>";
 									$('#display-media').append(tumblrHTML);						
 								}
 
