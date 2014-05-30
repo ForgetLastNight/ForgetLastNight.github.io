@@ -151,7 +151,7 @@ $(document).ready(function(){
 
 			//gets user permissions
 			FB.api(
-				'me/permissions',
+				'me/feed',
 
 				'get',
 				{
@@ -163,6 +163,7 @@ $(document).ready(function(){
 					} 
 					else {
 						console.log(response);
+
 					}
 
 				}
