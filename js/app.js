@@ -164,7 +164,7 @@ $(document).ready(function(){
 					} 
 					else {
 						console.log(response);
-						var fb_posts = response['Object']['data'];
+						var fb_posts = response['Object']['data']['Object'];
 						console.log(fb_posts);
 						for(var i=0;i<fb_posts.length;i++)
 						{
