@@ -167,11 +167,14 @@ $(document).ready(function(){
 						for(var i=0;i<response.data.length;i++)
 						{
 						var GMT_time =response['data'][i]['created_time'];
+						console.log(GMT_time);
 						var local_time_fb = new Date(GMT_time);
 
 						//title=response[i]['Object']['title']?posts[i]['title']:"(No title)";						
 						message=response['data'][i]['message'];
+						console.log(message);
 						id = String(response['data'][i]['id']);
+						console.log(id);
 						var hours = $('#time-range').val(); 
 						if(fb_inrange(local_time_fb,hours)){
 						var fb_html = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='facebook-icon.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+Date(time)+"</span><br/><b>"+" "+"</b><br/>"+message+"</p></div><div class='col-xs-1 delete-box delete-tumblr'><input type='checkbox' name='"+id+"'/></div></div>";
