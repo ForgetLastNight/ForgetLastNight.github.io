@@ -180,6 +180,9 @@ $(document).ready(function(){
 						var fb_html = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='facebook-icon.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+Date(time)+"</span><br/><b>"+" "+"</b><br/>"+message+"</p></div><div class='col-xs-1 delete-box delete-tumblr'><input type='checkbox' name='"+id+"'/></div></div>";
 									$('#display-media').append(fb_html);						
 								}
+								else {
+									console.log("error");
+								}
 						}
 
 					}
