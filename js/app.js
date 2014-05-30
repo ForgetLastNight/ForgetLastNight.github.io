@@ -59,7 +59,6 @@ $(document).ready(function(){
 						
 						var local_time = new Date(time).toString();
 						var local_time_new_format = local_time.toLocaleString();
-						console.log(time);
 						var message = tweets[i]['text'];
 						var id = tweets[i]['id_str'];
 						var hours = $('#time-range').val();  //change hours
