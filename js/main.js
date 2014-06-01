@@ -1,5 +1,5 @@
 // main.js
-var client = new ZeroClipboard( document.getElementById("display-verifier"), {
+var client = new ZeroClipboard( document.getElementById("copy-button"), {
   moviePath: "./js/ZeroClipboard.swf"
 } );
 
@@ -9,6 +9,6 @@ client.on( "load", function(client) {
   client.on( "complete", function(client, args) {
     // `this` is the element that was clicked
     this.style.display = "none";
-    alert("Copied text to clipboard: " + args.text );
+    alert("Copied text to clipboard: " + document.getElementById("display-verifier").text );
   } );
 } );
