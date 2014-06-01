@@ -1,5 +1,9 @@
 $(document).ready(function(){
 
+	$(document).ajaxStart(function () {
+    	console.log("AJAX START");
+ 	});
+
 	var twitterCKey = "Ku3MsRCDG1GZI2Gdb3hggjTw5";
 	var twitterCSecret = "8HHQZhecyFPrPcmHbQ5AGh174WXx8eDo0irkdLqwaQxaYHLirk";
 
@@ -16,7 +20,6 @@ $(document).ready(function(){
 
 	//check if user has a profile
 	if (window.localStorage.getItem("FLNuser") != 'yes' || window.localStorage.getItem("FLNuser") === null) {
-	
 	  $('#main').html("<div class='row'><div class='col-xs-2'></div><div class='col-xs-8'><a href='signup.html'><div style='font-size: 20px;font-weight: bold;width: 100%;outline:none;border:1px solid blue;' type='button' class='btn btn-lg btn-primary'><span>Sign Up</span></div></a></div><div class='col-xs-2'></div></div>");
 	}
 	else{
@@ -45,6 +48,8 @@ $(document).ready(function(){
 
 		$('#display-media').html('');
 		$('#logo').html("<img style='height:120px; margin-top:15px;margin-bottom:15px;' src='flnLogo.png'/>");
+
+
 
 		if(window.localStorage['twitterIsSynced']=='yes')
 		{
@@ -285,53 +290,83 @@ $(document).ready(function(){
 
 
 	$('#forget').click(function(){
+		var promiseQ=[];
 
+		deleteTwitter(promiseQ);
+
+		deleteTumblr(promiseQ);
+
+
+		Parse.Promise.when(promiseQ).then(function(args){
+			//will trigger when all promises complete
+			$('#logo').html("<img style='height:120px; margin-top:15px;margin-bottom:15px;' src='fln_logo_white.png'/>");
+			$('#display-media').html("");
+			$('#LNNH').hide().html("<center><img style='height:120px; margin-top:15px;margin-bottom:15px;' src='forget.png'/></center>").fadeIn(2000);
+
+		});
+
+	});
+
+
+	function deleteTwitter(promises)
+	{
 		var checkboxes_twitter = $('#display-media .delete-twitter input');
 
 		for(var i = 0;i<checkboxes_twitter.length;i++)
 		{
-			if(checkboxes_twitter[i]['checked'])
+			(function(lockedInIndex)
 			{
-				var delete_id_tw = checkboxes_twitter[i]['name'];
+				var cbox = checkboxes_twitter[i];
+				if(cbox['checked'])
+				{
+					var delete_id_tw = cbox['name'];
+					var twitter_promise = new Parse.Promise();
+					promises.push(twitter_promise);
 
-		 		Parse.Cloud.run('DeleteTweet', {id : delete_id_tw, oToken : twitterToken, oKey : twitterCKey, tSec : twitterTSecret, cSec : twitterCSecret}, {
-		 			success: function(results){
-
-		 				alert("Last night's tweets never happened!");
-		 			},
-		 			error: function(error){
-		 				alert("Failed to delete tweet "+delete_id_tw);
-		 			}
-		 		});
-
-
-			}
+			 		Parse.Cloud.run('DeleteTweet', {id : delete_id_tw, oToken : twitterToken, oKey : twitterCKey, tSec : twitterTSecret, cSec : twitterCSecret}, {
+			 			success: function(results){
+			 				//console.log("Tweet "+delete_id_tw+" deleted");
+			 				twitter_promise.resolve("Tweet deleted");
+			 			},
+			 			error: function(error){
+			 				alert("Failed to delete tweet "+delete_id_tw);
+			 				twitter_promise.reject("Failed to delete tweet");
+			 			}
+			 		});
+				}
+			})();
 		}
+	}
 
+	function deleteTumblr(promises){
 		var checkboxes_tumblr = $('#display-media .delete-tumblr input');
 
 		for(var i = 0;i<checkboxes_tumblr.length;i++)
 		{
-			if(checkboxes_tumblr[i]['checked'])
-			{
-				var delete_id_tm = checkboxes_tumblr[i]['name'];
+			(function(lockedInIndex){
 
-				Parse.Cloud.run('TumblrDeletePost', {id: delete_id_tm, oToken : tumblrToken, oKey : tumblrCKey, tSec : tumblrTSecret, cSec : tumblrCSecret, bName: blogname}, {
-					success: function(msg) {
-						alert("Last night's tumblr blog never happened!");
-					},
-					error: function(err) {
-						console.log(err);
-					}
-				});
+				if(checkboxes_tumblr[i]['checked'])
+				{
+					var delete_id_tm = checkboxes_tumblr[i]['name'];
+					var tumblr_promise = new Parse.Promise();
+					promises.push(tumblr_promise);
 
-			}
+					Parse.Cloud.run('TumblrDeletePost', {id: delete_id_tm, oToken : tumblrToken, oKey : tumblrCKey, tSec : tumblrTSecret, cSec : tumblrCSecret, bName: blogname}, {
+						success: function(msg) {
+							//console.log("Tumblr post "+delete_id_tm+" deleted");
+							tumblr_promise.resolve("Tumblr post deleted");
+						},
+						error: function(err) {
+							alert("Failed to delete Tumblr post "+delete_id_tm);
+							tumblr_promise.reject("Could not delete Tumblr post");
+						}
+					});
+
+				}
+			})();
 		}
+	}
 
-
-		//while loop to refresh once all async deletes are finished
-
-	});
 
 	function fb_inrange(fb_time,hours){
 		var currentTime  = new Date();
