@@ -1,5 +1,5 @@
 // main.js
-var client = new ZeroClipboard( document.getElementById("copy-button"), {
+var client = new ZeroClipboard( document.getElementById("display-verifier"), {
   moviePath: "./js/ZeroClipboard.swf"
 } );
 
