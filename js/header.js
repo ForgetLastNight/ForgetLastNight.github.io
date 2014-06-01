@@ -21,6 +21,7 @@ document.write(
         "Parse.initialize('JzA8q6sistqJipqlSGVoQjgzUIkM5DTT4TiAmun9', 'ME6ADe5O6EAxaznIONYLpECysNoE9TzRWi3F8BtK');"+
         "});"+
       "</script>"+
+      "<meta name='apple-mobile-web-app-capable' content='yes'>"+
      "<link rel='apple-touch-startup-image' href='./background_clear_iphone.png'/>"+ 
   "</head>"+
   
