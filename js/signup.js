@@ -159,12 +159,13 @@ $(document).ready(function(){
 		}
 		window.localStorage['FLNuser']='yes';
 
-		$('#finish-signup').css({"display":"none"});
-		$('#after-submit').css({"display":"inline"});
+		var promiseQ=[];
 
 		if(twitter_auth!='')
 		{
-			$('#twitter-ready').css({"display":"inline"});
+			var twitter_promise = new Parse.Promise();
+			promiseQ.push(twitter_promise);
+			
 			Parse.Cloud.run('TwitterAccessToken', {oVer: twitter_auth, oToken : twitterToken, oKey : twitterCKey, tSec : twitterTSecret, cSec : twitterCSecret}, {
 				success: function(reply) {
 					temp = reply.split('=');
@@ -175,12 +176,15 @@ $(document).ready(function(){
 					window.localStorage['twitterToken']=twitterToken;
 					window.localStorage['twitterTSecret']=twitterTSecret;
 
-					$('#twitter-ready').css({'opacity':'1.0'});
+					console.log("Twitter connected");
+					twitter_promise.resolve("Twitter account connected");
 
 				},
 				error: function(error) {
 					console.log(error);
 					alert("There was an error connecting to Twitter. Please try again.");
+					return;
+					//twitter_promise.reject("Failed to connect to Twitter");
 				}
 			});
 		}
@@ -188,7 +192,9 @@ $(document).ready(function(){
 		
 		if(tumblr_auth!='')
 		{
-			$('#tumblr-ready').css({"display":"inline"});
+			var tumblr_promise = new Parse.Promise();
+			promiseQ.push(tumblr_promise);
+
 			Parse.Cloud.run('TumblrAccessToken', {oVer: tumblr_auth, oToken : tumblrToken, oKey : tumblrCKey, tSec : tumblrTSecret, cSec : tumblrCSecret}, {
 				success: function(reply) {
 					temp = reply.split('=');
@@ -198,11 +204,15 @@ $(document).ready(function(){
 					window.localStorage['tumblrIsSynced']='yes';
 					window.localStorage['tumblrToken']=tumblrToken;
 					window.localStorage['tumblrTSecret']=tumblrTSecret;
-					$('#tumblr-ready').css({'opacity':'1.0'});
+					
+					console.log("Tumblr connected");
+					tumblr_promise.resolve("Tumblr account connected");
 				},
 				error: function(error) {
 					console.log(error);
 					alert("There was an error connecting to Tumblr. Please try again.");
+					return;
+					//twitter_promise.reject("Failed to connect to Twitter");
 				}
 			});
 		}
@@ -210,13 +220,15 @@ $(document).ready(function(){
 
 		if(fb_auth!='')
 		{
-			$('#fb-ready').css({"display":"inline"});
 			window.localStorage['fbIsSynced']='yes';
 			window.localStorage['fbToken']=fbToken;
-			$('#fb-ready').css({'opacity':'1.0'});
-
 		}
 		else window.localStorage['fbIsSynced']='no';
+
+		Parse.Promise.when(promiseQ).then(function(args){
+			console.log("Finished signing up");
+			window.location.href = 'index.html';
+		});
 
 	});
 

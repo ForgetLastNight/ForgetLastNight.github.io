@@ -27,7 +27,7 @@ document.write(
   
   "<body>"+
     "<div class='navbar navbar-fixed-top' role='navigation'>"+
-      "<center id='logo'><img style='height:120px; margin-top:15px;margin-bottom:15px;' src='fln_logo_white.png'/>"+
+      "<center id='logo'><a href='index.html'><img style='height:120px; margin-top:15px;margin-bottom:15px;' src='fln_logo_white.png'/></a>"+
       "</center>"+
     "</div><!-- navbar-->"+
     "<div class='container-fluid' id='main'>"

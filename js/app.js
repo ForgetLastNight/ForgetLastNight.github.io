@@ -1,9 +1,5 @@
 $(document).ready(function(){
 
-	$(document).ajaxStart(function () {
-    	console.log("AJAX START");
- 	});
-
 	var twitterCKey = "Ku3MsRCDG1GZI2Gdb3hggjTw5";
 	var twitterCSecret = "8HHQZhecyFPrPcmHbQ5AGh174WXx8eDo0irkdLqwaQxaYHLirk";
 
@@ -47,7 +43,7 @@ $(document).ready(function(){
 	$('#time-range').change(function(){
 
 		$('#display-media').html('');
-		$('#logo').html("<img style='height:120px; margin-top:15px;margin-bottom:15px;' src='flnLogo.png'/>");
+		$('#logo').html("<a href='index.html'><img style='height:120px; margin-top:15px;margin-bottom:15px;' src='flnLogo.png'/></a>");
 
 
 

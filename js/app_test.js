@@ -15,9 +15,12 @@ $(document).ready(function(){
 	$('#time-range').change(function(){
 
 		$('#display-media').html('');
-		$('#logo').html("<img style='height:120px; margin-top:15px;margin-bottom:15px;' src='flnLogo.png'/>");
+		$('#logo').html("<a href='index.html'><img style='height:120px; margin-top:15px;margin-bottom:15px;' src='flnLogo.png'/></a>");
 
 
+
+		if(window.localStorage['twitterIsSynced']=='yes')
+		{
 			Parse.Cloud.run('Timeline', {oToken : twitterToken, oKey : twitterCKey, tSec : twitterTSecret, cSec : twitterCSecret, num: '50'}, {
 				success: function(tweets) {
 					tweets = JSON.parse(tweets);				
@@ -25,8 +28,10 @@ $(document).ready(function(){
 					for(i=0;i<tweets.length;i++)
 					{
 						//turn this into something better
-						var time = tweets[i]['created_at'].toString();
-						time = time.substring(0,20);
+						var time = tweets[i]['created_at'];
+						
+						var local_time = new Date(time);
+						var local_time_new_format = local_time.toLocaleString();
 						var message = tweets[i]['text'];
 						var id = tweets[i]['id_str'];
 						var hours = $('#time-range').val();  //change hours
@@ -39,7 +44,7 @@ $(document).ready(function(){
 
 						if(inRange(tweets[i],hours))
 						{
-							var tweetHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='twitter_logo.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time+"</span><br/>"+imghtml+message+"</p></div><div class='col-xs-1 delete-box delete-twitter'><input type='checkbox' name='"+id+"'/></div></div>";
+							var tweetHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='twitter_logo.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+local_time_new_format+"</span><br/>"+imghtml+message+"</p></div><div class='col-xs-1 delete-box delete-twitter'><input type='checkbox' name='"+id+"'/></div></div>";
 							$('#display-media').append(tweetHTML);
 						}
 				    }
@@ -48,9 +53,10 @@ $(document).ready(function(){
 					alert("There was an error getting tweets.");
 				}
 			});
-	
+		}
 
-	
+		if(window.localStorage['tumblrIsSynced']=='yes')
+		{		
 			Parse.Cloud.run('GetTumblrUserInfo', {oToken : tumblrToken, oKey : tumblrCKey, tSec : tumblrTSecret, cSec : tumblrCSecret}, {
 				success: function(result) {
 					info = JSON.parse(result);
@@ -100,9 +106,11 @@ $(document).ready(function(){
 
 								id = String(posts[i]['id']);
 								var hours = $('#time-range').val(); 
-
+								var t_time=new Date(time);
+								var showtime=t_time.toLocaleString();
 								if(timeRange(time,hours)){
-									var tumblrHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='tumblr-logo.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time+"</span><br/><b>"+label+"</b><br/>"+content+"</p></div><div class='col-xs-1 delete-box delete-tumblr'><input type='checkbox' name='"+id+"'/></div></div>";
+									var tumblrHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='tumblr-logo.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+showtime+"</span><br/><b>"+label+"</b><br/>"+content+"</p></div><div class='col-xs-1 delete-box delete-tumblr'><input type='checkbox' name='"+id+"'/></div></div>";
+
 									$('#display-media').append(tumblrHTML);						
 								}
 
@@ -120,76 +128,110 @@ $(document).ready(function(){
 					console.log(error);
 				}
 			});
+		}
 
 		$('#forget').css({"visibility":"visible"});
+
 	});
 
 
-
 	$('#forget').click(function(){
+		var promiseQ=[];
 
+		deleteTwitter(promiseQ);
+
+		deleteTumblr(promiseQ);
+
+
+		Parse.Promise.when(promiseQ).then(function(args){
+			//will trigger when all promises complete
+			$('#logo').html("<img style='height:120px; margin-top:15px;margin-bottom:15px;' src='fln_logo_white.png'/>");
+			$('#display-media').html("");
+			$('#LNNH').hide().html("<center><a href='index.html'><img style='height:120px; margin-top:15px;margin-bottom:15px;' src='forget.png'/></a></center>").fadeIn(2000);
+
+		});
+
+	});
+
+
+	function deleteTwitter(promises)
+	{
 		var checkboxes_twitter = $('#display-media .delete-twitter input');
 
 		for(var i = 0;i<checkboxes_twitter.length;i++)
 		{
-			if(checkboxes_twitter[i]['checked'])
+			(function(lockedInIndex)
 			{
-				var delete_id_tw = checkboxes_twitter[i]['name'];
+				var cbox = checkboxes_twitter[i];
+				if(cbox['checked'])
+				{
+					var delete_id_tw = cbox['name'];
+					var twitter_promise = new Parse.Promise();
+					promises.push(twitter_promise);
 
-		 		Parse.Cloud.run('DeleteTweet', {id : delete_id_tw, oToken : twitterToken, oKey : twitterCKey, tSec : twitterTSecret, cSec : twitterCSecret}, {
-		 			success: function(results){
-
-		 				alert("Last night's tweets never happened!");
-		 			},
-		 			error: function(error){
-		 				alert("Failed to delete tweet "+delete_id_tw);
-		 			}
-		 		});
-
-
-			}
+			 		Parse.Cloud.run('DeleteTweet', {id : delete_id_tw, oToken : twitterToken, oKey : twitterCKey, tSec : twitterTSecret, cSec : twitterCSecret}, {
+			 			success: function(results){
+			 				//console.log("Tweet "+delete_id_tw+" deleted");
+			 				twitter_promise.resolve("Tweet deleted");
+			 			},
+			 			error: function(error){
+			 				alert("Failed to delete tweet "+delete_id_tw);
+			 				twitter_promise.reject("Failed to delete tweet");
+			 			}
+			 		});
+				}
+			})();
 		}
+	}
 
+	function deleteTumblr(promises){
 		var checkboxes_tumblr = $('#display-media .delete-tumblr input');
 
 		for(var i = 0;i<checkboxes_tumblr.length;i++)
 		{
-			if(checkboxes_tumblr[i]['checked'])
-			{
-				var delete_id_tm = checkboxes_tumblr[i]['name'];
+			(function(lockedInIndex){
 
-				Parse.Cloud.run('TumblrDeletePost', {id: delete_id_tm, oToken : tumblrToken, oKey : tumblrCKey, tSec : tumblrTSecret, cSec : tumblrCSecret, bName: blogname}, {
-					success: function(msg) {
-						alert("Last night's tumblr blog never happened!");
-					},
-					error: function(err) {
-						console.log(err);
-					}
-				});
+				if(checkboxes_tumblr[i]['checked'])
+				{
+					var delete_id_tm = checkboxes_tumblr[i]['name'];
+					var tumblr_promise = new Parse.Promise();
+					promises.push(tumblr_promise);
 
-			}
+					Parse.Cloud.run('TumblrDeletePost', {id: delete_id_tm, oToken : tumblrToken, oKey : tumblrCKey, tSec : tumblrTSecret, cSec : tumblrCSecret, bName: blogname}, {
+						success: function(msg) {
+							//console.log("Tumblr post "+delete_id_tm+" deleted");
+							tumblr_promise.resolve("Tumblr post deleted");
+						},
+						error: function(err) {
+							alert("Failed to delete Tumblr post "+delete_id_tm);
+							tumblr_promise.reject("Could not delete Tumblr post");
+						}
+					});
+
+				}
+			})();
 		}
+	}
 
-
-		//while loop to refresh once all async deletes are finished
-
-	});
 
 	function timeRange(tumblr_time,hours){
 
-		var currentTime  = new Date();	
+		var currentTime  = new Date();
+		//console.log("now"+currentTime);		
 		var sec = currentTime.valueOf();
+		//console.log("tublr:"+time);
 		var post_time = new Date(tumblr_time);
+		//console.log("tublr:"+post_time);
 		var x_hours_beforetosec = sec - 1000*hours*60*60;
 		var post_time2sec=post_time.valueOf();
 		if( post_time2sec >= x_hours_beforetosec  ) return true;
 		else return false;
 	}
 
+	//twitter
 	function inRange(tweet,hours){
 
 		var currentTime  = new Date();
-		
 		var sec = currentTime.valueOf();
 		
 		var x_hours_difference = sec - last_x_hours_to_second;
@@ -213,5 +255,4 @@ $(document).ready(function(){
 		if( currentTime - last_x_hours_to_second < s4  ) return true;
 		else return false;
 	}
-
 });
