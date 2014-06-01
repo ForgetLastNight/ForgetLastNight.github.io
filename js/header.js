@@ -16,7 +16,10 @@ document.write(
     "<script type='text/javascript' src='https://platform.twitter.com/widgets.js'></script>"+
     "<script src='https://www.parsecdn.com/js/parse-1.2.18.min.js'></script>"+
     "<script type='text/javascript'>"+
-      "Parse.initialize('JzA8q6sistqJipqlSGVoQjgzUIkM5DTT4TiAmun9', 'ME6ADe5O6EAxaznIONYLpECysNoE9TzRWi3F8BtK');"+
+      "$(document).ready(function(){"+
+        "FastClick.attach(document.body);"+
+        "Parse.initialize('JzA8q6sistqJipqlSGVoQjgzUIkM5DTT4TiAmun9', 'ME6ADe5O6EAxaznIONYLpECysNoE9TzRWi3F8BtK');"+
+        "});"+
       "</script>"+
      "<link rel='apple-touch-startup-image' href='./background_clear_iphone.png'/>"+ 
   "</head>"+
