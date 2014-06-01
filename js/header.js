@@ -22,7 +22,7 @@ document.write(
         "});"+
       "</script>"+
       "<meta name='apple-mobile-web-app-capable' content='yes'>"+
-     "<link rel='apple-touch-startup-image' href='./background_clear_iphone.png'/>"+ 
+     "<link rel='apple-touch-startup-image' href='./background_clear_iphone5.png'/>"+ 
   "</head>"+
   
   "<body>"+
