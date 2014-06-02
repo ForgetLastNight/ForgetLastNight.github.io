@@ -10,7 +10,6 @@
         var end_verif = url.length;
 
         var verif = url.substring(start_verif,end_verif);
-        console.log("Verifier: "+verif);
 		
         $('#display-verifier p').html(verif);
 
@@ -27,10 +26,11 @@
     </div>
     <div class='row'>
       <div class='col-xs-2'></div>
-      <div class='col-xs-8' id='display-verifier' style='height:40px;background:white;border:1px solid black;color:black;font-size:9px;'><p class='wordwrap'></p></div> 
+      <div class='col-xs-8' id='display-verifier' style='height:40px;background:white;border:1px solid black;color:black;font-size:9px;'><p id='getcpy' class='wordwrap'></p></div> 
       <div class='col-xs-2'></div>
-	<button id="copy-button" data-clipboard-target="display-verifier" title="Click to copy me.">Copy to Clipboard</button>
     </div>
+    <br/>
+    <center><button id="copy-button" data-clipboard-target="getcpy" title="Click to copy me.">Copy to Clipboard</button></center>
 	<script src="./js/ZeroClipboard.js"></script>
     <script src="./js/main.js"></script>
   	<script type="text/javascript" src="js/footer.js"></script>

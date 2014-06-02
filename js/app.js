@@ -295,9 +295,9 @@ $(document).ready(function(){
 
 		Parse.Promise.when(promiseQ).then(function(args){
 			//will trigger when all promises complete
-			$('#logo').html("<img style='height:120px; margin-top:15px;margin-bottom:15px;' src='fln_logo_white.png'/>");
+			$('#logo').html("<a href='index.html'><img style='height:120px; margin-top:15px;margin-bottom:15px;' src='fln_logo_white.png'/></a>");
 			$('#display-media').html("");
-			$('#LNNH').hide().html("<center><img style='height:120px; margin-top:15px;margin-bottom:15px;' src='forget.png'/></center>").fadeIn(2000);
+			$('#LNNH').hide().html("<center><a href='index.html'><img style='height:120px; margin-top:15px;margin-bottom:15px;' src='forget.png'/></a></center>").fadeIn(2000);
 
 		});
 
