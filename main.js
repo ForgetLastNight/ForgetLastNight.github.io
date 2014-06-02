@@ -1,5 +1,5 @@
 // main.js
-var client = new ZeroClipboard( document.getElementById("copy-button"), {
+var client = new ZeroClipboard( document.getElementById("my-button_text"), {
   moviePath: "./js/ZeroClipboard.swf"
 } );
 
