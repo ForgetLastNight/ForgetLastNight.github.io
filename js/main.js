@@ -8,7 +8,7 @@ client.on( "load", function(client) {
 
   client.on( "complete", function(client, args) {
     // `this` is the element that was clicked
-    this.style.display = "none";
+    $('#copy-button').html('Copied!');
     //alert("Copied text: " + args.text );
   } );
 } );
