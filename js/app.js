@@ -255,11 +255,10 @@ $(document).ready(function(){
 					alert('There was an error connecting to Facebook.');
 					} 
 					else {
-						console.log(response);
+
 						for(var i=0;i<response.data.length;i++)
 						{
 						var GMT_time =response['data'][i]['created_time'];
-						console.log(GMT_time);
 						
 						var local_time_fb = new Date(GMT_time).toLocaleString();
 
@@ -270,13 +269,13 @@ $(document).ready(function(){
 						body =  response.data[i].story? response.data[i].story:response.data[i].message;
 						var hours = $('#time-range').val(); 
 						if(fb_inrange(local_time_fb,hours)){
-						console.log("here");
+
 						var FBHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='facebook-icon.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+remove_sec(local_time_fb)+"</span><br/>"+type+"<br/>"+body+"</p></div><div class='col-xs-1'></div></div>";
 									$('#display-media').append(FBHTML);						
 								}
 
 						}
-						console.log("viewFB finished");
+
 						fb_promise.resolve("viewFB finished");
 
 					}
@@ -417,10 +416,10 @@ $(document).ready(function(){
 		var sec = currentTime.valueOf();
 		//console.log("tublr:"+time);
 		var post_time = new Date(fb_time);
-		console.log("fb:"+post_time);
+
 		var x_hours_beforetosec = sec - 1000*hours*60*60;
 		var post_time2sec=post_time.valueOf();
-		console.log(post_time2sec);
+
 		if( post_time2sec >= x_hours_beforetosec  ) return true;
 		else return false;
 	}
