@@ -48,3 +48,18 @@ margin-left: -200px;
    white-space: -o-pre-wrap;   /* Opera 7 */    
    word-wrap: break-word;      /* IE */
 }
+
+#finish-signup{
+	font-size: 40px;
+	font-weight: bold;
+	width:100%;
+	outline:none;
+	color:#39B3D7;
+	background:rgba(0,0,0,0.9);
+	cursor:pointer;
+}
+
+.full-row{
+	padding-left:0px;
+	padding-right: 0px;
+}

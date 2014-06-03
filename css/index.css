@@ -83,3 +83,23 @@ height:221px;
 width: 170px;
 
 }
+
+#finish-signup{
+	font-size: 40px;
+	font-weight: bold;
+	width:100%;
+	outline:none;
+	color:#39B3D7;
+	background:rgba(0,0,0,0.9);
+	cursor:pointer;
+}
+
+#signup-button{
+	font-size: 40px;
+	font-weight: bold;
+	width:100%;
+	outline:none;
+	color:#39B3D7;
+	background:rgba(0,0,0,0.9);
+	cursor:pointer;
+}

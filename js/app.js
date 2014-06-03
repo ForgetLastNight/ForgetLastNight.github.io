@@ -16,7 +16,7 @@ $(document).ready(function(){
 
 	//check if user has a profile
 	if (window.localStorage.getItem("FLNuser") != 'yes' || window.localStorage.getItem("FLNuser") === null) {
-	  $('#main').html("<div class='row'><div class='col-xs-2'></div><div class='col-xs-8'><a href='signup.html'><div style='font-size: 20px;font-weight: bold;width: 100%;outline:none;border:1px solid blue;' type='button' class='btn btn-lg btn-primary'><span>Sign Up</span></div></a></div><div class='col-xs-2'></div></div>");
+	  $('#main').html("<div class='row' style='padding-top:20px;'><div class='col-xs-12' style='padding-left:0px;padding-right:0px;'><a style='text-decoration:none;' href='signup.html'><div style='font-size: 40px;	font-weight: bold;width:100%; outline:none;	color:#39B3D7;	background:rgba(0,0,0,0.9);cursor:pointer;'type='button'><center>Sign Up</center></div></a></div></div>");
 	}
 	else{
 		

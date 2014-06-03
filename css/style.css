@@ -8,7 +8,7 @@ html,body{
 }
 
 body{
-	padding-top:155px;
+	padding-top:175px;
 	padding-bottom:20px;
 }
 
@@ -16,7 +16,7 @@ body{
 	background-color: rgba(0, 0, 0, 0.7);
 }
 
-.navbar{margin-bottom:0px;}
+.navbar{margin-bottom:0px;padding-top:20px;}
 
 #main{
 	padding-top:20px;
@@ -33,6 +33,6 @@ body{
   src: url('../fonts/BEAUTYSC.woff');
 }
 
-#logo{margin-top:5px;color:white; font-family:BeautySC;font-size:4em;}
+#logo{margin-top:5px;color:white; font-size:4em;}
 
 .row{margin-left: 0px;margin-right: 0px;}
