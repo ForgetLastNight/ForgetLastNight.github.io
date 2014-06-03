@@ -191,7 +191,7 @@ $(document).ready(function(){
 								var t_time=new Date(time);
 								var showtime=t_time.toLocaleString();
 								if(timeRange(time,hours)){
-									var tumblrHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='tumblr-logo.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+remove_sec(showtime)+"</span><br/><b>"+label+"</b><br/>"+content+"</p></div><div class='col-xs-1 delete-box delete-tumblr'><input type='checkbox' name='"+id+"'/></div></div>";
+									var tumblrHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='tumblr-logo.png'/></div><div class='col-xs-9 message'><p style='margin-bottom:0px;'><span class='time-tw'>"+remove_sec(showtime)+"</span><br/><b>"+label+"</b><br/>"+content+"</p></div><div class='col-xs-1 delete-box delete-tumblr'><input type='checkbox' name='"+id+"'/></div></div>";
 
 									$('#display-media').append(tumblrHTML);						
 								}
@@ -270,7 +270,7 @@ $(document).ready(function(){
 						var hours = $('#time-range').val(); 
 						if(fb_inrange(local_time_fb,hours)){
 
-						var FBHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='facebook-icon.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+remove_sec(local_time_fb)+"</span><br/>"+type+"<br/>"+body+"</p></div><div class='col-xs-1'></div></div>";
+						var FBHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='facebook-icon.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+remove_sec(local_time_fb)+"</span><br/><i>"+type+"</i><br/>"+body+"</p></div><div class='col-xs-1'></div></div>";
 									$('#display-media').append(FBHTML);						
 								}
 

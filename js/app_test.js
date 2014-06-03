@@ -12,131 +12,39 @@ $(document).ready(function(){
 	var tumblrToken = "b0iM33OcSdxBhZUZL2D3deJjktF4apxoGuXOjB85oGDzUMe4dU";
 	var tumblrTSecret = "e3VliuVgSBefdxglKKfpvBbcrqigIW4TSadcyCPJnonPRz3mLz";
 	
+	var fbToken = "CAAGq4S8DgZBwBAPWf9PvpTKZA1n34q2217EZCnFP6aFrw8m1YxlyjrWpijia86HeUm1rSBpEjEjJGJ4eZAzYaeUy4PnrHYBlM7ieUBZACYK5jh3xSlRUqIfNnqxj5LzzNIyVNwZAT6XoWYerOp16vH9ZCxsKU11FHGOsX3nPkpioNqvhuKFGWm7";
+
 	$('#time-range').change(function(){
 
 		$('#display-media').html('');
 		$('#logo').html("<a href='index.html'><img style='height:120px; margin-top:15px;margin-bottom:15px;' src='flnLogo.png'/></a>");
-
-
-
-		if(window.localStorage['twitterIsSynced']=='yes')
-		{
-			Parse.Cloud.run('Timeline', {oToken : twitterToken, oKey : twitterCKey, tSec : twitterTSecret, cSec : twitterCSecret, num: '50'}, {
-				success: function(tweets) {
-					tweets = JSON.parse(tweets);				
-
-					for(i=0;i<tweets.length;i++)
-					{
-						//turn this into something better
-						var time = tweets[i]['created_at'];
-						
-						var local_time = new Date(time);
-						var local_time_new_format = local_time.toLocaleString();
-						var message = tweets[i]['text'];
-						var id = tweets[i]['id_str'];
-						var hours = $('#time-range').val();  //change hours
-						var imghtml = '';
-						if(tweets[i]['entities']['media'])
-						{
-							imgsrc = tweets[i]['entities']['media'][0]['media_url'];
-							imghtml = "<img class='pic' src='"+imgsrc+"'/><br/>";
-						}
-
-						if(inRange(tweets[i],hours))
-						{
-							var tweetHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='twitter_logo.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+local_time_new_format+"</span><br/>"+imghtml+message+"</p></div><div class='col-xs-1 delete-box delete-twitter'><input type='checkbox' name='"+id+"'/></div></div>";
-							$('#display-media').append(tweetHTML);
-						}
-				    }
-				},
-				error: function(error) {
-					alert("There was an error getting tweets.");
-				}
-			});
-		}
-
-		if(window.localStorage['tumblrIsSynced']=='yes')
-		{		
-			Parse.Cloud.run('GetTumblrUserInfo', {oToken : tumblrToken, oKey : tumblrCKey, tSec : tumblrTSecret, cSec : tumblrCSecret}, {
-				success: function(result) {
-					info = JSON.parse(result);
-
-					blogname = info.response.user.blogs[0].name+".tumblr.com";
-
-
-					Parse.Cloud.run('GetTumblrPosts', {oToken : tumblrToken, oKey : tumblrCKey, tSec : tumblrTSecret, cSec : tumblrCSecret, bName: blogname}, {
-						success: function(results) {
-							results = JSON.parse(results);
-
-
-							posts = results['response']['posts'];
-							for(var i=0;i<posts.length;i++)
-							{
-								switch(posts[i].type){
-
-									case 'text':
-										label=posts[i].title;
-										content=posts[i].body;
-										break;
-
-									case 'link':
-										label=posts[i].title;
-										content="<a href='"+posts[i].url+"'>"+posts[i].url+"</a>";
-										break;
-
-									case 'photo':
-										label=posts[i].caption;
-										content="";
-										for(var j=0;j<posts[i].photos.length;j++){
-											content = content.concat("<img class='pic' src='"+posts[i].photos[j].original_size.url+"'/><br/>");
-										}
-										break;
-
-									case 'quote':
-										label=posts[i].source;
-										content='<i>"'+posts[i].text+'"</i>';
-										break;
-
-									default:
-										label='(No title)';
-										content='(No content)';
-										break;
-								}
-								time = posts[i]['date'];
-
-								id = String(posts[i]['id']);
-								var hours = $('#time-range').val(); 
-								var t_time=new Date(time);
-								var showtime=t_time.toLocaleString();
-								if(timeRange(time,hours)){
-									var tumblrHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='tumblr-logo.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+showtime+"</span><br/><b>"+label+"</b><br/>"+content+"</p></div><div class='col-xs-1 delete-box delete-tumblr'><input type='checkbox' name='"+id+"'/></div></div>";
-
-									$('#display-media').append(tumblrHTML);						
-								}
-
-							}
-
-						},
-						error: function(error) {
-							console.log(error);
-						}
-					});
-
-
-				},
-				error: function(error) {
-					console.log(error);
-				}
-			});
-		}
-
+		$('#forget center').html("<img style='height:20px;width:20px;' src='loading.gif'/>");
 		$('#forget').css({"visibility":"visible"});
+
+
+		var promiseQ=[];
+
+		viewTwitter(promiseQ);
+
+		viewTumblr(promiseQ);
+
+		viewFB(promiseQ);
+
+
+		Parse.Promise.when(promiseQ).then(function(args){
+			//will trigger when all promises complete
+			console.log("all promises fulfilled");
+		 	$('#forget center').html("Forget");
+
+		});
 
 	});
 
 
 	$('#forget').click(function(){
 		var promiseQ=[];
+
+		$('#forget center').html("<img style='height:20px;width:20px;' src='loading.gif'/>");
 
 		deleteTwitter(promiseQ);
 
@@ -152,6 +60,177 @@ $(document).ready(function(){
 		});
 
 	});
+
+
+	function viewTwitter(promises)
+	{
+		var twitter_promise = new Parse.Promise();
+		promises.push(twitter_promise);
+
+		Parse.Cloud.run('Timeline', {oToken : twitterToken, oKey : twitterCKey, tSec : twitterTSecret, cSec : twitterCSecret, num: '50'}, {
+			success: function(tweets) {
+				tweets = JSON.parse(tweets);				
+
+				for(i=0;i<tweets.length;i++)
+				{
+					//turn this into something better
+					var time = tweets[i]['created_at'];
+					
+					var local_time = new Date(time);
+					var local_time_new_format = local_time.toLocaleString();
+					var message = tweets[i]['text'];
+					var id = tweets[i]['id_str'];
+					var hours = $('#time-range').val();  //change hours
+					var imghtml = '';
+					if(tweets[i]['entities']['media'])
+					{
+						imgsrc = tweets[i]['entities']['media'][0]['media_url'];
+						imghtml = "<img class='pic' src='"+imgsrc+"'/><br/>";
+					}
+
+					if(inRange(tweets[i],hours))
+					{
+						var tweetHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='twitter_logo.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+remove_sec(local_time_new_format)+"</span><br/>"+imghtml+message+"</p></div><div class='col-xs-1 delete-box delete-twitter'><input type='checkbox' name='"+id+"'/></div></div>";
+						$('#display-media').append(tweetHTML);
+					}
+
+			    }
+			    console.log("view twitter fulfilled");
+			    twitter_promise.resolve("viewTwitter finished displaying");
+			},
+			error: function(error) {
+				alert("There was an error getting tweets.");
+			}
+		});
+		
+	}
+
+	function viewTumblr(promises)
+	{
+		var tumblr_promise = new Parse.Promise();
+		promises.push(tumblr_promise);
+
+		Parse.Cloud.run('GetTumblrUserInfo', {oToken : tumblrToken, oKey : tumblrCKey, tSec : tumblrTSecret, cSec : tumblrCSecret}, {
+			success: function(result) {
+				info = JSON.parse(result);
+
+				blogname = info.response.user.blogs[0].name+".tumblr.com";
+
+				Parse.Cloud.run('GetTumblrPosts', {oToken : tumblrToken, oKey : tumblrCKey, tSec : tumblrTSecret, cSec : tumblrCSecret, bName: blogname}, {
+					success: function(results) {
+						results = JSON.parse(results);
+
+
+						posts = results['response']['posts'];
+						for(var i=0;i<posts.length;i++)
+						{
+							switch(posts[i].type){
+
+								case 'text':
+									label=posts[i].title;
+									content=posts[i].body;
+									break;
+
+								case 'link':
+									label=posts[i].title;
+									content="<a href='"+posts[i].url+"'>"+posts[i].url+"</a>";
+									break;
+
+								case 'photo':
+									label=posts[i].caption;
+									content="";
+									for(var j=0;j<posts[i].photos.length;j++){
+										content = content.concat("<img class='pic' src='"+posts[i].photos[j].original_size.url+"'/><br/>");
+									}
+									break;
+
+								case 'quote':
+									label=posts[i].source;
+									content='<i>"'+posts[i].text+'"</i>';
+									break;
+
+								default:
+									label='(No title)';
+									content='(No content)';
+									break;
+							}
+							time = posts[i]['date'];
+
+							id = String(posts[i]['id']);
+							var hours = $('#time-range').val(); 
+							var t_time=new Date(time);
+							var showtime=t_time.toLocaleString();
+							if(timeRange(time,hours)){
+								var tumblrHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='tumblr-logo.png'/></div><div class='col-xs-9 message'><p style='margin-bottom:0px;'><span class='time-tw'>"+remove_sec(showtime)+"</span><br/><b>"+label+"</b><br/>"+content+"</p></div><div class='col-xs-1 delete-box delete-tumblr'><input type='checkbox' name='"+id+"'/></div></div>";
+
+								$('#display-media').append(tumblrHTML);						
+							}
+
+						}
+						console.log("view tumblr fulfilled");
+						tumblr_promise.resolve("tumblrView finished");
+
+					},
+					error: function(error) {
+						console.log(error);
+					}
+				});
+
+
+			},
+			error: function(error) {
+				console.log(error);
+			}
+		});
+	}
+
+	function viewFB(promises)
+	{
+		var fb_promise = new Parse.Promise();
+		promises.push(fb_promise);
+
+
+		//gets user permissions
+		FB.api(
+			'me/feed',
+
+			'get',
+			{
+				access_token : fbToken,
+			},
+			function(response) {
+				if (!response || response.error) {
+				alert('There was an error connecting to Facebook.');
+				} 
+				else {
+
+					for(var i=0;i<response.data.length;i++)
+					{
+					var GMT_time =response['data'][i]['created_time'];
+					
+					var local_time_fb = new Date(GMT_time).toLocaleString();
+
+
+					
+					temp = response.data[i].story?"activity":"status";
+					type = temp.charAt(0).toUpperCase() + temp.slice(1);
+					body =  response.data[i].story? response.data[i].story:response.data[i].message;
+					var hours = $('#time-range').val(); 
+					if(fb_inrange(local_time_fb,hours)){
+
+					var FBHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='facebook-icon.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+remove_sec(local_time_fb)+"</span><br/><i>"+type+"</i><br/>"+body+"</p></div><div class='col-xs-1'></div></div>";
+								$('#display-media').append(FBHTML);						
+							}
+
+					}
+
+					fb_promise.resolve("viewFB finished");
+
+				}
+
+			}
+		);		
+	}
 
 
 	function deleteTwitter(promises)
@@ -213,6 +292,26 @@ $(document).ready(function(){
 		}
 	}
 
+	function remove_sec(time){
+	var pos=time.length;
+	var tail=time.substr(pos-3,pos);
+	var head=time.substr(0,pos-6);
+	return head+tail;
+	}
+
+	function fb_inrange(fb_time,hours){
+		var currentTime  = new Date();
+		//console.log("now"+currentTime);		
+		var sec = currentTime.valueOf();
+		//console.log("tublr:"+time);
+		var post_time = new Date(fb_time);
+
+		var x_hours_beforetosec = sec - 1000*hours*60*60;
+		var post_time2sec=post_time.valueOf();
+
+		if( post_time2sec >= x_hours_beforetosec  ) return true;
+		else return false;
+	}
 
 	function timeRange(tumblr_time,hours){
 
@@ -255,4 +354,5 @@ $(document).ready(function(){
 		if( currentTime - last_x_hours_to_second < s4  ) return true;
 		else return false;
 	}
+
 });
