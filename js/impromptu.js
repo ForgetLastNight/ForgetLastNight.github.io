@@ -381,7 +381,7 @@
 		else{
 			$.prompt.jqi.css({
 				position: "absolute",
-				top: "155px",
+				top: "175px",
 				left: '50%',//$window.width()/2,
 				marginLeft: (($.prompt.jqi.outerWidth(false)/2)*-1)
 			});

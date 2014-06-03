@@ -44,11 +44,57 @@ $(document).ready(function(){
 
 		$('#display-media').html('');
 		$('#logo').html("<a href='index.html'><img style='height:120px; margin-top:15px;margin-bottom:15px;' src='flnLogo.png'/></a>");
+		$('#forget center').html("<img style='height:20px;width:20px;' src='loading.gif'/>");
+		$('#forget').css({"visibility":"visible"});
 
 
+		var promiseQ=[];
 
+		viewTwitter(promiseQ);
+
+		viewTumblr(promiseQ);
+
+		//viewFB();
+
+
+		Parse.Promise.when(promiseQ).then(function(args){
+			//will trigger when all promises complete
+			console.log("all promises fulfilled");
+		 	$('#forget center').html("Forget");
+
+		});
+
+	});
+
+
+	$('#forget').click(function(){
+		var promiseQ=[];
+
+		$('#forget center').html("<img style='height:20px;width:20px;' src='loading.gif'/>");
+
+		deleteTwitter(promiseQ);
+
+		deleteTumblr(promiseQ);
+
+
+		Parse.Promise.when(promiseQ).then(function(args){
+			//will trigger when all promises complete
+			$('#logo').html("<a href='index.html'><img style='height:120px; margin-top:15px;margin-bottom:15px;' src='fln_logo_white.png'/></a>");
+			$('#display-media').html("");
+			$('#LNNH').hide().html("<center><a href='index.html'><img style='height:120px; margin-top:15px;margin-bottom:15px;' src='forget.png'/></a></center>").fadeIn(2000);
+
+		});
+
+	});
+
+
+	function viewTwitter(promises)
+	{
 		if(window.localStorage['twitterIsSynced']=='yes')
 		{
+			var twitter_promise = new Parse.Promise();
+			promises.push(twitter_promise);
+
 			Parse.Cloud.run('Timeline', {oToken : twitterToken, oKey : twitterCKey, tSec : twitterTSecret, cSec : twitterCSecret, num: '50'}, {
 				success: function(tweets) {
 					tweets = JSON.parse(tweets);				
@@ -75,22 +121,30 @@ $(document).ready(function(){
 							var tweetHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='twitter_logo.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+local_time_new_format+"</span><br/>"+imghtml+message+"</p></div><div class='col-xs-1 delete-box delete-twitter'><input type='checkbox' name='"+id+"'/></div></div>";
 							$('#display-media').append(tweetHTML);
 						}
+
 				    }
+				    console.log("view twitter fulfilled");
+				    twitter_promise.resolve("viewTwitter finished displaying");
 				},
 				error: function(error) {
 					alert("There was an error getting tweets.");
 				}
 			});
 		}
+	}
 
+	function viewTumblr(promises)
+	{
 		if(window.localStorage['tumblrIsSynced']=='yes')
-		{		
+		{	
+			var tumblr_promise = new Parse.Promise();
+			promises.push(tumblr_promise);
+
 			Parse.Cloud.run('GetTumblrUserInfo', {oToken : tumblrToken, oKey : tumblrCKey, tSec : tumblrTSecret, cSec : tumblrCSecret}, {
 				success: function(result) {
 					info = JSON.parse(result);
 
 					blogname = info.response.user.blogs[0].name+".tumblr.com";
-
 
 					Parse.Cloud.run('GetTumblrPosts', {oToken : tumblrToken, oKey : tumblrCKey, tSec : tumblrTSecret, cSec : tumblrCSecret, bName: blogname}, {
 						success: function(results) {
@@ -143,6 +197,8 @@ $(document).ready(function(){
 								}
 
 							}
+							console.log("view tumblr fulfilled");
+							tumblr_promise.resolve("tumblrView finished");
 
 						},
 						error: function(error) {
@@ -157,8 +213,10 @@ $(document).ready(function(){
 				}
 			});
 		}
+	}
 
-
+	function viewFB()
+	{
 		if(window.localStorage['fbIsSynced']=='yes')
 		{	
 
@@ -179,6 +237,10 @@ $(document).ready(function(){
 			//   console.log(r);
 
 			// });
+
+			var fb_promise = new Parse.Promise();
+			promises.push(fb_promise);
+
 
 			//gets user permissions
 			FB.api(
@@ -214,6 +276,8 @@ $(document).ready(function(){
 								}
 
 						}
+						console.log("viewFB finished");
+						fb_promise.resolve("viewFB finished");
 
 					}
 
@@ -279,29 +343,7 @@ $(document).ready(function(){
 			// );
 
 		}
-
-		$('#forget').css({"visibility":"visible"});
-
-	});
-
-
-	$('#forget').click(function(){
-		var promiseQ=[];
-
-		deleteTwitter(promiseQ);
-
-		deleteTumblr(promiseQ);
-
-
-		Parse.Promise.when(promiseQ).then(function(args){
-			//will trigger when all promises complete
-			$('#logo').html("<a href='index.html'><img style='height:120px; margin-top:15px;margin-bottom:15px;' src='fln_logo_white.png'/></a>");
-			$('#display-media').html("");
-			$('#LNNH').hide().html("<center><a href='index.html'><img style='height:120px; margin-top:15px;margin-bottom:15px;' src='forget.png'/></a></center>").fadeIn(2000);
-
-		});
-
-	});
+	}
 
 
 	function deleteTwitter(promises)

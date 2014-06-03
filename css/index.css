@@ -75,6 +75,15 @@
 .delete-box{
 	padding:7% 0px;
 	text-align: center;
+	margin-left:-10px;
+}
+
+.delete-box input[type=checkbox]{
+ -ms-transform: scale(3); /* IE */
+ -moz-transform: scale(3); /* FF */
+ -webkit-transform: scale(3); /* Safari and Chrome */
+ -o-transform: scale(3); /* Opera */
+
 }
 
 

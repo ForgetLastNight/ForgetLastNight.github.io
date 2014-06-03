@@ -157,6 +157,9 @@ $(document).ready(function(){
 			alert("You did not connect with any apps. Please enter one or more authentication codes.")
 			return;
 		}
+
+		$('#finish-signup center').html("<img style='height:20px;width:20px;' src='loading.gif'/>");
+
 		window.localStorage['FLNuser']='yes';
 
 		var promiseQ=[];
