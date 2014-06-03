@@ -54,7 +54,7 @@ $(document).ready(function(){
 
 		viewTumblr(promiseQ);
 
-		//viewFB();
+		viewFB(promiseQ);
 
 
 		Parse.Promise.when(promiseQ).then(function(args){
@@ -215,7 +215,7 @@ $(document).ready(function(){
 		}
 	}
 
-	function viewFB()
+	function viewFB(promises)
 	{
 		if(window.localStorage['fbIsSynced']=='yes')
 		{	
