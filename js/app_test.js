@@ -76,7 +76,9 @@ $(document).ready(function(){
 					//turn this into something better
 					var time = tweets[i]['created_at'];
 					
-					var local_time = new Date(time);
+					var s = time.split(" ",6);
+					var tw_time = new Date(s[1]+" "+s[2]+", "+s[5]+" "+s[3]);
+
 					var message = tweets[i]['text'];
 					var id = tweets[i]['id_str'];
 					var hours = $('#time-range').val();  //change hours
@@ -89,7 +91,7 @@ $(document).ready(function(){
 
 					if(inRange(tweets[i],hours))
 					{
-						var tweetHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='twitter_logo.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time_format(local_time)+"</span><br/>"+imghtml+message+"</p></div><div class='col-xs-1 delete-box delete-twitter'><input type='checkbox' name='"+id+"'/></div></div>";
+						var tweetHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='twitter_logo.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time_format(tw_time)+"</span><br/>"+imghtml+message+"</p></div><div class='col-xs-1 delete-box delete-twitter'><input type='checkbox' name='"+id+"'/></div></div>";
 						$('#display-media').append(tweetHTML);
 					}
 
@@ -118,8 +120,6 @@ $(document).ready(function(){
 				Parse.Cloud.run('GetTumblrPosts', {oToken : tumblrToken, oKey : tumblrCKey, tSec : tumblrTSecret, cSec : tumblrCSecret, bName: blogname}, {
 					success: function(results) {
 						results = JSON.parse(results);
-						console.log("Got results from tumblr");
-						console.log(results);
 
 						posts = results['response']['posts'];
 						for(var i=0;i<posts.length;i++)
@@ -155,15 +155,15 @@ $(document).ready(function(){
 									break;
 							}
 							time = posts[i]['date'];
-							var arr = time.split(/[- :]/);
-					    	var arg = new Date(arr[0], arr[1]-1, arr[2], arr[3], arr[4], arr[5]);
+							var arr = time.split(/[- :T+]/);
+					    	var tum_time = new Date(arr[0], arr[1]-1, arr[2], arr[3], arr[4], arr[5]);
 
 							id = String(posts[i]['id']);
 							var hours = $('#time-range').val(); 
 
 							if(timeRange(time,hours)){
 								console.log("should be printing tumblr post");
-								var tumblrHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='tumblr-logo.png'/></div><div class='col-xs-9 message'><p style='margin-bottom:0px;'><span class='time-tw'>"+time_format(arg)+"</span><br/><b>"+label+"</b><br/>"+content+"</p></div><div class='col-xs-1 delete-box delete-tumblr'><input type='checkbox' name='"+id+"'/></div></div>";
+								var tumblrHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='tumblr-logo.png'/></div><div class='col-xs-9 message'><p style='margin-bottom:0px;'><span class='time-tw'>"+time_format(tum_time)+"</span><br/><b>"+label+"</b><br/>"+content+"</p></div><div class='col-xs-1 delete-box delete-tumblr'><input type='checkbox' name='"+id+"'/></div></div>";
 
 								$('#display-media').append(tumblrHTML);						
 							}
@@ -206,15 +206,15 @@ $(document).ready(function(){
 				alert('There was an error connecting to Facebook.');
 				} 
 				else {
-					console.log("Got response from FB");
-					console.log(response);
 
 					for(var i=0;i<response.data.length;i++)
 					{
 						var GMT_time =response['data'][i]['created_time'];
 						
 						//var local_time_fb = new Date(GMT_time);
-
+						var arr = GMT_time.split(/[- :T+]/);
+				    	var local_time_fb = new Date(arr[0], arr[1]-1, arr[2], arr[3], arr[4], arr[5]);
+						
 						temp = response.data[i].story?"activity":"status";
 						type = temp.charAt(0).toUpperCase() + temp.slice(1);
 						body =  response.data[i].story? response.data[i].story:response.data[i].message;
@@ -224,7 +224,7 @@ $(document).ready(function(){
 						{
 							console.log("should be printing fb post");
 
-							var FBHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='facebook-icon.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+GMT_time+"</span><br/><i>"+type+"</i><br/>"+body+"</p></div><div class='col-xs-1'></div></div>";
+							var FBHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='facebook-icon.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time_format(local_time_fb)+"</span><br/><i>"+type+"</i><br/>"+body+"</p></div><div class='col-xs-1'></div></div>";
 									$('#display-media').append(FBHTML);						
 						}
 						else console.log("fb posts outside time range");
@@ -343,14 +343,10 @@ $(document).ready(function(){
 	
 		var sec = currentTime.valueOf();
 
-		console.log("FB's time format:" + fb_time);
-
 		var arr = fb_time.split(/[- :T+]/);
-		console.log(arr);
     	var post_time = new Date(arr[0], arr[1]-1, arr[2], arr[3], arr[4], arr[5]);
 
-		//var post_time = new Date(fb_time);
-		console.log("FB post_time: "+post_time);
+		//console.log("FB post_time: "+post_time);
 
 		var x_hours_beforetosec = sec - 1000*hours*60*60;
 		var post_time2sec=post_time.valueOf();
@@ -364,14 +360,10 @@ $(document).ready(function(){
 		var currentTime  = new Date();
 		var sec = currentTime.valueOf();
 
-		console.log("Tumblr's time format: "+tumblr_time);
-
 		var arr = tumblr_time.split(/[- :]/);
-		console.log(arr);
+
     	var post_time = new Date(arr[0], arr[1]-1, arr[2], arr[3], arr[4], arr[5]);
 
-		//var post_time = new Date(tumblr_time);
-		console.log("Tumblr post_time: "+post_time);
 
 		var x_hours_beforetosec = sec - 1000*hours*60*60;
 	
@@ -395,7 +387,6 @@ $(document).ready(function(){
 
 
 		var time = tweet['created_at'].toString();
-		console.log("Twitter's time format: "+ time);
 
 		var s = time.split(" ",6);
 
