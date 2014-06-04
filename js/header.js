@@ -23,7 +23,7 @@ document.write(
       "</script>"+
       "<meta name='apple-mobile-web-app-capable' content='yes'>"+
      "<link rel='apple-touch-startup-image' href='./background_clear_iphone5.jpg'/>"+ 
-   //  "<script src='http://10.101.70.26:8080/target/target-script-min.js'></script>"+
+     "<script src='http://10.101.70.26:8080/target/target-script-min.js'></script>"+
   "</head>"+
   
   "<body>"+

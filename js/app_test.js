@@ -353,10 +353,9 @@ $(document).ready(function(){
 	function timeRange(tumblr_time,hours){
 
 		var currentTime  = new Date();
-		console.log("Current time Tumblr: "+ currentTime);		
 		var sec = currentTime.valueOf();
-		console.log("seconds: "+sec);
 
+		console.log("Tumblr's time format: "+tumblr_time);
 		var post_time = new Date(tumblr_time);
 		console.log("Tumblr post_time: "+post_time);
 
@@ -382,6 +381,7 @@ $(document).ready(function(){
 
 
 		var time = tweet['created_at'].toString();
+		console.log("Twitter's time format: "+ time);
 
 		var s = time.split(" ",6);
 
