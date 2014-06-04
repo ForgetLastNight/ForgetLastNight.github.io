@@ -158,7 +158,8 @@ $(document).ready(function(){
 
 							id = String(posts[i]['id']);
 							var hours = $('#time-range').val(); 
-							var t_time=new Date(time);
+							var t_time = new Date(time);
+
 							if(timeRange(time,hours)){
 								console.log("should be printing tumblr post");
 								var tumblrHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='tumblr-logo.png'/></div><div class='col-xs-9 message'><p style='margin-bottom:0px;'><span class='time-tw'>"+time_format(t_time)+"</span><br/><b>"+label+"</b><br/>"+content+"</p></div><div class='col-xs-1 delete-box delete-tumblr'><input type='checkbox' name='"+id+"'/></div></div>";
@@ -356,7 +357,11 @@ $(document).ready(function(){
 		var sec = currentTime.valueOf();
 
 		console.log("Tumblr's time format: "+tumblr_time);
-		var post_time = new Date(tumblr_time);
+
+		var arr = tumblr_time.split(/[- :]/);
+    	var post_time = new Date(arr[0], arr[1]-1, arr[2], arr[3], arr[4], arr[5]);
+
+		//var post_time = new Date(tumblr_time);
 		console.log("Tumblr post_time: "+post_time);
 
 		var x_hours_beforetosec = sec - 1000*hours*60*60;
