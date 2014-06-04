@@ -189,9 +189,8 @@ $(document).ready(function(){
 								id = String(posts[i]['id']);
 								var hours = $('#time-range').val(); 
 								var t_time=new Date(time);
-								var showtime=t_time.toLocaleString();
 								if(timeRange(time,hours)){
-									var tumblrHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='tumblr-logo.png'/></div><div class='col-xs-9 message'><p style='margin-bottom:0px;'><span class='time-tw'>"+remove_sec(showtime)+"</span><br/><b>"+label+"</b><br/>"+content+"</p></div><div class='col-xs-1 delete-box delete-tumblr'><input type='checkbox' name='"+id+"'/></div></div>";
+									var tumblrHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='tumblr-logo.png'/></div><div class='col-xs-9 message'><p style='margin-bottom:0px;'><span class='time-tw'>"+time_format(t_time)+"</span><br/><b>"+label+"</b><br/>"+content+"</p></div><div class='col-xs-1 delete-box delete-tumblr'><input type='checkbox' name='"+id+"'/></div></div>";
 
 									$('#display-media').append(tumblrHTML);						
 								}
@@ -260,7 +259,7 @@ $(document).ready(function(){
 						{
 						var GMT_time =response['data'][i]['created_time'];
 						
-						var local_time_fb = new Date(GMT_time).toLocaleString();
+						var local_time_fb = new Date(GMT_time);
 
 
 						
@@ -270,7 +269,7 @@ $(document).ready(function(){
 						var hours = $('#time-range').val(); 
 						if(fb_inrange(local_time_fb,hours)){
 
-						var FBHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='facebook-icon.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+remove_sec(local_time_fb)+"</span><br/><i>"+type+"</i><br/>"+body+"</p></div><div class='col-xs-1'></div></div>";
+						var FBHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='facebook-icon.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time_format(local_time_fb)+"</span><br/><i>"+type+"</i><br/>"+body+"</p></div><div class='col-xs-1'></div></div>";
 									$('#display-media').append(FBHTML);						
 								}
 
@@ -408,24 +407,25 @@ $(document).ready(function(){
 		var pos=t.length;
 		var tail=t.substr(pos-3,pos);
 		var head=t.substr(0,pos-6);
-		return num_to_weekdayName(time.getDay())+","+num_to_monthName(time.getMonth())+" "+time.getDate+" "
-		+tail+head;
+		return num_to_weekdayName(time.getDay())+","+num_to_monthName(time.getMonth())+" "+time.getDate()+" at "
+		+head+tail;
 	}
 	function num_to_monthName(num){
-		var shortName=["January", "February", "March",
-		"April", "May", "June",
-		"July", "August", "September",
-		"October", "November", "December"];
+		var shortName=["Jan", "Feb", "Mar",
+		"Apr", "May", "Jun",
+		"Jul", "Aug", "Sep",
+		"Oct", "Nov", "Dec"];
+		return shortName[num];
 	}
 	function num_to_weekdayName(num){
 		var weekday = new Array(7);
-		weekday[0]=  "Sunday";
-		weekday[1] = "Monday";
-		weekday[2] = "Tuesday";
-		weekday[3] = "Wednesday";
-		weekday[4] = "Thursday";
-		weekday[5] = "Friday";
-		weekday[6] = "Saturday";
+		weekday[0]=  "Sun";
+		weekday[1] = "Mon";
+		weekday[2] = "Tue";
+		weekday[3] = "Wed";
+		weekday[4] = "Thu";
+		weekday[5] = "Fri";
+		weekday[6] = "Sat";
 		return weekday[num];
 	}
 	function fb_inrange(fb_time,hours){
