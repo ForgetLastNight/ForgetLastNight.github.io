@@ -355,11 +355,17 @@ $(document).ready(function(){
 		console.log("Current time Tumblr: "+ currentTime);
 		//console.log("now"+currentTime);		
 		var sec = currentTime.valueOf();
+		console.log("seconds: "+sec);
 		//console.log("tublr:"+time);
 		var post_time = new Date(tumblr_time);
+		console.log("post_time: "+post_time);
 		//console.log("tublr:"+post_time);
 		var x_hours_beforetosec = sec - 1000*hours*60*60;
+		console.log("x_hrs_bf: "+x_hours_beforetosec);
+
 		var post_time2sec=post_time.valueOf();
+		console.log("post_time2sec: "+post_time2sec);
+
 		if( post_time2sec >= x_hours_beforetosec  ) return true;
 		else return false;
 	}
