@@ -337,10 +337,11 @@ $(document).ready(function(){
 	function fb_inrange(fb_time,hours){
 		var currentTime  = new Date();
 		console.log("Current time FB: "+ currentTime);
-		//console.log("now"+currentTime);		
+	
 		var sec = currentTime.valueOf();
-		//console.log("tublr:"+time);
+
 		var post_time = new Date(fb_time);
+		console.log("FB post time: "+post_time);
 
 		var x_hours_beforetosec = sec - 1000*hours*60*60;
 		var post_time2sec=post_time.valueOf();
@@ -352,19 +353,18 @@ $(document).ready(function(){
 	function timeRange(tumblr_time,hours){
 
 		var currentTime  = new Date();
-		console.log("Current time Tumblr: "+ currentTime);
-		//console.log("now"+currentTime);		
+		console.log("Current time Tumblr: "+ currentTime);		
 		var sec = currentTime.valueOf();
 		console.log("seconds: "+sec);
-		//console.log("tublr:"+time);
+
 		var post_time = new Date(tumblr_time);
-		console.log("post_time: "+post_time);
-		//console.log("tublr:"+post_time);
+		console.log("Tumblr post_time: "+post_time);
+
 		var x_hours_beforetosec = sec - 1000*hours*60*60;
-		console.log("x_hrs_bf: "+x_hours_beforetosec);
+	
 
 		var post_time2sec=post_time.valueOf();
-		console.log("post_time2sec: "+post_time2sec);
+	
 
 		if( post_time2sec >= x_hours_beforetosec  ) return true;
 		else return false;
@@ -374,7 +374,7 @@ $(document).ready(function(){
 	function inRange(tweet,hours){
 
 		var currentTime  = new Date();
-		console.log("Current time Twitter: "+ currentTime);
+		
 		var sec = currentTime.valueOf();
 		
 		var x_hours_difference = sec - last_x_hours_to_second;
