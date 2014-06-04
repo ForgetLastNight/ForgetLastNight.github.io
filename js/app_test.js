@@ -158,7 +158,7 @@ $(document).ready(function(){
 
 							id = String(posts[i]['id']);
 							var hours = $('#time-range').val(); 
-							var t_time = new Date(time);
+							var t_time = time;//new Date(time); invalid
 
 							if(timeRange(time,hours)){
 								console.log("should be printing tumblr post");
@@ -340,6 +340,9 @@ $(document).ready(function(){
 		console.log("Current time FB: "+ currentTime);
 	
 		var sec = currentTime.valueOf();
+
+		var arr = fb_time.split(/[- :]/);
+    	var post_time = new Date(arr[0], arr[1]-1, arr[2], arr[3], arr[4], arr[5]);
 
 		var post_time = new Date(fb_time);
 		console.log("FB post time: "+post_time);
