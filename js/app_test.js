@@ -336,6 +336,7 @@ $(document).ready(function(){
 
 	function fb_inrange(fb_time,hours){
 		var currentTime  = new Date();
+		console.log("Current time FB: "+ currentTime);
 		//console.log("now"+currentTime);		
 		var sec = currentTime.valueOf();
 		//console.log("tublr:"+time);
@@ -351,6 +352,7 @@ $(document).ready(function(){
 	function timeRange(tumblr_time,hours){
 
 		var currentTime  = new Date();
+		console.log("Current time Tumblr: "+ currentTime);
 		//console.log("now"+currentTime);		
 		var sec = currentTime.valueOf();
 		//console.log("tublr:"+time);
@@ -366,6 +368,7 @@ $(document).ready(function(){
 	function inRange(tweet,hours){
 
 		var currentTime  = new Date();
+		onsole.log("Current time Twitter: "+ currentTime);
 		var sec = currentTime.valueOf();
 		
 		var x_hours_difference = sec - last_x_hours_to_second;
