@@ -407,7 +407,7 @@ $(document).ready(function(){
 		var pos=t.length;
 		var tail=t.substr(pos-3,pos);
 		var head=t.substr(0,pos-6);
-		return num_to_weekdayName(time.getDay())+","+num_to_monthName(time.getMonth())+" "+time.getDate()+" at "
+		return num_to_weekdayName(time.getDay())+", "+num_to_monthName(time.getMonth())+" "+time.getDate()+" "
 		+head+tail;
 	}
 	function num_to_monthName(num){
@@ -418,15 +418,8 @@ $(document).ready(function(){
 		return shortName[num];
 	}
 	function num_to_weekdayName(num){
-		var weekday = new Array(7);
-		weekday[0]=  "Sun";
-		weekday[1] = "Mon";
-		weekday[2] = "Tue";
-		weekday[3] = "Wed";
-		weekday[4] = "Thu";
-		weekday[5] = "Fri";
-		weekday[6] = "Sat";
-		return weekday[num];
+		var weekdayName = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Satday"];
+		return weekdayName[num];
 	}
 	function fb_inrange(fb_time,hours){
 		var currentTime  = new Date();
