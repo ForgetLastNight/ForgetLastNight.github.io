@@ -77,7 +77,6 @@ $(document).ready(function(){
 					var time = tweets[i]['created_at'];
 					
 					var local_time = new Date(time);
-					var local_time_new_format = local_time.toLocaleString();
 					var message = tweets[i]['text'];
 					var id = tweets[i]['id_str'];
 					var hours = $('#time-range').val();  //change hours
@@ -90,7 +89,7 @@ $(document).ready(function(){
 
 					if(inRange(tweets[i],hours))
 					{
-						var tweetHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='twitter_logo.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+remove_sec(local_time_new_format)+"</span><br/>"+imghtml+message+"</p></div><div class='col-xs-1 delete-box delete-twitter'><input type='checkbox' name='"+id+"'/></div></div>";
+						var tweetHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='twitter_logo.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time_format(local_time)+"</span><br/>"+imghtml+message+"</p></div><div class='col-xs-1 delete-box delete-twitter'><input type='checkbox' name='"+id+"'/></div></div>";
 						$('#display-media').append(tweetHTML);
 					}
 
@@ -159,9 +158,8 @@ $(document).ready(function(){
 							id = String(posts[i]['id']);
 							var hours = $('#time-range').val(); 
 							var t_time=new Date(time);
-							var showtime=t_time.toLocaleString();
 							if(timeRange(time,hours)){
-								var tumblrHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='tumblr-logo.png'/></div><div class='col-xs-9 message'><p style='margin-bottom:0px;'><span class='time-tw'>"+remove_sec(showtime)+"</span><br/><b>"+label+"</b><br/>"+content+"</p></div><div class='col-xs-1 delete-box delete-tumblr'><input type='checkbox' name='"+id+"'/></div></div>";
+								var tumblrHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='tumblr-logo.png'/></div><div class='col-xs-9 message'><p style='margin-bottom:0px;'><span class='time-tw'>"+time_format(t_time)+"</span><br/><b>"+label+"</b><br/>"+content+"</p></div><div class='col-xs-1 delete-box delete-tumblr'><input type='checkbox' name='"+id+"'/></div></div>";
 
 								$('#display-media').append(tumblrHTML);						
 							}
@@ -208,7 +206,7 @@ $(document).ready(function(){
 					{
 					var GMT_time =response['data'][i]['created_time'];
 					
-					var local_time_fb = new Date(GMT_time).toLocaleString();
+					var local_time_fb = new Date(GMT_time);
 
 
 					
@@ -218,7 +216,7 @@ $(document).ready(function(){
 					var hours = $('#time-range').val(); 
 					if(fb_inrange(local_time_fb,hours)){
 
-					var FBHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='facebook-icon.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+remove_sec(local_time_fb)+"</span><br/><i>"+type+"</i><br/>"+body+"</p></div><div class='col-xs-1'></div></div>";
+					var FBHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='facebook-icon.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time_format(local_time_fb)+"</span><br/><i>"+type+"</i><br/>"+body+"</p></div><div class='col-xs-1'></div></div>";
 								$('#display-media').append(FBHTML);						
 							}
 
@@ -292,11 +290,24 @@ $(document).ready(function(){
 		}
 	}
 
-	function remove_sec(time){
-	var pos=time.length;
-	var tail=time.substr(pos-3,pos);
-	var head=time.substr(0,pos-6);
-	return head+tail;
+	function time_format(time){
+		var t=time.toLocaleTimeString();
+		var pos=t.length;
+		var tail=t.substr(pos-3,pos);
+		var head=t.substr(0,pos-6);
+		return num_to_weekdayName(time.getDay())+", "+num_to_monthName(time.getMonth())+" "+time.getDate()+" "
+		+head+tail;
+	}
+	function num_to_monthName(num){
+		var shortName=["Jan", "Feb", "Mar",
+		"Apr", "May", "Jun",
+		"Jul", "Aug", "Sep",
+		"Oct", "Nov", "Dec"];
+		return shortName[num];
+	}
+	function num_to_weekdayName(num){
+		var weekdayName = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Satday"];
+		return weekdayName[num];
 	}
 
 	function fb_inrange(fb_time,hours){
