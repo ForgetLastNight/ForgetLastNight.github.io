@@ -367,6 +367,7 @@ $(document).ready(function(){
 		console.log("Tumblr's time format: "+tumblr_time);
 
 		var arr = tumblr_time.split(/[- :]/);
+		console.log(arr);
     	var post_time = new Date(arr[0], arr[1]-1, arr[2], arr[3], arr[4], arr[5]);
 
 		//var post_time = new Date(tumblr_time);
