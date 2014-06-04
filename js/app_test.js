@@ -224,7 +224,7 @@ $(document).ready(function(){
 						{
 							console.log("should be printing fb post");
 
-							var FBHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='facebook-icon.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time_format(local_time_fb)+"</span><br/><i>"+type+"</i><br/>"+body+"</p></div><div class='col-xs-1'></div></div>";
+							var FBHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='facebook-icon.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+GMT_time+"</span><br/><i>"+type+"</i><br/>"+body+"</p></div><div class='col-xs-1'></div></div>";
 									$('#display-media').append(FBHTML);						
 						}
 						else console.log("fb posts outside time range");
