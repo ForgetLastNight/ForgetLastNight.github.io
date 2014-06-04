@@ -368,7 +368,7 @@ $(document).ready(function(){
 	function inRange(tweet,hours){
 
 		var currentTime  = new Date();
-		onsole.log("Current time Twitter: "+ currentTime);
+		console.log("Current time Twitter: "+ currentTime);
 		var sec = currentTime.valueOf();
 		
 		var x_hours_difference = sec - last_x_hours_to_second;
