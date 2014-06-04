@@ -155,14 +155,15 @@ $(document).ready(function(){
 									break;
 							}
 							time = posts[i]['date'];
+							var arr = time.split(/[- :]/);
+					    	var arg = new Date(arr[0], arr[1]-1, arr[2], arr[3], arr[4], arr[5]);
 
 							id = String(posts[i]['id']);
 							var hours = $('#time-range').val(); 
-							//var t_time = new Date(time); invalid
 
 							if(timeRange(time,hours)){
 								console.log("should be printing tumblr post");
-								var tumblrHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='tumblr-logo.png'/></div><div class='col-xs-9 message'><p style='margin-bottom:0px;'><span class='time-tw'>"+time+"</span><br/><b>"+label+"</b><br/>"+content+"</p></div><div class='col-xs-1 delete-box delete-tumblr'><input type='checkbox' name='"+id+"'/></div></div>";
+								var tumblrHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='tumblr-logo.png'/></div><div class='col-xs-9 message'><p style='margin-bottom:0px;'><span class='time-tw'>"+time_format(arg)+"</span><br/><b>"+label+"</b><br/>"+content+"</p></div><div class='col-xs-1 delete-box delete-tumblr'><input type='checkbox' name='"+id+"'/></div></div>";
 
 								$('#display-media').append(tumblrHTML);						
 							}
@@ -212,14 +213,14 @@ $(document).ready(function(){
 					{
 						var GMT_time =response['data'][i]['created_time'];
 						
-						var local_time_fb = new Date(GMT_time);
+						//var local_time_fb = new Date(GMT_time);
 
 						temp = response.data[i].story?"activity":"status";
 						type = temp.charAt(0).toUpperCase() + temp.slice(1);
 						body =  response.data[i].story? response.data[i].story:response.data[i].message;
 						var hours = $('#time-range').val(); 
 
-						if(fb_inrange(local_time_fb,hours))
+						if(fb_inrange(GMT_time,hours))
 						{
 							console.log("should be printing fb post");
 
