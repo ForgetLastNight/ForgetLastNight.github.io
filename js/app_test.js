@@ -118,7 +118,8 @@ $(document).ready(function(){
 				Parse.Cloud.run('GetTumblrPosts', {oToken : tumblrToken, oKey : tumblrCKey, tSec : tumblrTSecret, cSec : tumblrCSecret, bName: blogname}, {
 					success: function(results) {
 						results = JSON.parse(results);
-
+						console.log("Got results from tumblr");
+						console.log(results);
 
 						posts = results['response']['posts'];
 						for(var i=0;i<posts.length;i++)
@@ -159,10 +160,12 @@ $(document).ready(function(){
 							var hours = $('#time-range').val(); 
 							var t_time=new Date(time);
 							if(timeRange(time,hours)){
+								console.log("should be printing tumblr post");
 								var tumblrHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='tumblr-logo.png'/></div><div class='col-xs-9 message'><p style='margin-bottom:0px;'><span class='time-tw'>"+time_format(t_time)+"</span><br/><b>"+label+"</b><br/>"+content+"</p></div><div class='col-xs-1 delete-box delete-tumblr'><input type='checkbox' name='"+id+"'/></div></div>";
 
 								$('#display-media').append(tumblrHTML);						
 							}
+							else console.log("tumblr post outside time range");
 
 						}
 						console.log("view tumblr fulfilled");
@@ -201,24 +204,28 @@ $(document).ready(function(){
 				alert('There was an error connecting to Facebook.');
 				} 
 				else {
+					console.log("Got response from FB");
+					console.log(response);
 
 					for(var i=0;i<response.data.length;i++)
 					{
-					var GMT_time =response['data'][i]['created_time'];
-					
-					var local_time_fb = new Date(GMT_time);
+						var GMT_time =response['data'][i]['created_time'];
+						
+						var local_time_fb = new Date(GMT_time);
 
+						temp = response.data[i].story?"activity":"status";
+						type = temp.charAt(0).toUpperCase() + temp.slice(1);
+						body =  response.data[i].story? response.data[i].story:response.data[i].message;
+						var hours = $('#time-range').val(); 
 
-					
-					temp = response.data[i].story?"activity":"status";
-					type = temp.charAt(0).toUpperCase() + temp.slice(1);
-					body =  response.data[i].story? response.data[i].story:response.data[i].message;
-					var hours = $('#time-range').val(); 
-					if(fb_inrange(local_time_fb,hours)){
+						if(fb_inrange(local_time_fb,hours))
+						{
+							console.log("should be printing fb post");
 
-					var FBHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='facebook-icon.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time_format(local_time_fb)+"</span><br/><i>"+type+"</i><br/>"+body+"</p></div><div class='col-xs-1'></div></div>";
-								$('#display-media').append(FBHTML);						
-							}
+							var FBHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='facebook-icon.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time_format(local_time_fb)+"</span><br/><i>"+type+"</i><br/>"+body+"</p></div><div class='col-xs-1'></div></div>";
+									$('#display-media').append(FBHTML);						
+						}
+						else console.log("fb posts outside time range");
 
 					}
 
@@ -295,11 +302,11 @@ $(document).ready(function(){
 		var pos=t.length;
 		var tail=t.substr(pos-3,pos);
 		var head=t.substr(0,pos-6);
-		return num_to_weekdayName(time.getDay())+", "+num_to_monthName(time.getMonth())+" "+time.getDate()+" "
-		+head+tail;
-		//var hour=hour_format(time);
 		//return num_to_weekdayName(time.getDay())+", "+num_to_monthName(time.getMonth())+" "+time.getDate()+" "
-		//+hour[0]+":"+time.getMinutes()+" "+hour[1];
+		//+head+tail;
+		var hour=hour_format(time);
+		return num_to_weekdayName(time.getDay())+", "+num_to_monthName(time.getMonth())+" "+time.getDate()+" "
+		+hour[0]+":"+time.getMinutes()+" "+hour[1];
 
 	}
 	function hour_format(time){
