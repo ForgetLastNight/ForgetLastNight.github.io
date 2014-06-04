@@ -105,7 +105,7 @@ $(document).ready(function(){
 						var time = tweets[i]['created_at'];
 						
 						var local_time = new Date(time);
-						var local_time_new_format = local_time.toLocaleString();
+						//var local_time_new_format = local_time.toLocaleString();
 						var message = tweets[i]['text'];
 						var id = tweets[i]['id_str'];
 						var hours = $('#time-range').val();  //change hours
@@ -118,7 +118,7 @@ $(document).ready(function(){
 
 						if(inRange(tweets[i],hours))
 						{
-							var tweetHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='twitter_logo.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+remove_sec(local_time_new_format)+"</span><br/>"+imghtml+message+"</p></div><div class='col-xs-1 delete-box delete-twitter'><input type='checkbox' name='"+id+"'/></div></div>";
+							var tweetHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='twitter_logo.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time_format(local_time)+"</span><br/>"+imghtml+message+"</p></div><div class='col-xs-1 delete-box delete-twitter'><input type='checkbox' name='"+id+"'/></div></div>";
 							$('#display-media').append(tweetHTML);
 						}
 
@@ -403,13 +403,31 @@ $(document).ready(function(){
 			})();
 		}
 	}
-	function remove_sec(time){
-	var pos=time.length;
-	var tail=time.substr(pos-3,pos);
-	var head=time.substr(0,pos-6);
-	return head+tail;
+	function time_format(time){
+		var t=time.toLocaleTimeString();
+		var pos=t.length;
+		var tail=t.substr(pos-3,pos);
+		var head=t.substr(0,pos-6);
+		return num_to_weekdayName(time.getDay())+","+num_to_monthName(time.getMonth())+" "+time.getDate+" "
+		+tail+head;
 	}
-
+	function num_to_monthName(num){
+		var shortName=["January", "February", "March",
+		"April", "May", "June",
+		"July", "August", "September",
+		"October", "November", "December"];
+	}
+	function num_to_weekdayName(num){
+		var weekday = new Array(7);
+		weekday[0]=  "Sunday";
+		weekday[1] = "Monday";
+		weekday[2] = "Tuesday";
+		weekday[3] = "Wednesday";
+		weekday[4] = "Thursday";
+		weekday[5] = "Friday";
+		weekday[6] = "Saturday";
+		return weekday[num];
+	}
 	function fb_inrange(fb_time,hours){
 		var currentTime  = new Date();
 		//console.log("now"+currentTime);		
