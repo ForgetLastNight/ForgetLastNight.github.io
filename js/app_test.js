@@ -309,8 +309,8 @@ $(document).ready(function(){
 		//var hour=hour_format(time);
 		//return num_to_weekdayName(time.getDay())+", "+num_to_monthName(time.getMonth())+" "+time.getDate()+" "
 		//+hour[0]+":"+time.getMinutes()+" "+hour[1];
-
 	}
+
 	function hour_format(time){
 		var h=time.getHours();
 		var amOrpm="AM";
@@ -324,6 +324,7 @@ $(document).ready(function(){
 		}
 		return [h,amOrpm];
 	}
+
 	function num_to_monthName(num){
 		var shortName=["Jan", "Feb", "Mar",
 		"Apr", "May", "Jun",
@@ -331,6 +332,7 @@ $(document).ready(function(){
 		"Oct", "Nov", "Dec"];
 		return shortName[num];
 	}
+
 	function num_to_weekdayName(num){
 		var weekdayName = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Satday"];
 		return weekdayName[num];
@@ -338,15 +340,16 @@ $(document).ready(function(){
 
 	function fb_inrange(fb_time,hours){
 		var currentTime  = new Date();
-		console.log("Current time FB: "+ currentTime);
 	
 		var sec = currentTime.valueOf();
 
+		console.log("FB's time format:" + fb_time);
+		
 		var arr = fb_time.split(/[- :]/);
     	var post_time = new Date(arr[0], arr[1]-1, arr[2], arr[3], arr[4], arr[5]);
 
 		//var post_time = new Date(fb_time);
-		console.log("FB post time: "+post_time);
+		console.log("FB post_time: "+post_time);
 
 		var x_hours_beforetosec = sec - 1000*hours*60*60;
 		var post_time2sec=post_time.valueOf();
