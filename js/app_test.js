@@ -345,7 +345,7 @@ $(document).ready(function(){
 
 		console.log("FB's time format:" + fb_time);
 
-		var arr = fb_time.split(/[- :T]/);
+		var arr = fb_time.split(/[- :T+]/);
 		console.log(arr);
     	var post_time = new Date(arr[0], arr[1]-1, arr[2], arr[3], arr[4], arr[5]);
 
