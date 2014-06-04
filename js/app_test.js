@@ -295,25 +295,8 @@ $(document).ready(function(){
 		var pos=t.length;
 		var tail=t.substr(pos-3,pos);
 		var head=t.substr(0,pos-6);
-		//return num_to_weekdayName(time.getDay())+", "+num_to_monthName(time.getMonth())+" "+time.getDate()+" "
-		//+head+tail;
-		var hour=hour_format(time);
 		return num_to_weekdayName(time.getDay())+", "+num_to_monthName(time.getMonth())+" "+time.getDate()+" "
-		+hour[0]+":"+time.getMinutes()+" "+hour[1];
-		
-	}
-	function hour_format(time){
-		var h=time.getHours();
-		var amOrpm="AM";
-		if(h==0){
-			h=12;
-		} else if(h==12){
-			amOrpm="PM";
-		} else if(h>12){
-			h-=12;
-			amOrpm="PM";
-		}
-		return [h,amOrpm];
+		+head+tail;
 	}
 	function num_to_monthName(num){
 		var shortName=["Jan", "Feb", "Mar",
