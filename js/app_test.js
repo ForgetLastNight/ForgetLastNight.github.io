@@ -344,7 +344,7 @@ $(document).ready(function(){
 		var arr = fb_time.split(/[- :]/);
     	var post_time = new Date(arr[0], arr[1]-1, arr[2], arr[3], arr[4], arr[5]);
 
-		var post_time = new Date(fb_time);
+		//var post_time = new Date(fb_time);
 		console.log("FB post time: "+post_time);
 
 		var x_hours_beforetosec = sec - 1000*hours*60*60;
