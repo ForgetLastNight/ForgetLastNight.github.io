@@ -105,7 +105,6 @@ $(document).ready(function(){
 						var time = tweets[i]['created_at'];
 						
 						var local_time = new Date(time);
-						//var local_time_new_format = local_time.toLocaleString();
 						var message = tweets[i]['text'];
 						var id = tweets[i]['id_str'];
 						var hours = $('#time-range').val();  //change hours
