@@ -158,11 +158,11 @@ $(document).ready(function(){
 
 							id = String(posts[i]['id']);
 							var hours = $('#time-range').val(); 
-							var t_time = time;//new Date(time); invalid
+							//var t_time = new Date(time); invalid
 
 							if(timeRange(time,hours)){
 								console.log("should be printing tumblr post");
-								var tumblrHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='tumblr-logo.png'/></div><div class='col-xs-9 message'><p style='margin-bottom:0px;'><span class='time-tw'>"+time_format(t_time)+"</span><br/><b>"+label+"</b><br/>"+content+"</p></div><div class='col-xs-1 delete-box delete-tumblr'><input type='checkbox' name='"+id+"'/></div></div>";
+								var tumblrHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='tumblr-logo.png'/></div><div class='col-xs-9 message'><p style='margin-bottom:0px;'><span class='time-tw'>"+time+"</span><br/><b>"+label+"</b><br/>"+content+"</p></div><div class='col-xs-1 delete-box delete-tumblr'><input type='checkbox' name='"+id+"'/></div></div>";
 
 								$('#display-media').append(tumblrHTML);						
 							}
