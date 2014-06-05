@@ -75,10 +75,9 @@ $(document).ready(function(){
 				{
 					//turn this into something better
 					var time = tweets[i]['created_at'];
-					
 					var s = time.split(" ",6);
 					var tw_time = new Date(s[1]+" "+s[2]+", "+s[5]+" "+s[3]);
-
+					var tw_time_l=GMTtoLocal(tw_time);
 					var message = tweets[i]['text'];
 					var id = tweets[i]['id_str'];
 					var hours = $('#time-range').val();  //change hours
@@ -89,9 +88,9 @@ $(document).ready(function(){
 						imghtml = "<img class='pic' src='"+imgsrc+"'/><br/>";
 					}
 
-					if(inRange(tweets[i],hours))
+					if(timeRange(tw_time_l,hours))
 					{
-						var tweetHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='twitter_logo.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time_format(tw_time)+"</span><br/>"+imghtml+message+"</p></div><div class='col-xs-1 delete-box delete-twitter'><input type='checkbox' name='"+id+"'/></div></div>";
+						var tweetHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='twitter_logo.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time_format(tw_time_l)+"</span><br/>"+imghtml+message+"</p></div><div class='col-xs-1 delete-box delete-twitter'><input type='checkbox' name='"+id+"'/></div></div>";
 						$('#display-media').append(tweetHTML);
 					}
 
@@ -157,13 +156,13 @@ $(document).ready(function(){
 							time = posts[i]['date'];
 							var arr = time.split(/[- :T+]/);
 					    	var tum_time = new Date(arr[0], arr[1]-1, arr[2], arr[3], arr[4], arr[5]);
-
+							var l_tum_time=GMTtoLocal(tum_time);
 							id = String(posts[i]['id']);
 							var hours = $('#time-range').val(); 
 
-							if(timeRange(time,hours)){
+							if(timeRange(l_tum_time,hours)){
 								console.log("should be printing tumblr post");
-								var tumblrHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='tumblr-logo.png'/></div><div class='col-xs-9 message'><p style='margin-bottom:0px;'><span class='time-tw'>"+time_format(tum_time)+"</span><br/><b>"+label+"</b><br/>"+content+"</p></div><div class='col-xs-1 delete-box delete-tumblr'><input type='checkbox' name='"+id+"'/></div></div>";
+								var tumblrHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='tumblr-logo.png'/></div><div class='col-xs-9 message'><p style='margin-bottom:0px;'><span class='time-tw'>"+time_format(l_tum_time)+"</span><br/><b>"+label+"</b><br/>"+content+"</p></div><div class='col-xs-1 delete-box delete-tumblr'><input type='checkbox' name='"+id+"'/></div></div>";
 
 								$('#display-media').append(tumblrHTML);						
 							}
@@ -213,14 +212,16 @@ $(document).ready(function(){
 						
 						//var local_time_fb = new Date(GMT_time);
 						var arr = GMT_time.split(/[- :T+]/);
-				    	var local_time_fb = new Date(arr[0], arr[1]-1, arr[2], arr[3], arr[4], arr[5]);
+						//console.log(arr);
+				    	var gmt_time_fb = new Date(arr[0], arr[1]-1, arr[2], arr[3], arr[4], arr[5]);
 						
+						var local_time_fb=GMTtoLocal(gmt_time_fb);
 						temp = response.data[i].story?"activity":"status";
 						type = temp.charAt(0).toUpperCase() + temp.slice(1);
 						body =  response.data[i].story? response.data[i].story:response.data[i].message;
 						var hours = $('#time-range').val(); 
 
-						if(fb_inrange(GMT_time,hours))
+						if(timeRange(local_time_fb,hours))
 						{
 							console.log("should be printing fb post");
 
@@ -360,24 +361,19 @@ $(document).ready(function(){
 		if( post_time2sec >= x_hours_beforetosec  ) return true;
 		else return false;
 	}
-
-	function timeRange(tumblr_time,hours){
-
+	function GMTtoLocal(time){
+	console.log(time);
+		var localtime=new Date(time.getTime()-time.getTimezoneOffset()*60*1000);
+		console.log(localtime);
+		return localtime;
+	}
+	function timeRange(post_local_time,hours){
 		var currentTime  = new Date();
 		var sec = currentTime.valueOf();
-
-		var arr = tumblr_time.split(/[- :]/);
-
-    	var post_time = new Date(arr[0], arr[1]-1, arr[2], arr[3], arr[4], arr[5]);
-
-
+    	var post_time = post_local_time;
 		var x_hours_beforetosec = sec - 1000*hours*60*60;
-	
-
-		var post_time2sec=post_time.valueOf();
-	
-
-		if( post_time2sec >= x_hours_beforetosec  ) return true;
+		var post_local_time2sec=post_local_time.valueOf();
+		if( post_local_time2sec >= x_hours_beforetosec  ) return true;
 		else return false;
 	}
 
