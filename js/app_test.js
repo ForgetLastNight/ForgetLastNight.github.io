@@ -88,7 +88,7 @@ $(document).ready(function(){
 						imghtml = "<img class='pic' src='"+imgsrc+"'/><br/>";
 					}
 
-					if(inRange(tw_time_l,hours))
+					if(timeRange(tw_time_l,hours))
 					{
 						var tweetHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='twitter_logo.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time_format(tw_time_l)+"</span><br/>"+imghtml+message+"</p></div><div class='col-xs-1 delete-box delete-twitter'><input type='checkbox' name='"+id+"'/></div></div>";
 						$('#display-media').append(tweetHTML);
