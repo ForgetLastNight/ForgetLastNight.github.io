@@ -70,12 +70,13 @@
 
 #display-media .message{
 	padding:3% 8px;
+	width:70%;
 }
 
 .delete-box{
 	padding:7% 0px;
 	text-align: center;
-	margin-left:-10px;
+	margin-left:5px;
 }
 
 .delete-box input[type=checkbox]{
@@ -88,8 +89,7 @@
 
 
 .pic{
-height:221px;
-width: 170px;
+width:100%;
 
 }
 
