@@ -33,7 +33,6 @@ $(document).ready(function(){
 
 		Parse.Promise.when(promiseQ).then(function(args){
 			//will trigger when all promises complete
-			console.log("all promises fulfilled");
 		 	$('#forget center').html("Forget");
 
 		});
@@ -95,7 +94,7 @@ $(document).ready(function(){
 					}
 
 			    }
-			    console.log("view twitter fulfilled");
+			    
 			    twitter_promise.resolve("viewTwitter finished displaying");
 			},
 			error: function(error) {
@@ -161,15 +160,13 @@ $(document).ready(function(){
 							var hours = $('#time-range').val(); 
 
 							if(timeRange(l_tum_time,hours)){
-								console.log("should be printing tumblr post");
+								
 								var tumblrHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='tumblr-logo.png'/></div><div class='col-xs-9 message'><p style='margin-bottom:0px;'><span class='time-tw'>"+time_format(l_tum_time)+"</span><br/><b>"+label+"</b><br/>"+content+"</p></div><div class='col-xs-1 delete-box delete-tumblr'><input type='checkbox' name='"+id+"'/></div></div>";
 
 								$('#display-media').append(tumblrHTML);						
 							}
-							else console.log("tumblr post outside time range");
 
 						}
-						console.log("view tumblr fulfilled");
 						tumblr_promise.resolve("tumblrView finished");
 
 					},
@@ -212,7 +209,7 @@ $(document).ready(function(){
 						
 						//var local_time_fb = new Date(GMT_time);
 						var arr = GMT_time.split(/[- :T+]/);
-						//console.log(arr);
+						
 				    	var gmt_time_fb = new Date(arr[0], arr[1]-1, arr[2], arr[3], arr[4], arr[5]);
 						
 						var local_time_fb=GMTtoLocal(gmt_time_fb);
@@ -223,12 +220,9 @@ $(document).ready(function(){
 
 						if(timeRange(local_time_fb,hours))
 						{
-							console.log("should be printing fb post");
-
 							var FBHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='facebook-icon.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time_format(local_time_fb)+"</span><br/><i>"+type+"</i><br/>"+body+"</p></div><div class='col-xs-1'></div></div>";
 									$('#display-media').append(FBHTML);						
 						}
-						else console.log("fb posts outside time range");
 
 					}
 
@@ -262,7 +256,7 @@ $(document).ready(function(){
 			 				twitter_promise.resolve("Tweet deleted");
 			 			},
 			 			error: function(error){
-			 				alert("Failed to delete tweet "+delete_id_tw);
+			 				alert("Failed to delete a tweet");
 			 				twitter_promise.reject("Failed to delete tweet");
 			 			}
 			 		});
@@ -290,7 +284,7 @@ $(document).ready(function(){
 							tumblr_promise.resolve("Tumblr post deleted");
 						},
 						error: function(err) {
-							alert("Failed to delete Tumblr post "+delete_id_tm);
+							alert("Failed to delete a Tumblr post");
 							tumblr_promise.reject("Could not delete Tumblr post");
 						}
 					});
@@ -345,26 +339,8 @@ $(document).ready(function(){
 		return weekdayName[num];
 	}
 
-	function fb_inrange(fb_time,hours){
-		var currentTime  = new Date();
-	
-		var sec = currentTime.valueOf();
-
-		var arr = fb_time.split(/[- :T+]/);
-    	var post_time = new Date(arr[0], arr[1]-1, arr[2], arr[3], arr[4], arr[5]);
-
-		//console.log("FB post_time: "+post_time);
-
-		var x_hours_beforetosec = sec - 1000*hours*60*60;
-		var post_time2sec=post_time.valueOf();
-
-		if( post_time2sec >= x_hours_beforetosec  ) return true;
-		else return false;
-	}
 	function GMTtoLocal(time){
-	console.log(time);
 		var localtime=new Date(time.getTime()-time.getTimezoneOffset()*60*1000);
-		console.log(localtime);
 		return localtime;
 	}
 	function timeRange(post_local_time,hours){
@@ -374,35 +350,6 @@ $(document).ready(function(){
 		var x_hours_beforetosec = sec - 1000*hours*60*60;
 		var post_local_time2sec=post_local_time.valueOf();
 		if( post_local_time2sec >= x_hours_beforetosec  ) return true;
-		else return false;
-	}
-
-	//twitter
-	function inRange(tweet,hours){
-
-		var currentTime  = new Date();
-		
-		var sec = currentTime.valueOf();
-		
-		var x_hours_difference = sec - last_x_hours_to_second;
-		var x_hours_before = new Date(x_hours_difference);
-
-
-		var time = tweet['created_at'].toString();
-
-		var s = time.split(" ",6);
-
-		var s3 = new Date(s[1]+" "+s[2]+", "+s[5]+" "+s[3]);
-		var s4 = s3.valueOf();
-
-		var last_x_hours_to_second = 1000*hours*60*60;
-		var seconds_difference =  s4 - last_x_hours_to_second;
-
-		var x_hour_before = new Date(seconds_difference);
-
-
-		
-		if( currentTime - last_x_hours_to_second < s4  ) return true;
 		else return false;
 	}
 
