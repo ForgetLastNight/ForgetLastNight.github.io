@@ -41,7 +41,7 @@ $(document).ready(function(){
 
 
 	$('#time-range').change(function(){
-
+		$('#LNNH').hide();
 		$('#display-media').html('');
 		$('#logo').html("<a href='index.html'><img style='height:120px; margin-top:15px;margin-bottom:15px;' src='flnLogo.png'/></a>");
 		$('#forget center').html("<img style='height:20px;width:20px;' src='loading.gif'/>");
@@ -218,24 +218,6 @@ $(document).ready(function(){
 		if(window.localStorage['fbIsSynced']=='yes')
 		{	
 
-			// may return 0 results instead of error if proper permissions are not configured
-			//likes on statuses, etc.
-			//must query post_id from "stream" table to get created time
-			// var obj_likes = "SELECT object_id FROM like WHERE post_id='post_id' AND user_id = me()";
-
-			// //liking bands, movies, etc
-			// var page_likes = "select page_id, name from page where page_id in (select page_id from page_fan where uid = me())";
-			// var url_likes = "select url from url_like where user_id = me()";
-			// var comments_query = "select text from comment where fromid = me()";
-			// var likes_query = "SELECT likes FROM stream WHERE source_id = me()";
-
-
-			//doesn't have timestamps of object likes
-			// FB.api('/fql', {q: {"query1": likes_query}, access_token: fbToken}, function(r) {
-			//   console.log(r);
-
-			// });
-
 			var fb_promise = new Parse.Promise();
 			promises.push(fb_promise);
 
@@ -280,64 +262,6 @@ $(document).ready(function(){
 
 				}
 			);
-
-			//gets page likes
-			// FB.api(
-			// 	'me/likes',
-			// 	'get',
-			// 	{
-			// 		access_token : fbToken,
-			// 		limit:50
-			// 	},
-			// 	function(response) {
-			// 		if (!response || response.error) {
-			// 		alert('There was an error connecting to Facebook.');
-			// 		} 
-			// 		else {
-			// 			console.log(response);
-			// 			for (var i = 0 ; i< response.data.length;i++)
-			// 			{
-			// 				time = response['data'][i]['created_time'];
-			// 				message = "You liked the page <i>"+ response['data'][i]['name']+"</i>";
-			// 				var FBHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='facebook-icon.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time+"</span><br/>"+message+"</p></div><div class='col-xs-1'></div></div>";
-			// 				$('#display-media').append(FBHTML);
-			// 			}
-			// 		}
-
-			// 	}
-			// );
-
-			//gets home feed
-			// FB.api(
-			// 	'me/feed',
-			// 	'get',
-			// 	{
-			// 		access_token : fbToken,
-			// 		limit:50
-			// 	},
-			// 	function(response) {
-			// 		if (!response || response.error) {
-			// 		alert('There was an error connecting to Facebook.');
-			// 		} 
-			// 		else {
-			// 			//console.log(response);
-			// 			for (var i = 0 ; i< response.data.length;i++)
-			// 			{
-			// 				temp = response.data[i].story?"activity":"status";
-			// 				type = temp.charAt(0).toUpperCase() + temp.slice(1);
-			// 				body =  response.data[i].story? response.data[i].story:response.data[i].message;
-			// 				if(body[0]!='"')
-			// 				{
-			// 					time = response['data'][i]['created_time'];
-
-			// 					var FBHTML = "<div class='row' ><div class='col-xs-2 logo'><img class='logo_tw' src='facebook-icon.png'/></div><div class='col-xs-9 message'><p><span class='time-tw'>"+time+"</span><br/>"+type+"<br/>"+body+"</p></div><div class='col-xs-1'></div></div>";
-			// 					$('#display-media').append(FBHTML);
-			// 				}
-			// 			}
-			// 		}
-
-			// 	}
-			// );
 
 		}
 	}

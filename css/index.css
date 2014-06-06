@@ -1,6 +1,6 @@
 
 .col-xs-6{text-align: center;}
-#forget{
+.xbar{
 	font-size: 40px;
 	font-weight: bold;
 	width:100%;
@@ -8,7 +8,6 @@
 	color:#9928DB;
 	background:rgba(0,0,0,0.9);
 	cursor:pointer;
-	visibility: hidden;
 }
 
 #time-select{
@@ -71,6 +70,7 @@
 #display-media .message{
 	padding:3% 8px;
 	width:70%;
+	padding-left:0px;
 }
 
 .delete-box{

@@ -16,10 +16,15 @@ $(document).ready(function(){
 
 	$('#time-range').change(function(){
 
+		$('#LNNH').hide();
 		$('#display-media').html('');
 		$('#logo').html("<a href='index.html'><img style='height:120px; margin-top:15px;margin-bottom:15px;' src='flnLogo.png'/></a>");
-		$('#forget center').html("<img style='height:20px;width:20px;' src='loading.gif'/>");
-		$('#forget').css({"visibility":"visible"});
+		
+
+		//$('#forget center').html("<img style='height:20px;width:20px;' src='loading.gif'/>");
+		//$('#forget').css({"visibility":"visible"});
+		$('#loading').show();
+
 
 
 		var promiseQ=[];
@@ -33,7 +38,8 @@ $(document).ready(function(){
 
 		Parse.Promise.when(promiseQ).then(function(args){
 			//will trigger when all promises complete
-		 	$('#forget center').html("Forget");
+			$('#loading').hide();
+		 	$('#forget').show();
 
 		});
 
@@ -43,7 +49,9 @@ $(document).ready(function(){
 	$('#forget').click(function(){
 		var promiseQ=[];
 
-		$('#forget center').html("<img style='height:20px;width:20px;' src='loading.gif'/>");
+		//$('#forget center').html("<img style='height:20px;width:20px;' src='loading.gif'/>");
+		$('#forget').hide();
+		$('#loading').show();
 
 		deleteTwitter(promiseQ);
 
@@ -52,9 +60,11 @@ $(document).ready(function(){
 
 		Parse.Promise.when(promiseQ).then(function(args){
 			//will trigger when all promises complete
+			$('#loading').hide();
 			$('#logo').html("<a href='index.html'><img style='height:120px; margin-top:15px;margin-bottom:15px;' src='fln_logo_white.png'/></a>");
 			$('#display-media').html("");
-			$('#LNNH').hide().html("<center><a href='index.html'><img style='height:120px; margin-top:15px;margin-bottom:15px;' src='forget.png'/></a></center>").fadeIn(2000);
+			$('#LNNH').fadeIn(2000);
+			
 
 		});
 
@@ -101,7 +111,6 @@ $(document).ready(function(){
 				alert("There was an error getting tweets.");
 			}
 		});
-		
 	}
 
 	function viewTumblr(promises)
