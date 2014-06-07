@@ -344,7 +344,7 @@ $(document).ready(function(){
 	}
 
 	function num_to_weekdayName(num){
-		var weekdayName = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Satday"];
+		var weekdayName = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
 		return weekdayName[num];
 	}
 
