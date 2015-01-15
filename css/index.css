@@ -48,8 +48,10 @@
 
 
 #display-media{
-	margin-top:20px;
-	color:white;
+	color: white;
+	max-width: 800px;
+	margin: 0 auto;
+	margin-top: 20px;
 }
 #display-media .logo{
 	padding:3% 5px;

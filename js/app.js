@@ -45,7 +45,7 @@ $(document).ready(function(){
 		$('#display-media').html('');
 		$('#logo').html("<a href='index.html'><img style='height:120px; margin-top:15px;margin-bottom:15px;' src='flnLogo.png'/></a>");
 		$('#forget center').html("<img style='height:20px;width:20px;' src='loading.gif'/>");
-		$('#forget').css({"visibility":"visible"});
+		$('.forget-box').css({"display":"block"});
 
 
 		var promiseQ=[];
@@ -60,6 +60,7 @@ $(document).ready(function(){
 		Parse.Promise.when(promiseQ).then(function(args){
 			//will trigger when all promises complete
 			console.log("all promises fulfilled");
+
 		 	$('#forget center').html("Forget");
 
 		});
@@ -78,6 +79,7 @@ $(document).ready(function(){
 
 
 		Parse.Promise.when(promiseQ).then(function(args){
+			$('.forget-box').css({"display":"none"});
 			//will trigger when all promises complete
 			$('#logo').html("<a href='index.html'><img style='height:120px; margin-top:15px;margin-bottom:15px;' src='fln_logo_white.png'/></a>");
 			$('#display-media').html("");
@@ -122,7 +124,6 @@ $(document).ready(function(){
 						}
 
 				    }
-				    console.log("view twitter fulfilled");
 				    twitter_promise.resolve("viewTwitter finished displaying");
 				},
 				error: function(error) {
